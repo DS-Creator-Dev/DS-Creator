@@ -1,52 +1,56 @@
-# Prerequisites
-*.d
+.DS_Store
+.env
+.gclient_done
+**/.npmrc
+.tags*
+.vs/
+.vscode/
+*.log
+*.pyc
+*.sln
+*.swp
+*.VC.db
+*.VC.VC.opendb
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.xcodeproj
+/.idea/
+/dist/
+node_modules/
+SHASUMS256.txt
+**/package-lock.json
+compile_commands.json
+.envrc
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# npm package
+/npm/dist
+/npm/path.txt
+/npm/checksums.json
 
-# Linker output
-*.ilk
-*.map
-*.exp
+.npmrc
 
-# Precompiled Headers
-*.gch
-*.pch
+# Generated API definitions
+electron-api.json
+electron.d.ts
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# Spec hash calculation
+spec/.hash
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# Eslint Cache
+.eslintcache*
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# Generated native addon files
+/spec-main/fixtures/native-addon/echo/build/
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# If someone runs tsc this is where stuff will end up
+ts-gen
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Used to accelerate CI builds
+.depshash
+.depshash-target
+
+# Used to accelerate builds after sync
+patches/mtime-cache.json
+
+spec/fixtures/logo.png
