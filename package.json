@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "Kenyon Bowers <Bowersindustry.bwrs@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "electron": "^17.0.1",
     "typescript": "^4.5.5"
