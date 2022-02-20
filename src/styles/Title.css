@@ -1,0 +1,12 @@
+h1 {
+    color: black;
+}
+
+#discord-btn {
+    background-color: blue;
+    text-emphasis-color: black;
+    border-color: cornflowerblue;
+
+    position: relative;
+    bottom: -400px;
+}
