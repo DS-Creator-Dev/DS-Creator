@@ -1,11 +1,19 @@
-import {app, ipcMain, BrowserWindow} from "electron";
+/** 
+ * Initial script executed when electron starts 
+ * running.
+*/
+import { app, ipcMain, BrowserWindow } from "electron";
+import { initialize, enable } from '@electron/remote/main'
 
-let mainWindow : BrowserWindow;
-let discordWindow : BrowserWindow;
+initialize();
+
+
+let mainWindow: BrowserWindow;
+let discordWindow: BrowserWindow;
 
 app.on("ready", createWindows);
 
-function createWindows (): void {
+function createWindows(): void {
     mainWindow = new BrowserWindow({
         width: 900, height: 600,
         webPreferences: {
@@ -15,7 +23,7 @@ function createWindows (): void {
     });
     mainWindow.loadFile("./index.html");
     mainWindow.on("ready-to-show", () => mainWindow.show())
-
+    enable(mainWindow.webContents)
 
     discordWindow = new BrowserWindow({
         width: 450, height: 300,
@@ -24,25 +32,6 @@ function createWindows (): void {
         },
         show: false
     });
-    discordWindow.loadFile("./html/discord.html");
+    discordWindow.loadFile("./views/discord.html");
     discordWindow.on("ready-to-show", () => discordWindow.show())
 }
-
-/*
-const btn = document.querySelector("button");
-btn.addEventListener("click", function () {
-    NewProject()
-});
-
-function NewProject() : void{
-    const files = dialog.showOpenDialogSync({
-        properties: ["openFile"],
-        filters: [
-          {
-            name: "Projects",
-            extensions: ["DSCProj"],
-          },
-        ],
-    });
-}
-*/

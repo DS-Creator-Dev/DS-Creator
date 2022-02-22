@@ -1,7 +1,7 @@
 {
   "name": "ds-creator",
   "version": "1.0.0",
-  "main": "./outDir/index.js",
+  "main": "./dist/electron/electron-main.js",
   "scripts": {
     "build": "tsc",
     "start": "npm run build && electron ."
@@ -10,6 +10,7 @@
   "author": "Kenyon Bowers <Bowersindustry.bwrs@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@electron/remote": "^2.0.5",
     "electron": "^17.0.1",
     "typescript": "^4.5.5"
   },

@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DS Creator</title>
-    <link rel="stylesheet" href="./src/styles/Title.css" />
-    <script src="./outDir/file_management/NewProject.js"></script>
-</head>
-<body>
-   <h1>This will one day be the powerful DS Creator!</h1>
-   <p>There is no content yet lol.</p>
+    <link rel="stylesheet" href="./styles/title.css" />
 
-   <!--<button id="menu-btn" onclick="NewProject()">New Project</button>-->
-   <input type="button" id="menu-btn" value="New Project" onclick="NewProject" />
-   <button id="menu-btn">Open Project</button>
+</head>
+
+<body>
+    <h1>This will one day be the powerful DS Creator!</h1>
+    <p>There is no content yet lol.</p>
+
+    <!--<button id="menu-btn" onclick="NewProject()">New Project</button>-->
+    <input class="btn-menu" type="button" id="btn-new-project" value="New Project" onclick="NewProject" />
+    <button id="btn-open-project">Open Project</button>
+
+    <script src="./dist/client/file_management/NewProject.js"></script>
+
 </html>
