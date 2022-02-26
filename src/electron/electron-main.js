@@ -1,6 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Initial script executed when electron starts
+ * running.
+*/
 const electron_1 = require("electron");
+const main_1 = require("@electron/remote/main");
+(0, main_1.initialize)();
 let mainWindow;
 let discordWindow;
 electron_1.app.on("ready", createWindows);
@@ -14,6 +20,7 @@ function createWindows() {
     });
     mainWindow.loadFile("./index.html");
     mainWindow.on("ready-to-show", () => mainWindow.show());
+    (0, main_1.enable)(mainWindow.webContents);
     discordWindow = new electron_1.BrowserWindow({
         width: 450, height: 300,
         webPreferences: {
@@ -21,24 +28,6 @@ function createWindows() {
         },
         show: false
     });
-    discordWindow.loadFile("./html/discord.html");
+    discordWindow.loadFile("./views/discord.html");
     discordWindow.on("ready-to-show", () => discordWindow.show());
 }
-/*
-const btn = document.querySelector("button");
-btn.addEventListener("click", function () {
-    NewProject()
-});
-
-function NewProject() : void{
-    const files = dialog.showOpenDialogSync({
-        properties: ["openFile"],
-        filters: [
-          {
-            name: "Projects",
-            extensions: ["DSCProj"],
-          },
-        ],
-    });
-}
-*/ 
