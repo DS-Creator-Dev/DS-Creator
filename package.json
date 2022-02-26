@@ -1,21 +1,29 @@
 {
   "name": "ds-creator",
   "version": "1.0.0",
+  "description": "DS Creator is a new game engine that let's you create games for the Nintendo DS.",
   "main": "./dist/electron/electron-main.js",
   "scripts": {
     "build": "tsc",
     "start": "npm run build && electron ."
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BowersIndustry/DS-Creator.git"
+  },
   "keywords": [],
-  "author": "Kenyon Bowers <Bowersindustry.bwrs@gmail.com>",
+  "author": "Kenyon Bowers",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BowersIndustry/DS-Creator/issues"
+  },
+  "homepage": "https://github.com/BowersIndustry/DS-Creator#readme",
   "dependencies": {
     "@electron/remote": "^2.0.5",
-    "electron": "^17.0.1",
+    "electron": "^17.1.0",
     "typescript": "^4.5.5"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10"
-  },
-  "description": ""
+  }
 }
