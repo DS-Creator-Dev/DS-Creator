@@ -2,13 +2,20 @@
  * Initial script executed when electron starts 
  * running.
 */
-import { app, ipcMain, BrowserWindow } from "electron";
+import { app, ipcMain, BrowserWindow, ipcRenderer } from "electron";
 import { initialize, enable } from '@electron/remote/main'
+import { getCurrentWindow } from "@electron/remote";
+const { contextBridge } = require('electron')
+
+
+
 
 initialize();
 
-
 let mainWindow: BrowserWindow;
+let sceneWindow: BrowserWindow;
+let collisonBoxEditorWindow: BrowserWindow;
+let playWindow: BrowserWindow;
 let discordWindow: BrowserWindow;
 
 app.on("ready", createWindows);
