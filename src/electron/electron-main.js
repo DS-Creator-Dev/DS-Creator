@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.NewProject = void 0;
 /**
  * Initial script executed when electron starts
  * running.
@@ -31,3 +32,9 @@ function createWindows() {
     discordWindow.loadFile("./views/discord.html");
     discordWindow.on("ready-to-show", () => discordWindow.show());
 }
+function NewProject() {
+    console.log("1");
+    mainWindow.loadFile("./views/projectNew.html");
+    console.log("2");
+}
+exports.NewProject = NewProject;

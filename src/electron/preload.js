@@ -13,5 +13,6 @@ electron_1.contextBridge.exposeInMainWorld("api", {
                 extensions: ["DSCProj"],
             },
         ],
-    })
+    }),
+    NewProject: () => ({})
 });
