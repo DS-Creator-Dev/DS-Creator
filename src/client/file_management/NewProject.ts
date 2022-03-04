@@ -3,22 +3,16 @@ declare var api: any;
 declare var thing: any;
 
 function OpenProject(): void {
-  const files = api.showOpenFileDialog();
+  const file = api.showOpenFileDialog();
   console.log("Done")
+  location.href='./views/projectOpen.html'
 }
-function NewProject(): void{
-  //Sending the logs but not doing the api function
-  //Api function in preload.ts/preload.js
-  console.log("Before")
-  api.NewProject();
-  console.log("After")
-}
+
+//NewProject() is no longer needed.
+//Note to self. Remove these comments after this commit.
 
 (() => {
   document.querySelector('#btn-open-project')?.addEventListener('click', () => {
     OpenProject();
-  })
-  document.querySelector('#btn-new-project')?.addEventListener('click', () => {
-    NewProject();
   })
 })()

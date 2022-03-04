@@ -35,10 +35,3 @@ function createWindows(): void {
     discordWindow.loadFile("./views/discord.html");
     discordWindow.on("ready-to-show", () => discordWindow.show())
 }
-
-//This is in here so that we can access mainWindow
-export function NewProject() {
-    console.log("1")
-    mainWindow.loadFile("./views/projectNew.html")
-    console.log("2")
-}

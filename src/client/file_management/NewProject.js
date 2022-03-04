@@ -1,20 +1,14 @@
 "use strict";
 function OpenProject() {
-    const files = api.showOpenFileDialog();
+    const file = api.showOpenFileDialog();
     console.log("Done");
+    location.href = './views/projectOpen.html';
 }
-function NewProject() {
-    //Sending the logs but not doing the api function
-    console.log("Before");
-    api.NewProject();
-    console.log("After");
-}
+//NewProject() is no longer needed.
+//Note to self. Remove these comments after this commit.
 (() => {
-    var _a, _b;
+    var _a;
     (_a = document.querySelector('#btn-open-project')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
         OpenProject();
-    });
-    (_b = document.querySelector('#btn-new-project')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
-        NewProject();
     });
 })();
