@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const { contextBridge, ipcRenderer } = require('electron');
 function OpenProject() {
     const files = api.showOpenFileDialog();
+<<<<<<< Updated upstream
     console.log("Done");
 }
 function NewProject() {
@@ -10,6 +11,15 @@ function NewProject() {
 }
 (() => {
     var _a, _b;
+=======
+    console.log("Done");
+    if (files != null) {
+        location.href = './views/projectOpen.html';
+    }
+}
+(() => {
+    var _a;
+>>>>>>> Stashed changes
     //TODO: After a file is chosen, open the file and read contents. Then use the contents to know how many scenes, and what is on those scenes.
     (_a = document.querySelector('#btn-open-project')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
         OpenProject();
