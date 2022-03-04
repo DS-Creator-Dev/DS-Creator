@@ -31,7 +31,7 @@ function createWindows(): void {
     enable(mainWindow.webContents)
 
     discordWindow = new BrowserWindow({
-        width: 450, height: 300,
+        width: 450 * 1.5, height: 300 * 1.5,
         webPreferences: {
             preload: __dirname + "/preload.js"
         },

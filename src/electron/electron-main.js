@@ -25,7 +25,7 @@ function createWindows() {
     mainWindow.on("ready-to-show", () => mainWindow.show());
     (0, main_1.enable)(mainWindow.webContents);
     discordWindow = new electron_1.BrowserWindow({
-        width: 450, height: 300,
+        width: 450 * 1.5, height: 300 * 1.5,
         webPreferences: {
             preload: __dirname + "/preload.js"
         },
