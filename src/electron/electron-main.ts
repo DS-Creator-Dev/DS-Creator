@@ -2,11 +2,9 @@
  * Initial script executed when electron starts 
  * running.
 */
-import { app, ipcMain, BrowserWindow, ipcRenderer } from "electron";
+import { app, ipcMain, BrowserWindow, contextBridge } from "electron";
 import { initialize, enable } from '@electron/remote/main'
 import { getCurrentWindow } from "@electron/remote";
-const { contextBridge } = require('electron')
-
 
 
 

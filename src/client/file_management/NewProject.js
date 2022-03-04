@@ -1,20 +1,16 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const { contextBridge, ipcRenderer } = require('electron');
 function OpenProject() {
-    const files = api.showOpenFileDialog();
+    const file = api.showOpenFileDialog();
     console.log("Done");
+    if (file != null) {
+        location.href = './views/projectOpen.html';
+    }
 }
-function NewProject() {
-    console.log("Done");
-}
+//NewProject() is no longer needed.
+//Note to self. Remove these comments after this commit.
 (() => {
-    var _a, _b;
-    //TODO: After a file is chosen, open the file and read contents. Then use the contents to know how many scenes, and what is on those scenes.
+    var _a;
     (_a = document.querySelector('#btn-open-project')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
         OpenProject();
-    });
-    (_b = document.querySelector('#btn-new-project')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
-        NewProject();
     });
 })();
