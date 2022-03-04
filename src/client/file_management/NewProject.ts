@@ -5,7 +5,9 @@ declare var thing: any;
 function OpenProject(): void {
   const file = api.showOpenFileDialog();
   console.log("Done")
-  location.href='./views/projectOpen.html'
+  if(file != null){
+    location.href='./views/projectOpen.html'
+  }
 }
 
 //NewProject() is no longer needed.
