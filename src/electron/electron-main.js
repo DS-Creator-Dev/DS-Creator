@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 const electron_1 = require("electron");
 const main_1 = require("@electron/remote/main");
-const { contextBridge } = require('electron');
 (0, main_1.initialize)();
 let mainWindow;
 let sceneWindow;
