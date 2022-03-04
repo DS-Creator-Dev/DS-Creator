@@ -2,7 +2,9 @@
 function OpenProject() {
     const file = api.showOpenFileDialog();
     console.log("Done");
-    location.href = './views/projectOpen.html';
+    if (file != null) {
+        location.href = './views/projectOpen.html';
+    }
 }
 //NewProject() is no longer needed.
 //Note to self. Remove these comments after this commit.
