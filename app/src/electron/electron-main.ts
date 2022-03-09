@@ -26,7 +26,7 @@ function createWindows(): void {
         },
         show: false
     });
-    mainWindow.loadFile("./index.html");
+    mainWindow.loadFile("./app/index.html");
     mainWindow.on("ready-to-show", () => mainWindow.show())
     enable(mainWindow.webContents)
 
@@ -37,6 +37,6 @@ function createWindows(): void {
         },
         show: false
     });
-    discordWindow.loadFile("./views/discord.html");
+    discordWindow.loadFile("./app/views/discord.html");
     discordWindow.on("ready-to-show", () => discordWindow.show())
 }
