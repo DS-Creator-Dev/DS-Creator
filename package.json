@@ -20,7 +20,7 @@
   "homepage": "https://github.com/BowersIndustry/DS-Creator#readme",
   "dependencies": {
     "@electron/remote": "^2.0.5",
-    "electron": "^17.1.0",
+    "electron": "^17.1.1",
     "typescript": "^4.5.5"
   },
   "devDependencies": {

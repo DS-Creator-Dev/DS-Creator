@@ -1,6 +1,5 @@
 // TODO: move to a global include definition or something
 declare var api: any;
-declare var thing: any;
 
 function OpenProject(): void {
   const file = api.showOpenFileDialog();
@@ -16,5 +15,8 @@ function OpenProject(): void {
 (() => {
   document.querySelector('#btn-open-project')?.addEventListener('click', () => {
     OpenProject();
+  }),
+  document.querySelector('#btn-new-project')?.addEventListener('click', () => {
+    location.href='./views/projectNew.html'
   })
 })()
