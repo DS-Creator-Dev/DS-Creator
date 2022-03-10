@@ -21,7 +21,7 @@ function createWindows() {
         },
         show: false
     });
-    mainWindow.loadFile("./app/index.html");
+    mainWindow.loadFile("./index.html");
     mainWindow.on("ready-to-show", () => mainWindow.show());
     (0, main_1.enable)(mainWindow.webContents);
     discordWindow = new electron_1.BrowserWindow({
@@ -31,6 +31,6 @@ function createWindows() {
         },
         show: false
     });
-    discordWindow.loadFile("./app/views/discord.html");
+    discordWindow.loadFile("./views/discord.html");
     discordWindow.on("ready-to-show", () => discordWindow.show());
 }
