@@ -1,1 +1,0 @@
-ball.o: ball.s
