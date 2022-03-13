@@ -54,3 +54,9 @@ ts-gen
 patches/mtime-cache.json
 
 spec/fixtures/logo.png
+
+*.o
+*.d
+*.s
+*.map
+*.elf
