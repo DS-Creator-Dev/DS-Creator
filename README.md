@@ -6,6 +6,7 @@ APP
  - $ npm install electron
  - $ npx -p typescript tsc --init
  - $ npm i @electron/remote
+ - $ npm start
 
 DS TESTING
  - https://github.com/devkitPro/installer/releases
