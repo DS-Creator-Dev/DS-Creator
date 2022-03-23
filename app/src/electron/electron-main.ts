@@ -5,6 +5,7 @@
 import { app, ipcMain, BrowserWindow, contextBridge } from "electron";
 import { initialize, enable } from '@electron/remote/main'
 import { getCurrentWindow } from "@electron/remote";
+import { isRemoteModuleEnabled } from "@electron/remote/dist/src/main/server";
 
 
 

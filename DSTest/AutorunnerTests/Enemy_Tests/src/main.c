@@ -146,7 +146,6 @@ int main(void) {
 
 	vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
 	vramSetBankB(VRAM_A_MAIN_SPRITE);
-	vramSetBankG(((1)VRAM_G));
 
 	vramSetBankD(VRAM_D_SUB_SPRITE);
 
@@ -161,7 +160,7 @@ int main(void) {
 	dmaCopy(DeSPal, SPRITE_PALETTE, 512);
 
 	initEnemy(&cart, (u8*)CartTiles);
-	dmaCopy(CartPal, VRAM_G, 512);
+	//dmaCopy(CartPal, SPRITE_PALETTE, 512);
 
 	
 
