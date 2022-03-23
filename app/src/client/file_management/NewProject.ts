@@ -9,8 +9,7 @@ function OpenProject(): void {
   }
 }
 
-//NewProject() is no longer needed.
-//Note to self. Remove these comments after this commit.
+
 
 (() => {
   document.querySelector('#btn-open-project')?.addEventListener('click', () => {

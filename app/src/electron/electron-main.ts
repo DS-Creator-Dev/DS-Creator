@@ -22,7 +22,8 @@ function createWindows(): void {
     mainWindow = new BrowserWindow({
         width: 900, height: 600,
         webPreferences: {
-            preload: __dirname + "/preload.js"
+            preload: __dirname + "/preload.js",
+            nodeIntegration: true
         },
         show: false
     });
@@ -33,7 +34,8 @@ function createWindows(): void {
     discordWindow = new BrowserWindow({
         width: 450 * 1.5, height: 300 * 1.5,
         webPreferences: {
-            preload: __dirname + "/preload.js"
+            preload: __dirname + "/preload.js",
+            nodeIntegration: true
         },
         show: false
     });
