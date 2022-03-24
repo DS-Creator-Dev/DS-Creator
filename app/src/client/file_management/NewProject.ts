@@ -5,6 +5,7 @@ function OpenProject(): void {
   const file = api.showOpenFileDialog();
   console.log("Done")
   if(file != null){
+    localStorage.setItem('path', file);
     location.href='./views/projectOpen.html'
   }
 }

@@ -1,8 +1,10 @@
 "use strict";
 function OpenProject() {
     const file = api.showOpenFileDialog();
+    const filePath = file.__dirname;
     console.log("Done");
     if (file != null) {
+        localStorage.setItem('path', filePath);
         location.href = './views/projectOpen.html';
     }
 }

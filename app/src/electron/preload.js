@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const remote_1 = require("@electron/remote");
 const { exec } = require('child_process');
-let commandOne = 'E:/Repos/DS-Creator/DSTest/AutorunnerTests/A_Autorunner';
-let commandTwo = "make";
 electron_1.contextBridge.exposeInMainWorld("api", {
     showOpenFileDialog: () => remote_1.dialog.showOpenDialogSync({
         properties: ["openFile"],
@@ -15,7 +13,7 @@ electron_1.contextBridge.exposeInMainWorld("api", {
             },
         ],
     }),
-    OpenCmd: () => exec(`cd ${commandOne} && make`, (error, stdout, stderr) => {
+    OpenCmd: (path) => exec(`cd ${path} && make`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
