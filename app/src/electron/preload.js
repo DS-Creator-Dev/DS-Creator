@@ -5,6 +5,7 @@ const remote_1 = require("@electron/remote");
 const { exec } = require('child_process');
 electron_1.contextBridge.exposeInMainWorld("api", {
     showOpenFileDialog: () => remote_1.dialog.showOpenDialogSync({
+        title: "Open Your Project File",
         properties: ["openFile"],
         filters: [
             {
@@ -12,6 +13,10 @@ electron_1.contextBridge.exposeInMainWorld("api", {
                 extensions: ["DSCProj"],
             },
         ],
+    }),
+    showOpenDirDialog: (path) => remote_1.dialog.showOpenDialogSync({
+        title: "Open Folder of Your Project",
+        properties: ["openDirectory"],
     }),
     OpenCmd: (path) => exec(`cd ${path} && make`, (error, stdout, stderr) => {
         if (error) {

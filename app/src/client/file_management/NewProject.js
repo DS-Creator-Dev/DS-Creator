@@ -1,11 +1,14 @@
 "use strict";
 function OpenProject() {
     const file = api.showOpenFileDialog();
-    const filePath = file.__dirname;
+    const filedir = api.showOpenDirDialog(file);
     console.log("Done");
     if (file != null) {
-        localStorage.setItem('path', filePath);
-        location.href = './views/projectOpen.html';
+        if (filedir != null) {
+            localStorage.setItem('ProjectPath', file);
+            localStorage.setItem('DirPath', filedir);
+            location.href = './views/projectOpen.html';
+        }
     }
 }
 (() => {

@@ -3,10 +3,14 @@ declare var api: any;
 
 function OpenProject(): void {
   const file = api.showOpenFileDialog();
+  const filedir = api.showOpenDirDialog(file);
   console.log("Done")
   if(file != null){
-    localStorage.setItem('path', file);
-    location.href='./views/projectOpen.html'
+    if(filedir != null){
+      localStorage.setItem('ProjectPath', file);
+      localStorage.setItem('DirPath', filedir);
+      location.href='./views/projectOpen.html'
+    }
   }
 }
 

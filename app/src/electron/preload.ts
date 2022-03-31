@@ -5,6 +5,7 @@ const { exec } = require('child_process');
 
 contextBridge.exposeInMainWorld("api", {
     showOpenFileDialog: () => dialog.showOpenDialogSync({
+        title: "Open Your Project File",
         properties: ["openFile"],
         filters: [
             {
@@ -12,6 +13,10 @@ contextBridge.exposeInMainWorld("api", {
                 extensions: ["DSCProj"],
             },
         ],
+    }),
+    showOpenDirDialog: (path: string) => dialog.showOpenDialogSync({
+        title: "Open Folder of Your Project",
+        properties: ["openDirectory"],
     }),
     OpenCmd: (path: string) => exec(`cd ${path} && make`, (error : any, stdout : any, stderr : any) => {
         if (error) {
