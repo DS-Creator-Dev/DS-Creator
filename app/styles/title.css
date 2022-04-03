@@ -3,6 +3,49 @@ h1 {
 }
 
 .btn-menu {
-    color: gray;
-    border-color: gray;
+    background-color: white;
+    border: none;
+    width: 10%;
+    height: 7%;
+}
+
+#Version{
+    position:absolute;
+    bottom:0;
+    left: 1%;
+}
+
+#btn-new-project{
+    position:absolute;
+    top: 45%;
+    transition: 150ms;
+}
+
+#btn-new-project:hover{
+    position: absolute;
+    background-color: gray;
+}
+
+#btn-open-project{
+    position:absolute;
+    top: 55%;
+    transition: 150ms;
+}
+
+#btn-open-project:hover{
+    position: absolute;
+    background-color: gray;
+}
+
+#DSC-Logo{
+    max-width: 65%;
+    max-height: 65%;
+    transition: 200ms;
+    position: absolute;
+    left: 50%;
+    top: 15%;
+}
+
+#DSC-Logo:hover{
+    position: absolute;
 }
