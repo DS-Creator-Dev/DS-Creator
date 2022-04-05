@@ -26,5 +26,21 @@
         <p id="Version">v1.0.0</p>
     </div>
 
-    <script src="./src/client/file_management/NewProject.js"></script>
+    <script>
+        document.getElementById('btn-open-project').addEventListener('click', () => {
+            openProject();
+         });
+
+        function openProject() {
+            window.ipcRender.invoke('getPath')
+                .then((path) => {
+                    // As we are using "invoke" a response will be returned, even if undefined.
+                    if (path === undefined) { return; } // When user cancels dialog.
+
+                    console.log(path); // Testing.
+                    // localStorage.setItem('DirPath', path);
+                    // location.href='./views/projectOpen.html';
+                });
+        }
+    </script>
 </html>

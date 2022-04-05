@@ -1,5 +1,5 @@
 import { ipcRenderer, contextBridge } from "electron";
-import { dialog } from '@electron/remote'
+import { dialog } from '@electron/remote';
 
 const { exec } = require('child_process');
 
