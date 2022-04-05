@@ -33,11 +33,13 @@
 
         function openProject() {
             window.ipcRender.invoke('getPath')
-                .then((path) => {
+                .then((FilePath) => {
                     // As we are using "invoke" a response will be returned, even if undefined.
-                    if (path === undefined) { return; } // When user cancels dialog.
+                    //if (path === undefined) { return; } // When user cancels dialog.
 
-                    console.log(path); // Testing.
+                    localStorage.setItem('ProjectFile', FilePath);
+                    //localStorage.setItem('ProjectDir', DirPath);
+                    console.log(FilePath); // Testing.
                     // localStorage.setItem('DirPath', path);
                     // location.href='./views/projectOpen.html';
                 });

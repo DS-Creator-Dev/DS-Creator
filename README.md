@@ -6,7 +6,7 @@ APP
  - $ npm install electron
  - $ npx -p typescript tsc --init
  - $ npm i @electron/remote
- - $ npm install electron-store
+ - $ npm i electron-browser-storage
  - $ npm start
 
 DS TESTING

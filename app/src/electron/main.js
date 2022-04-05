@@ -3,6 +3,8 @@ const electronBrowserWindow = require('electron').BrowserWindow;
 const electronDialog = require('electron').dialog;
 const electronIpcMain = require('electron').ipcMain;
 
+const { localStorage } = require('electron-browser-storage');
+
 const nodePath = require("path");
 
 const Store = require('electron-store');
@@ -88,14 +90,16 @@ electronIpcMain.handle('getPath', async () => {
             // Modify and return the path
             let path = result.filePaths[0];
             let modifiedPath = nodePath.parse(path).dir; // Here's the magic.
-            console.log(modifiedPath); // Testing
+            //console.log(modifiedPath); // Testing
 
             if(path != null){
-                export var path;
+                localStorage.setItem('ProjectFile', path);
+                localStorage.setItem('ProjectDir', modifiedPath);
+
                 mainWindow.loadFile('./views/projectOpen.html');
             }
 
-            return modifiedPath;
+            return path;
         })
 })
 

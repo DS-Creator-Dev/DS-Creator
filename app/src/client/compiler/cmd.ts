@@ -1,14 +1,11 @@
-const Store = require('electron-store');
-
-const store = new Store('project');
-
 declare var api: any;
 
 //@ts-expect-error
-document.getElementById('hi').textContent = store.get('ProjectDir');
+document.getElementById('hi').textContent = localStorage.getItem('ProjectDir');
 
 (() => {
-    document.querySelector('#CompileButton') ?. addEventListener('click', () => {
-        api.OpenCmd(localStorage.getItem('DirPath'));
+    document.querySelector('#CompileButton')?.addEventListener('click', () => {
+        api.OpenCmd(localStorage.getItem('ProjectDir'));
+        console.log("done Compile");
     })
 })()

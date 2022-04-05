@@ -49,9 +49,7 @@ contextBridge.exposeInMainWorld(
 contextBridge.exposeInMainWorld("api", {
     OpenCmd: (path) => exec(`cd ${path} && make`, (error, stdout, stderr) => {
         if (error) {
-            console.log(`error: ${
-                error.message
-            }`);
+            console.log(`error: ${error.message}`);
             return;
         }
         if (stderr) {
