@@ -5,13 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DSC : Project Name</title>
+
+    <link rel="stylesheet" href="../styles/engine.css" />
 </head>
 <body>
     <!--Need to set up some way for me to get the file that was chosen the the dir.-->
+
+    <div class="Header">
+        <input type="image" src="../images/SaveButton.png" id="SaveButton" />
+        <input type="image" src="../images/PlayButton.png" id="PlayButton" />
+        <input type="image" src="../images/CompileButton.png" id="CompileButton" />
+    </div>
+
     <h1>Opened : File Name</h1>
     <h2 id="hi" >File directory</h2>
 
-    <button id="CompileButton" >Compile</button>
+    
 
     <script src="../src/client/compiler/cmd.js"></script>
     

@@ -1,0 +1,17 @@
+#CompileButton{
+    position: absolute;
+    top:0;
+    left: 50%;
+}
+
+#PlayButton{
+    position: absolute;
+    top:0;
+    left: 45%;
+}
+
+#SaveButton{
+    position: absolute;
+    top:0;
+    left: 40%;
+}
