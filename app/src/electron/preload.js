@@ -1,6 +1,7 @@
 // Import the necessary Electron components.
 const contextBridge = require('electron').contextBridge;
 const ipcRenderer = require('electron').ipcRenderer;
+const { exec } = require('child_process');
 
 // White-listed channels.
 const ipc = {

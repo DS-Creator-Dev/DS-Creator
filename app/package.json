@@ -20,7 +20,7 @@
   "homepage": "https://github.com/BowersIndustry/DS-Creator#readme",
   "dependencies": {
     "@electron/remote": "^2.0.8",
-    "electron": "^17.3.1",
+    "electron": "^17.4.0",
     "electron-browser-storage": "^1.0.7",
     "electron-forge": "^5.2.4",
     "electron-store": "^8.0.1",

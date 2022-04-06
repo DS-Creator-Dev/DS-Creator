@@ -94,12 +94,15 @@ electronIpcMain.handle('getPath', async () => {
 
             if(path != null){
                 localStorage.setItem('ProjectFile', path);
-                localStorage.setItem('ProjectDir', modifiedPath);
-
-                mainWindow.loadFile('./views/projectOpen.html');
+                //mainWindow.loadFile('./views/projectOpen.html');
             }
 
-            return path;
+            if(result.canceled === true){
+                return result.canceled;
+            }
+            else{
+                return modifiedPath;
+            }
         })
 })
 
