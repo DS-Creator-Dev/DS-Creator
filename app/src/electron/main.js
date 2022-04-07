@@ -90,10 +90,13 @@ electronIpcMain.handle('getPath', async () => {
             // Modify and return the path
             let path = result.filePaths[0];
             let modifiedPath = nodePath.parse(path).dir; // Here's the magic.
+            let fileName = nodePath.parse(path).name;
             //console.log(modifiedPath); // Testing
 
             if(path != null){
                 localStorage.setItem('ProjectFile', path);
+
+                localStorage.setItem('ProjectFileName', fileName);
                 //mainWindow.loadFile('./views/projectOpen.html');
             }
 

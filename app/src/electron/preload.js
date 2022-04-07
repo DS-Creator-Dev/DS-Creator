@@ -2,6 +2,9 @@
 const contextBridge = require('electron').contextBridge;
 const ipcRenderer = require('electron').ipcRenderer;
 const { exec } = require('child_process');
+const { dialog } = require('electron');
+const fs = require('fs/promises');
+const remote_1 = require('@electron/remote');
 
 // White-listed channels.
 const ipc = {
@@ -46,17 +49,38 @@ contextBridge.exposeInMainWorld(
     }
 );
 
-
 contextBridge.exposeInMainWorld("api", {
-    OpenCmd: (path) => exec(`cd ${path} && make`, (error, stdout, stderr) => {
+    OpenCmd: (path) => exec(`cd ${path} && make && exit`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
+            document.getElementById('Console-Text').textContent = error.message;
             return;
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
+            //document.getElementById('Console-Text').textContent = stderr;
             return;
         }
         console.log(`Output: ${stdout}`);
-    })
+        if(!error){
+            document.getElementById('Console-Text').textContent = stdout;
+        }
+    }),
+    SaveProject: () => void(() => {
+        localStorage.setItem('Contents', "No");
+        fs.writeFile(localStorage.getItem('ProjectFile'), localStorage.getItem('Contents'), (err) => {
+            if(err){
+                console.log("Error:" + err.message)
+                return
+            }
+
+            alert("File Saved");
+        });
+    })(),
+    PlayGame: () => void(() => {
+        console.log('Playing');
+    })(),
+    Settings: () => void(() => {
+        console.log('Settings');
+    })()
 });
