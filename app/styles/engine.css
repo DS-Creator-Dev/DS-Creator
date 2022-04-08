@@ -6,7 +6,7 @@ body{
 #CompileButton{
     position: absolute;
     top:0;
-    left: 50%;
+    left: 52%;
 }
 
 #PlayButton{
@@ -18,13 +18,13 @@ body{
 #SaveButton{
     position: absolute;
     top:0;
-    left: 35%;
+    left: 38%;
 }
 
 #SettingsButton{
     position: absolute;
     top:0;
-    left: 55%;
+    left: 59%;
 }
 
 #Console{

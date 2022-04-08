@@ -6,6 +6,8 @@ const { dialog } = require('electron');
 const fs = require('fs/promises');
 const remote_1 = require('@electron/remote');
 
+const nodePath = require("path");
+
 // White-listed channels.
 const ipc = {
     'render': {
@@ -58,7 +60,6 @@ contextBridge.exposeInMainWorld("api", {
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
-            //document.getElementById('Console-Text').textContent = stderr;
             return;
         }
         console.log(`Output: ${stdout}`);
@@ -68,19 +69,29 @@ contextBridge.exposeInMainWorld("api", {
     }),
     SaveProject: () => void(() => {
         localStorage.setItem('Contents', "No");
-        fs.writeFile(localStorage.getItem('ProjectFile'), localStorage.getItem('Contents'), (err) => {
-            if(err){
-                console.log("Error:" + err.message)
-                return
-            }
-
-            alert("File Saved");
-        });
+        console.log("\nFile Contents of file before append:",
+        fs.readFile(localStorage.getItem('ProjectFile'), "utf8"));
+  
+        fs.appendFile(localStorage.getItem('ProjectFile'), "World", (err) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log("\nFile Contents of file after append:",
+            fs.readFile(localStorage.getItem('ProjectFile'), "utf8"));
+        }
+    });
     })(),
     PlayGame: () => void(() => {
         console.log('Playing');
     })(),
     Settings: () => void(() => {
         console.log('Settings');
+    })(),
+    GetPaths: (filePath) => void(() => {
+        localStorage.setItem('ProjectFile', filePath);
+        localStorage.setItem('ProjectDir', nodePath.parse(filePath).dir);
+        localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
+        console.log("Done Setting localStorage!")
     })()
 });

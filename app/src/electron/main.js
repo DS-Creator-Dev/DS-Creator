@@ -87,29 +87,17 @@ electronIpcMain.handle('getPath', async () => {
             // User cancelled the dialog
             if (result.canceled === true) { return; }
 
-            // Modify and return the path
             let path = result.filePaths[0];
-            let modifiedPath = nodePath.parse(path).dir; // Here's the magic.
-            let fileName = nodePath.parse(path).name;
-            //console.log(modifiedPath); // Testing
-
-            if(path != null){
-                localStorage.setItem('ProjectFile', path);
-
-                localStorage.setItem('ProjectFileName', fileName);
-                //mainWindow.loadFile('./views/projectOpen.html');
-            }
 
             if(result.canceled === true){
                 return result.canceled;
             }
             else{
-                return modifiedPath;
+                return path;
             }
         })
 })
 
-// Create an open dialog
 function openDialog(parentWindow, options) {
     return electronDialog.showOpenDialog(parentWindow, options)
         .then((result) => { if (result) { return result; } })
