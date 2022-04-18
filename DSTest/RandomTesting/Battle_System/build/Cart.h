@@ -3,12 +3,12 @@
 
 //======================================================================
 //
-//	Cart, 32x32@8, 
+//	Cart, 64x16@8, 
 //	+ palette 256 entries, not compressed
-//	+ 16 tiles Metatiled by 4x4 not compressed
+//	+ 16 tiles Metatiled by 2x2 not compressed
 //	Total size: 512 + 1024 = 1536
 //
-//	Time-stamp: 2022-04-09, 20:41:48
+//	Time-stamp: 2022-04-17, 15:11:48
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.17
 //	( http://www.coranac.com/projects/#grit )
 //

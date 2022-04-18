@@ -5,7 +5,6 @@
 
 SpriteEntry OAMCopy[128];
 
-#include <DeS.h>
 #include <Store.h>
 #include <Dirt.h>
 #include <Cart.h>
@@ -13,6 +12,7 @@ SpriteEntry OAMCopy[128];
 #include <NumbersLong.h>
 #include <Actions.h>
 #include <Scroll.h>
+#include <Scarlet.h>
 
 #include "soundbank.h"
 #include "soundbank_bin.h"
@@ -27,32 +27,39 @@ void Vblank() {
 	frame++;
 }
 
-
-//32x32 Sprites
-
-
 //---------------------------------------------------------------------------------
 int main(void) {
 //---------------------------------------------------------------------------------
 
 	//Create Objects
-	Sprite32 des = {0,0};
-	Sprite16 cart = {0,0};
-	Sprite8 playerLifes = {0,0};
-	Sprite8 ActionBlock = {0,0};
+	Sprite Player = {0,0};
+	Sprite cart = {0,0};
+	Sprite playerLifes = {0,0};
+	Sprite ActionBlock = {0,0};
+
+	cart.Xpos = 256;
+	cart.Ypos = 112;
 	
 	//Set Up Collision Boxes
-	box PlayerBox;
-	PlayerBox.Xpos = PlayerX;
-	PlayerBox.Ypos = PlayerY;
-	PlayerBox.SizeX = 32;
-	PlayerBox.SizeY = 32;
+	Box PlayerBox;
+	PlayerBox.OffsetX = 24;
+	PlayerBox.OffsetY = 26; //26
+	PlayerBox.Xpos = Player.Xpos + PlayerBox.OffsetX;
+	PlayerBox.Ypos = Player.Ypos + PlayerBox.OffsetY;
+	PlayerBox.SizeX = 15;
+	PlayerBox.SizeY = 40;
 
-	box EnemyBox;
-	EnemyBox.Xpos = EnemyX;
-	EnemyBox.Ypos = EnemyY;
+	Box EnemyBox;
+	EnemyBox.Xpos = cart.Xpos;
+	EnemyBox.Ypos = cart.Ypos;
 	EnemyBox.SizeX = 16;
 	EnemyBox.SizeY = 16;
+
+	Box GroundBox;
+	GroundBox.Xpos = 0;
+	GroundBox.Ypos = 130;
+	GroundBox.SizeX = 256;
+	GroundBox.SizeY = 1;
 
 	//Touch Position
 	touchPosition touch;
@@ -80,8 +87,8 @@ int main(void) {
 	//Set bank F
 	vramSetBankF(VRAM_F_LCD);
 	//Set player gfx
-	init32(&des, (u8*)DeSTiles);
-	dmaCopy(DeSPal, &VRAM_F_EXT_SPR_PALETTE[0][0],DeSPalLen);
+	init64(&Player, (u8*)ScarletTiles);
+	dmaCopy(ScarletPal, &VRAM_F_EXT_SPR_PALETTE[0][0],ScarletPalLen);
 
 	//Enemy gfx
 	init16(&cart, (u8*)CartTiles);
@@ -89,7 +96,7 @@ int main(void) {
 
 	//playerNum gfx
 	init8(&playerLifes, (u8*)NumbersTiles);
-	dmaCopy(NumbersPal, &VRAM_F_EXT_SPR_PALETTE[2][0],NumbersPalLen);
+	dmaCopy(NumbersPal, &VRAM_F_EXT_SPR_PALETTE[3][0],NumbersPalLen);
 
 	//Actions gfx
 	init8(&ActionBlock, (u8*)ActionsTiles);
@@ -104,16 +111,16 @@ int main(void) {
 	setBackdropColorSub(5555000000009999);
 	
 	//Background
-	int bg3 = bgInit(3, BgType_Bmp8, BgSize_B8_512x512, 0,0);
-	dmaCopy(ScrollBitmap, bgGetGfxPtr(bg3), 512*384);
-	dmaCopy(ScrollPal, BG_PALETTE, 512*2);
+	int bg3 = bgInit(3, BgType_Bmp8, BgSize_B8_256x256, 0,0);
+	dmaCopy(StoreBitmap, bgGetGfxPtr(bg3), 256*256);
+	dmaCopy(StorePal, BG_PALETTE, 256*2);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-int keys = 0;
+   int keys = 0;
    int sx = 0;
    int sy = 0;
-   int width = 512;
-   int height = 384;
+   int width = 0;
+   int height = 0;
 	
 //////////////////////////////////////////////////////////////////////////////////////Music
 	mmInitDefaultMem((mm_addr)soundbank_bin);
@@ -146,10 +153,6 @@ int keys = 0;
 
 		scanKeys();
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 		touchRead(&touch);
 		
 		int pressed = keysDown();
@@ -158,16 +161,16 @@ int keys = 0;
 		int FramesDone;
 
 		if(Battle == false){
-			//EnemyX -= Speed;
+			cart.Xpos -= Speed;
 
-			ScrollBackground(bg3, 496, 496, BackgroundX, BackgroundY, true);
+			ScrollBackground(bg3, 257, 193, BackgroundX, BackgroundY, true);
 
 			if(PlayerJumpState == 0){
-				Gravity();
+				Player = Gravity(Player);
 			}
 			else if(PlayerJumpState == 1){
-				AntiGravity();
-				des.state = W_JUMP;
+				Player = AntiGravity(Player);
+				Player.state = W_JUMP;
 			}
 			else if(pressed & KEY_TOUCH || pressed & KEY_A){
 				if(PlayerJumpState == 2){
@@ -183,26 +186,15 @@ int keys = 0;
 				InAir();
 			}
 
-			if(PlayerJumpState == 0){
-				if(PlayerY >= GroundPos){
-					PlayerJumpState = 2;
-					des.state = W_RIGHT;
-					PlayerY = GroundPos;
-				}
-			}
-			if(PlayerX >= 256 + 24){
-				PlayerX = -24;
+			if(cart.Xpos <= -16){
+				cart.Xpos = 256;
 			}
 
-			if(EnemyX <= -16){
-				EnemyX = 256;
-			}
+			PlayerBox.Xpos = Player.Xpos + PlayerBox.OffsetX;
+			PlayerBox.Ypos = Player.Ypos + PlayerBox.OffsetY;
 
-			PlayerBox.Xpos = PlayerX;
-			PlayerBox.Ypos = PlayerY;
-
-			EnemyBox.Xpos = EnemyX;
-			EnemyBox.Ypos = EnemyY;
+			EnemyBox.Xpos = cart.Xpos + EnemyBox.OffsetX;
+			EnemyBox.Ypos = cart.Ypos + EnemyBox.OffsetY;
 		
 			bool hit;
 			hit = false;
@@ -211,57 +203,65 @@ int keys = 0;
 
 			if(hit == true){
 				PlayerTurn = true;
-				PlayerX = 20;
-				PlayerY = 100;
-				EnemyX = 200;
-				EnemyY = 112;
+				Player.Xpos = BattlePlayerX;
+				Player.Ypos = BattlePlayerY;
+				cart.Xpos = 200;
+				cart.Ypos = 112;
 
-				PlayerBox.Xpos = PlayerX;
-				PlayerBox.Ypos = PlayerY;
-				EnemyBox.Xpos = EnemyX;
-				EnemyBox.Ypos = EnemyY;
+				PlayerBox.Xpos = Player.Xpos + PlayerBox.OffsetX;
+				PlayerBox.Ypos = Player.Ypos + PlayerBox.OffsetY;
+				EnemyBox.Xpos = cart.Xpos + EnemyBox.OffsetX;
+				EnemyBox.Ypos = cart.Ypos + EnemyBox.OffsetY;
 
 				Battle = true;
 			}
 
-			if(des.state == W_JUMP || AnimFramesDone >= AnimFrames){
-				des.anim_frame++;
-				AnimFramesDone = 0;
+			hit = CollisionCheck(PlayerBox, GroundBox);
+			if(hit){
+				if(PlayerJumpState == 0){
+					PlayerJumpState = 2;
+					Player.state = W_RIGHT;
+				}
+			}
+
+			if(Player.state == W_JUMP || Player.AnimationFrames >= FRAMES_PER_ANIMATION){
+				Player.anim_frame++;
+				Player.AnimationFrames = 0;
 			}
 			else{
-				AnimFramesDone++;
+				Player.AnimationFrames++;
 			}
 
-			if(des.anim_frame >= FRAMES_PER_ANIMATION) des.anim_frame = 0;
+			if(Player.anim_frame >= FRAMES_PER_ANIMATION) Player.anim_frame = 0;
 
-			if(EnemyFramesDone > FRAMES_PER_ANIMATION){
+			if(cart.AnimationFrames > FRAMES_PER_ANIMATION){
 				cart.anim_frame++;
-				EnemyFramesDone = 0;
+				cart.AnimationFrames = 0;
 			}
 			else{
-				EnemyFramesDone++;
+				cart.AnimationFrames++;
 			}
 			if(cart.anim_frame >= FRAMES_PER_ANIMATION) cart.anim_frame = 0;
 
 		}
 		else{
 			if(PlayerTurn){
-				PlayerBox.Xpos = PlayerX;
-				PlayerBox.Ypos = PlayerY;
-				EnemyBox.Xpos = EnemyX;
-				EnemyBox.Ypos = EnemyY;
-				PlayerTurnAction(Health, pressed);
+				PlayerBox.Xpos = Player.Xpos + PlayerBox.OffsetX;
+				PlayerBox.Ypos = Player.Ypos + PlayerBox.OffsetY;
+				EnemyBox.Xpos = cart.Xpos + EnemyBox.OffsetX;
+				EnemyBox.Ypos = cart.Ypos + EnemyBox.OffsetY;
+				Player = PlayerTurnAction(cart, EnemyBox, pressed, Player);
 			}
 			else{
-				PlayerBox.Xpos = PlayerX;
-				PlayerBox.Ypos = PlayerY;
-				EnemyBox.Xpos = EnemyX;
-				EnemyBox.Ypos = EnemyY;
-				EnemyTurnAction(Health, pressed);
+				PlayerBox.Xpos = Player.Xpos + PlayerBox.OffsetX;
+				PlayerBox.Ypos = Player.Ypos + PlayerBox.OffsetY;
+				EnemyBox.Xpos = cart.Xpos + EnemyBox.OffsetX;
+				EnemyBox.Ypos = cart.Ypos + EnemyBox.OffsetY;
+				cart = EnemyTurnAction(pressed, cart, Player, PlayerBox);
 			}
 		}
 
-		animate32(&des);
+		animate64(&Player);
 		animate16(&cart);
 //enum SpriteState {W_JUMP = 0, W_RIGHT = 1, W_DEAD = 2, W_LEFT = 3};
 		if(Health == 3){
@@ -288,13 +288,13 @@ int keys = 0;
 
 		animate8(&ActionBlock);
 
-		oamSet(&oamMain, 0, PlayerBox.Xpos, PlayerBox.Ypos, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, 
-			des.sprite_gfx_mem, -1, false, false, false, false, false);
-		oamSet(&oamMain, 1, EnemyBox.Xpos, EnemyBox.Ypos, 0, 1, SpriteSize_16x16, SpriteColorFormat_256Color, 
+		oamSet(&oamMain, 0, Player.Xpos, Player.Ypos, 0, 0, SpriteSize_64x64, SpriteColorFormat_256Color, 
+			Player.sprite_gfx_mem, -1, false, false, false, PlayerFlipped, false);
+		oamSet(&oamMain, 1, cart.Xpos, cart.Ypos, 0, 1, SpriteSize_16x16, SpriteColorFormat_256Color, 
 			cart.sprite_gfx_mem, -1, false, false, false, false, false);
-		oamSet(&oamMain, 2, 20, 150 - 10, 0, 0, SpriteSize_8x8, SpriteColorFormat_256Color, 
+		oamSet(&oamMain, 2, 20, 150 - 10, 0, 3, SpriteSize_8x8, SpriteColorFormat_256Color, 
 			playerLifes.sprite_gfx_mem, -1, false, false, false, false, false);
-		oamSet(&oamMain, 3, 30, 90 - 10, 0, 0, SpriteSize_8x8, SpriteColorFormat_256Color, 
+		oamSet(&oamMain, 3, 30, 90 - 10, 0, 2, SpriteSize_8x8, SpriteColorFormat_256Color, 
 			ActionBlock.sprite_gfx_mem, -1, false, false, false, false, false);
 
 		oamUpdate(&oamMain);

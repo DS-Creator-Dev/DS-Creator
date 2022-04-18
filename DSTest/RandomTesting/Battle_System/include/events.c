@@ -2,21 +2,22 @@
 #include <nds.h>
 
 //Animation Frame Variables
-#define FRAMES_PER_ANIMATION 2
+#define FRAMES_PER_ANIMATION 4
 //Animation States
 enum SpriteState {W_JUMP = 0, W_RIGHT = 1, W_DEAD = 2, W_LEFT = 3};
 
-//Enemy's X
-int EnemyX = 256;
-//Enemy's Y
-int EnemyY = 112;
 //Keeps track of how many delay frames have been done
 int EnemyFramesDone = 0;
 
+//Player's Battle X Position
+int BattlePlayerX = 20;
+//Player's Battle Y Position
+int BattlePlayerY = 90;
+
 //Player's Health/Lives
 int Health = 3;
-//Where is the ground
-int GroundPos = 100;
+//Is th the player flipped?
+bool PlayerFlipped = false;
 //How many frames you want between animation frames
 int AnimFrames = 10;
 //How many frames between animation frames are done
@@ -29,10 +30,6 @@ int FramesAirDone = 0;
 int GravityForce = 2;
 //How much force does the player have jumping
 int JumpForce = 2;
-//The player's Y position
-int PlayerY = 64;
-//The player's X position
-int PlayerX = 0;
 //The player's movement speed
 int Speed = 2;
 //How many frames you want the player to go up
@@ -54,7 +51,6 @@ int BackgroundY = 0;
 bool PlayerTurn = false;
 bool Battle = false;
 
-int EnemyHealth = 5;
 bool playerAction = false;
 bool enemyAction = false;
 bool DoneMove = false;
@@ -68,30 +64,19 @@ int ActionType = 0;
 //Objects
 typedef struct 
 {
+	int Xpos;
+	int Ypos;
+
+	int AnimationFrames;
+
 	u16* sprite_gfx_mem;
 	u8*  frame_gfx;
 
 	int state;
 	int anim_frame;
-}Sprite32;
 
-typedef struct 
-{
-	u16* sprite_gfx_mem;
-	u8*  frame_gfx;
-
-	int state;
-	int anim_frame;
-}Sprite16;
-
-typedef struct 
-{
-	u16* sprite_gfx_mem;
-	u8*  frame_gfx;
-
-	int state;
-	int anim_frame;
-}Sprite8;
+	int Health;
+}Sprite;
 
 typedef struct
 {
@@ -100,20 +85,27 @@ typedef struct
 
 	int SizeX;
 	int SizeY;
-}box;
+
+	int OffsetX;
+	int OffsetY;
+}Box;
 
 //Events
-void Gravity(){
-	PlayerY += GravityForce;
+Sprite Gravity(Sprite object){
+	object.Ypos += GravityForce;
+
+	return object;
 }
 
-void AntiGravity(){
+Sprite AntiGravity(Sprite object){
 	FramesJumpDone++;
-	PlayerY -= JumpForce;
+	object.Ypos -= JumpForce;
 	if(FramesJumpDone >= FramesToJump){
 		FramesJumpDone = 0;
 		PlayerJumpState = 4;
 	}
+
+	return object;
 }
 
 void InAir(){
@@ -126,7 +118,7 @@ void InAir(){
 	}
 }
 
-void MoveActor(int Xpos, int Ypos, bool isPlayer){
+Sprite MoveActor(int Xpos, int Ypos, Sprite object){
 	bool Go_Right;
 	bool Go_Left;
 	bool Go_Up;
@@ -137,67 +129,38 @@ void MoveActor(int Xpos, int Ypos, bool isPlayer){
 	Go_Up = false;
 	Go_Down = false;
 	
-	if(isPlayer){
-		if(PlayerX < Xpos){
-			Go_Right = true;
-		}
-		else if(PlayerX > Xpos){
-			Go_Left = true;
-		}
-
-		if(PlayerY < Ypos){
-			Go_Down = true;
-		}
-		else if(PlayerY > Ypos){
-			Go_Up = true;
-		}
-
-		if(Go_Right){
-			PlayerX++;
-		}
-		else if(Go_Left){
-			PlayerX--;
-		}
-
-		if(Go_Down){
-			PlayerY++;
-		}
-		else if(Go_Up){
-			PlayerY--;
-		}
+	if(object.Xpos < Xpos){
+		Go_Right = true;
 	}
-	else{
-		if(EnemyX < Xpos){
-			Go_Right = true;
-		}
-		else if(EnemyX > Xpos){
-			Go_Left = true;
-		}
-
-		if(EnemyY < Ypos){
-			Go_Down = true;
-		}
-		else if(EnemyY > Ypos){
-			Go_Up = true;
-		}
-
-		if(Go_Right){
-			EnemyX++;
-		}
-		else if(Go_Left){
-			EnemyX--;
-		}
-
-		if(Go_Down){
-			EnemyY++;
-		}
-		else if(Go_Up){
-			EnemyY--;
-		}
+	else if(object.Xpos > Xpos){
+		Go_Left = true;
 	}
+
+	if(object.Ypos < Ypos){
+		Go_Down = true;
+	}
+	else if(object.Ypos > Ypos){
+		Go_Up = true;
+	}
+
+	if(Go_Right){
+		object.Xpos++;
+	}
+	else if(Go_Left){
+		object.Xpos--;
+	}
+
+	if(Go_Down){
+		object.Ypos++;
+	}
+	else if(Go_Up){
+		object.Ypos--;
+	}
+
+	return object;
 }
 
-void PlayerTurnAction(int health, int pressed){
+Sprite PlayerTurnAction(Sprite enemy, Box enemyBox, int pressed, Sprite objectMoving){
 	if(playerAction == false){
 		if(pressed & KEY_A){
 			playerAction = true;
@@ -224,21 +187,20 @@ void PlayerTurnAction(int health, int pressed){
 	if(playerAction){
 		if(ActionType == 0){
 			if(!DoneMove){
-				MoveActor(EnemyX, 100, true);
+				objectMoving = MoveActor(enemy.Xpos - enemyBox.OffsetX, BattlePlayerY, objectMoving);
 			}
 		
-			if(PlayerX == EnemyX){
-				EnemyHealth--;
+			if(objectMoving.Xpos == enemy.Xpos - enemyBox.OffsetX){
 				DoneMove = true;
 			}
 
 			if(DoneMove){
-				MoveActor(20, 100, true);
+				objectMoving = MoveActor(BattlePlayerX, BattlePlayerY, objectMoving);
 			}
 
-			if(PlayerX == 20 & PlayerY == 100){
-				if(EnemyHealth <= 0){
-					EnemyHealth = 5;
+			if(objectMoving.Xpos == BattlePlayerX & objectMoving.Ypos == BattlePlayerY){
+				if(enemy.Health <= 0){
+					enemy.Health = 5;
 					Battle = false;
 				}
 				else{
@@ -259,40 +221,59 @@ void PlayerTurnAction(int health, int pressed){
 			enemyAction = true;
 		}
 	}
+
+	return objectMoving;
 }
 
-void EnemyTurnAction(int health, int pressed){
-	if(enemyAction){
-		if(!DoneMove){
-			MoveActor(PlayerX, 112, false);
-		}
-		
-		if(EnemyX == PlayerX){
-			Health--;
-			DoneMove = true;
-		}
+Sprite EnemyTurnAction(int pressed, Sprite This, Sprite Player, Box playerBox){
 
-		if(DoneMove){
-			MoveActor(200, 112, false);
-		}
-
-		if(EnemyX == 200 & EnemyY == 112){
-			if(Health <= 0){
-				PlayerY = 10;
-				Health = 3;
-				EnemyHealth = 5;
-				Battle = false;
-			}
-			else{
-				PlayerTurn = true;
-			}
-
-			enemyAction = false;
-		}
+	if(!DoneMove){
+		This = MoveActor(Player.Xpos, This.Ypos, This);
 	}
+		
+	if(This.Xpos == Player.Xpos + playerBox.OffsetX){
+		Health--;
+		DoneMove = true;
+	}
+
+	if(DoneMove){
+		This = MoveActor(200, This.Ypos, This);
+	}
+
+	if(This.Xpos == 200){
+		if(Health <= 0){
+			Player.Ypos = 10;
+			Health = 3;
+			This.Health = 5;
+			Battle = false;
+		}
+		else{
+			PlayerTurn = true;
+		}
+
+	}
+
+	return This;
 }
 
-void animate32(Sprite32 *sprite)
+
+void animate64(Sprite *sprite)
+{
+	int frame = sprite->anim_frame + sprite->state * FRAMES_PER_ANIMATION;
+
+	u8* offset = sprite->frame_gfx + frame * 64*64;
+
+	dmaCopy(offset, sprite->sprite_gfx_mem, 64*64);
+}
+
+void init64(Sprite *sprite, u8* gfx)
+{
+	sprite->sprite_gfx_mem = oamAllocateGfx(&oamMain, SpriteSize_64x64, SpriteColorFormat_256Color);
+	
+	sprite->frame_gfx = (u8*)gfx;
+}
+
+void animate32(Sprite *sprite)
 {
 	int frame = sprite->anim_frame + sprite->state * FRAMES_PER_ANIMATION;
 
@@ -301,14 +282,14 @@ void animate32(Sprite32 *sprite)
 	dmaCopy(offset, sprite->sprite_gfx_mem, 32*32);
 }
 
-void init32(Sprite32 *sprite, u8* gfx)
+void init32(Sprite *sprite, u8* gfx)
 {
 	sprite->sprite_gfx_mem = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 	
 	sprite->frame_gfx = (u8*)gfx;
 }
 
-void animate16(Sprite16 *sprite)
+void animate16(Sprite *sprite)
 {
 	int frame = sprite->anim_frame + sprite->state * FRAMES_PER_ANIMATION;
 
@@ -317,14 +298,14 @@ void animate16(Sprite16 *sprite)
 	dmaCopy(offset, sprite->sprite_gfx_mem, 16*16);
 }
 
-void init16(Sprite16 *sprite, u8* gfx)
+void init16(Sprite *sprite, u8* gfx)
 {
 	sprite->sprite_gfx_mem = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
 	
 	sprite->frame_gfx = (u8*)gfx;
 }
 
-void animate8(Sprite8 *sprite)
+void animate8(Sprite *sprite)
 {
 	int frame = sprite->anim_frame + sprite->state * FRAMES_PER_ANIMATION;
 
@@ -333,14 +314,14 @@ void animate8(Sprite8 *sprite)
 	dmaCopy(offset, sprite->sprite_gfx_mem, 8*8);
 }
 
-void init8(Sprite8 *sprite, u8* gfx)
+void init8(Sprite *sprite, u8* gfx)
 {
 	sprite->sprite_gfx_mem = oamAllocateGfx(&oamMain, SpriteSize_8x8, SpriteColorFormat_256Color);
 	
 	sprite->frame_gfx = (u8*)gfx;
 }
 
-bool CollisionCheck(box r1, box r2){
+bool CollisionCheck(Box r1, Box r2){
 	return(r1.Xpos < r2.Xpos + r2.SizeX && r1.Xpos + r1.SizeX > r2.Xpos && r1.Ypos < r2.Ypos + r2.SizeY && r1.Ypos + r1.SizeY > r2.Ypos);
 }
 
@@ -369,4 +350,10 @@ void ScrollBackground(int BackgroundId, int BackgroundWidth, int BackgroundHeigh
 	else{
 
 	}
+}
+
+Sprite HurtEnemy(Sprite enemy, int damage){
+	enemy.Health -= damage;
+
+	return enemy;
 }
