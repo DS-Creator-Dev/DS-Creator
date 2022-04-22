@@ -10,9 +10,6 @@ document.title = "DSC : " + localStorage.getItem('ProjectFileName');
     document.querySelector('#SaveButton')?.addEventListener('click', () => {
         api.SaveProject();
     }),
-    document.querySelector('#PlayButton')?.addEventListener('click', () => {
-        api.PlayGame();
-    }),
     document.querySelector('#SettingsButton')?.addEventListener('click', () => {
         api.Settings();
     })

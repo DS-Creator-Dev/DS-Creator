@@ -7,6 +7,7 @@ APP
  - $ npx -p typescript tsc --init
  - $ npm i @electron/remote
  - $ npm i electron-browser-storage
+ - $ npm install desmond-emu
  - $ npm start
 
 DS TESTING

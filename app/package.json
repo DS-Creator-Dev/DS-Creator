@@ -20,6 +20,7 @@
   "homepage": "https://github.com/BowersIndustry/DS-Creator#readme",
   "dependencies": {
     "@electron/remote": "^2.0.8",
+    "desmond-emu": "^1.0.0",
     "electron": "^17.4.0",
     "electron-browser-storage": "^1.0.7",
     "electron-forge": "^5.2.4",

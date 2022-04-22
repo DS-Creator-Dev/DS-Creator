@@ -49,6 +49,24 @@ function createDiscordWindow() {
     return discordWindow;
 }
 
+function openEmu() {
+    const emulatorWindow = new electronBrowserWindow({
+        width: 256 + 20, 
+        height: 192 * 2 + 20,
+        show: false,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: nodePath.join(__dirname, 'preload.js')
+        }
+    });
+
+    emulatorWindow.loadFile('./views/Emulator.html')
+        .then(() => { emulatorWindow.show(); });
+
+    return emulatorWindow;
+}
+
 app.on('ready', () => {
     mainWindow = createMainWindow();
     discordWindow = createDiscordWindow();
@@ -103,3 +121,7 @@ function openDialog(parentWindow, options) {
         .then((result) => { if (result) { return result; } })
         .catch((error) => { console.error('Show open dialog error: ' + error); });
 }
+
+electronIpcMain.handle('openEmu', async () => {
+    emulatorWindow = openEmu();
+})

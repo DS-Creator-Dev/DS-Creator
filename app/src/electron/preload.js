@@ -17,7 +17,8 @@ const ipc = {
         'receive': [],
         // From render to main and back again.
         'sendReceive': [
-            'getPath'
+            'getPath',
+            'openEmu'
         ]
     }
 };
@@ -83,7 +84,7 @@ contextBridge.exposeInMainWorld("api", {
     });
     })(),
     PlayGame: () => void(() => {
-        console.log('Playing');
+        window.ipcRender.invoke('openEmu');
     })(),
     Settings: () => void(() => {
         console.log('Settings');
