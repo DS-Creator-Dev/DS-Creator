@@ -1,12 +1,25 @@
+<!doctype html>
 <html>
-  <title>DSC : Emulator</title>
+
+<head>
+    <title>DSC : Emulator</title>
+</head>
+
 <body>
-<desmond-player id="player"></desmond-player>
-<script src="../src/emulator/desmond.min.js"></script>
-<script>
-window.onload = function(){
-document.getElementById("player").loadURL("path-to-game.nds");
-}
-</script>
+    <desmond-player></desmond-player>
+    <!--<input type="file" style="position: absolute; transform: translate(-50%, -50%); left: 50%; top: 95%; color: white;"></input>-->
+    <script src="../node_modules/desmond-emu/desmond.min.js"></script>
+    <script>
+        
+      
+        window.onload = function() {
+            setTimeout(function() {
+                document.querySelector("desmond-player").loadURL("E:/TestCompile.nds")
+                //document.querySelector("desmond-player").shadowRoot.querySelector("#top").style = "position: fixed;transform: translate(-50%, -50%);width: 40%;left: 50%;top: 30%;height: 40%;";
+
+                //document.querySelector("desmond-player").shadowRoot.querySelector("#bottom").style = "position: fixed;transform: translate(-50%, -50%);width: 40%;left: 50%;top: 70%;height: 40%;";
+            }, 1000)
+        }
+    </script>
 </body>
 </html>
