@@ -3,11 +3,14 @@ const electronBrowserWindow = require('electron').BrowserWindow;
 const electronDialog = require('electron').dialog;
 const electronIpcMain = require('electron').ipcMain;
 
+const fs = require('fs');
+
 const { localStorage } = require('electron-browser-storage');
 
 const nodePath = require("path");
 
 const Store = require('electron-store');
+const { fstat } = require('fs');
 
 const store = new Store('project');
 
@@ -49,7 +52,31 @@ function createDiscordWindow() {
     return discordWindow;
 }
 
-function openEmu() {
+function getNDSPath() {
+    fs.readdir(store.get('ProjectDir'), (err, files) => {
+        if (err)
+          console.log(err);
+        else {
+          //console.log("\nCurrent directory filenames:");
+          files.forEach(file => {
+            var rom = nodePath.parse(file).ext;
+            if(rom == '.nds'){
+                var MainPath = store.get('ProjectDir');
+                store.set('ROMPath', MainPath + "\\" + file);
+                var paaaath = nodePath.parse(store.get('ProjectDir'));
+            }
+            //console.log(rom);
+          })
+        }
+      })
+}
+
+function setNDSPath(){
+    
+}
+
+function openEmu() {   
+
     const emulatorWindow = new electronBrowserWindow({
         width: 256 + 20, 
         height: 192 * 2 + 20,
@@ -111,6 +138,7 @@ electronIpcMain.handle('getPath', async () => {
                 return result.canceled;
             }
             else{
+                store.set('ProjectDir', nodePath.parse(path).dir);
                 return path;
             }
         })
@@ -123,5 +151,7 @@ function openDialog(parentWindow, options) {
 }
 
 electronIpcMain.handle('openEmu', async () => {
+    getNDSPath();
     emulatorWindow = openEmu();
+    return store.get('ROMPath');
 })

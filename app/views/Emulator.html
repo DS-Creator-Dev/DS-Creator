@@ -13,8 +13,10 @@
         
       
         window.onload = function() {
+            console.log(localStorage.getItem('ProjectDir'));
             setTimeout(function() {
-                document.querySelector("desmond-player").loadURL("E:/TestCompile.nds")
+                document.querySelector("desmond-player").loadURL(localStorage.getItem("ROMPath"));
+                console.log(localStorage.getItem('ROMPath'));
                 //document.querySelector("desmond-player").shadowRoot.querySelector("#top").style = "position: fixed;transform: translate(-50%, -50%);width: 40%;left: 50%;top: 30%;height: 40%;";
 
                 //document.querySelector("desmond-player").shadowRoot.querySelector("#bottom").style = "position: fixed;transform: translate(-50%, -50%);width: 40%;left: 50%;top: 70%;height: 40%;";

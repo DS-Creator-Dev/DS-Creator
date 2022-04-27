@@ -8,6 +8,9 @@ const remote_1 = require('@electron/remote');
 
 const nodePath = require("path");
 
+const Store = require('electron-store');
+const store = new Store('project');
+
 // White-listed channels.
 const ipc = {
     'render': {
@@ -91,7 +94,9 @@ contextBridge.exposeInMainWorld("api", {
     })(),
     GetPaths: (filePath) => void(() => {
         localStorage.setItem('ProjectFile', filePath);
-        localStorage.setItem('ProjectDir', nodePath.parse(filePath).dir);
+        //localStorage.setItem('ProjectDir', nodePath.parse(filePath).dir);
+        localStorage.setItem('ProjectDir', store.get('ProjectDir'));
+        //console.log(localStorage.getItem('ProjectDir'));
         localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
         console.log("Done Setting localStorage!")
     })()

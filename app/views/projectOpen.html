@@ -43,12 +43,20 @@
     <script src="../src/client/compiler/cmd.js"></script>
 
     <script>
+        window.onload = function() {
+            console.log(localStorage.getItem('ProjectDir'));
+        }
+
         document.getElementById('PlayButton').addEventListener('click', () => {
             openProject();
          });
 
         function openProject() {
-            window.ipcRender.invoke('openEmu');
+            window.ipcRender.invoke('openEmu')
+                .then((ROM) => {
+                    localStorage.setItem('ROMPath', localStorage.getItem('ProjectDir') + "\\" + localStorage.getItem('ProjectFileName') + '.nds');
+                    console.log(localStorage.getItem('ROMPath'));
+                });
         }
     </script> 
     
