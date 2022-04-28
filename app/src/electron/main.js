@@ -146,6 +146,6 @@ function openDialog(parentWindow, options) {
 }
 
 electronIpcMain.handle('openEmu', async () => {
-    getNDSPath();
+    emulatorWindow = openEmu();
     return store.get('ROMPath');
 })

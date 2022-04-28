@@ -93,9 +93,6 @@ contextBridge.exposeInMainWorld("api", {
         }
     });
     })(),
-    PlayGame: () => void(() => {
-        window.ipcRender.invoke('openEmu');
-    })(),
     Settings: () => void(() => {
         console.log('Settings');
     })(),
