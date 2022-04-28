@@ -16,6 +16,7 @@ const store = new Store('project');
 
 let window;
 
+//Creates Main Window
 function createMainWindow() {
     const mainWindow = new electronBrowserWindow({
         width: 900,
@@ -33,7 +34,7 @@ function createMainWindow() {
 
     return mainWindow;
 }
-
+//Creates the Discord Window
 function createDiscordWindow() {
     const discordWindow = new electronBrowserWindow({
         width: 450 * 1.5, 
@@ -51,7 +52,7 @@ function createDiscordWindow() {
 
     return discordWindow;
 }
-
+//Gets the .nds file to play
 function getNDSPath() {
     fs.readdir(store.get('ProjectDir'), (err, files) => {
         if (err)
@@ -63,18 +64,13 @@ function getNDSPath() {
             if(rom == '.nds'){
                 var MainPath = store.get('ProjectDir');
                 store.set('ROMPath', MainPath + "\\" + file);
-                var paaaath = nodePath.parse(store.get('ProjectDir'));
+                emulatorWindow = openEmu();
             }
-            //console.log(rom);
           })
         }
       })
 }
-
-function setNDSPath(){
-    
-}
-
+//Opens the Emulator
 function openEmu() {   
 
     const emulatorWindow = new electronBrowserWindow({
@@ -90,7 +86,6 @@ function openEmu() {
 
     emulatorWindow.loadFile('./views/Emulator.html')
         .then(() => { emulatorWindow.show(); });
-
     return emulatorWindow;
 }
 
@@ -152,6 +147,5 @@ function openDialog(parentWindow, options) {
 
 electronIpcMain.handle('openEmu', async () => {
     getNDSPath();
-    emulatorWindow = openEmu();
     return store.get('ROMPath');
 })

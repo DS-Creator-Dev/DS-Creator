@@ -100,10 +100,9 @@ contextBridge.exposeInMainWorld("api", {
         console.log('Settings');
     })(),
     GetPaths: (filePath) => void(() => {
-        localStorage.setItem('ProjectFile', filePath);
-        //localStorage.setItem('ProjectDir', nodePath.parse(filePath).dir);
+        //Sets the localStorage
+        localStorage.setItem('ProjectFile', filePath)
         localStorage.setItem('ProjectDir', store.get('ProjectDir'));
-        //console.log(localStorage.getItem('ProjectDir'));
         localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
         console.log("Done Setting localStorage!")
     })()
