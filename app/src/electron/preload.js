@@ -56,7 +56,7 @@ contextBridge.exposeInMainWorld(
 );
 
 contextBridge.exposeInMainWorld("api", {
-    OpenCmd: (path) => exec(`cd ${path} && make && exit`, (error, stdout, stderr) => {
+    OpenCmd: (path, isPlay) => exec(`cd ${path} && make && exit`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             document.getElementById('Console-Text').textContent = error.message;
@@ -69,6 +69,13 @@ contextBridge.exposeInMainWorld("api", {
         console.log(`Output: ${stdout}`);
         if(!error){
             document.getElementById('Console-Text').textContent = stdout;
+        }
+        if(isPlay){
+            ipcRenderer.invoke('openEmu')
+                .then((ROM) => {
+                    localStorage.setItem('ROMPath', localStorage.getItem('ProjectDir') + "\\" + localStorage.getItem('ProjectFileName') + '.nds');
+                    console.log(localStorage.getItem('ROMPath'));
+                });
         }
     }),
     SaveProject: () => void(() => {
