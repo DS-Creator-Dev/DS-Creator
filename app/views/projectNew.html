@@ -7,6 +7,24 @@
     <title>DSC : New Project</title>
 </head>
 <body>
-    <h1>New Project</h1>
+    <input class="btn-menu" type="button" id="sample-proj-btn" value="Sample Project"/>
+    <input class="btn-menu" type="button" id="blank-proj-btn" value="Blank Project"/>
+    <input class="btn-menu" type="button" id="back-btn" value="Back"/>
+
+    <script>
+        var confirming;
+        document.getElementById('back-btn').addEventListener('click', () => {
+            window.location = '../index.html';
+         });
+
+         document.getElementById('sample-proj-btn').addEventListener('click', () => {
+            confirming = confirm('Do you really want to make a sample project?');
+            confirm(confirming);
+         });
+         document.getElementById('blank-proj-btn').addEventListener('click', () => {
+            confirming = confirm('Do you really want to make a blank project?');
+            confirm(confirming);
+         });
+    </script>
 </body>
 </html>
