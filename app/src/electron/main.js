@@ -145,6 +145,43 @@ function openDialog(parentWindow, options) {
         .catch((error) => { console.error('Show open dialog error: ' + error); });
 }
 
+electronIpcMain.handle('blankProject', async () => {
+
+    console.log('hi');
+    // Dialog options.
+    const options = {
+        filters: [
+            {
+                name: "DSC Projects",
+                extensions: ["DSCProj"],
+            }
+        ]
+    }
+
+    // When available, return the modified path back to the render thread via IPC
+    return await saveDialog(mainWindow, options)
+        .then((result) => {
+            // User cancelled the dialog
+            if (result.canceled === true) { return; }
+
+            let path = result.filePaths[0];
+
+            if(result.canceled === true){
+                return result.canceled;
+            }
+            else{
+                store.set('ProjectDir', nodePath.parse(path).dir);
+                return path;
+            }
+        })
+})
+
+function saveDialog(parentWindow, options) {
+    return electronDialog.showSaveDialog(parentWindow, options)
+        .then((result) => { if (result) { return result; } })
+        .catch((error) => { console.error('Show open dialog error: ' + error); });
+}
+
 electronIpcMain.handle('openEmu', async () => {
     emulatorWindow = openEmu();
     return store.get('ROMPath');

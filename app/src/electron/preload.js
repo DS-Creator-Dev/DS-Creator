@@ -102,5 +102,10 @@ contextBridge.exposeInMainWorld("api", {
         localStorage.setItem('ProjectDir', store.get('ProjectDir'));
         localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
         console.log("Done Setting localStorage!")
-    })()
+    })(),
+    saveBox: () => void(() => {
+        dialog.showSaveDialog(window, options, (path) => {
+            console.log(path);
+          });
+    })
 });
