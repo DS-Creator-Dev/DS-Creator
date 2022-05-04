@@ -5,10 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DSC : Create New Project</title>
+    <link rel="stylesheet" href="../styles/new.css" />
 </head>
 <body>
-    <input class="btn-menu" type="button" id="sample-proj-btn" value="Sample Project"/>
-    <input class="btn-menu" type="button" id="blank-proj-btn" value="Blank Project"/>
+    <div>
+        <p>Project Name</p>
+        <input id="name-input"/>
+        <p>Project Path</p>
+        <input id="path-input"/>
+    </div>
+    <br>
+    
+    <input class="btn-menu" type="button" id="sample-proj-btn" value="Create Sample Project"/>
+    <input class="btn-menu" type="button" id="blank-proj-btn" value="Create Blank Project"/>
     <input class="btn-menu" type="button" id="back-btn" value="Back"/>
 
     <script src="../src/client/project_handle/project_btn.js"></script>

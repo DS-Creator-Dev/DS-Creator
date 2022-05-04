@@ -2,6 +2,7 @@
 const contextBridge = require('electron').contextBridge;
 const ipcRenderer = require('electron').ipcRenderer;
 const { exec } = require('child_process');
+//const { remote } = require('electron').remote;
 const { dialog } = require('electron');
 const fs = require('fs/promises');
 const remote_1 = require('@electron/remote');
@@ -103,9 +104,7 @@ contextBridge.exposeInMainWorld("api", {
         localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
         console.log("Done Setting localStorage!")
     })(),
-    saveBox: () => void(() => {
-        dialog.showSaveDialog(window, options, (path) => {
-            console.log(path);
-          });
-    })
+    saveBox: (ProName, ProPath) => void(() => {
+        console.log(ProPath + '\\' + ProName);
+    })()
 });
