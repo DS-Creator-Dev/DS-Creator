@@ -9,12 +9,28 @@ const { localStorage } = require('electron-browser-storage');
 
 const nodePath = require("path");
 
+const Menu = require('electron').menu;
+
 const Store = require('electron-store');
 const { fstat } = require('fs');
 
 const store = new Store('project');
 
 let window;
+
+const menuTemplate = [
+    {
+        label: 'Help',
+        submenu: [
+            {
+                label: 'Help',
+                click: () => {
+                    window.loadFile('./views/discord.html');
+                }
+            }
+        ]
+    }
+];
 
 //Creates Main Window
 function createMainWindow() {
@@ -90,6 +106,7 @@ function openEmu() {
 }
 
 app.on('ready', () => {
+    //Menu.setApplicationMenu(menuTemplate);
     mainWindow = createMainWindow();
     discordWindow = createDiscordWindow();
 });

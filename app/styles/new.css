@@ -5,3 +5,23 @@ body{
 p{
     margin-block-end: 0em;
 }
+
+
+
+input[type=text] {
+    background-color: whitesmoke;
+    border: none;
+    width: 90%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    transition: 150ms;
+}
+
+input[type=text]:hover{
+    background-color: lightgrey;
+}
+
+input:focus, textarea:focus, select:focus{
+    outline: none;
+}

@@ -5,6 +5,18 @@ var ProPath;
     var _a, _b, _c;
     let NameObject = document.getElementById("name-input");
     let PathObject = document.getElementById("path-input");
+    NameObject === null || NameObject === void 0 ? void 0 : NameObject.addEventListener('input', () => {
+        //@ts-expect-error
+        ProName = NameObject === null || NameObject === void 0 ? void 0 : NameObject.value.replaceAll(' ', '_');
+        //@ts-expect-error
+        NameObject.value = ProName;
+    });
+    PathObject === null || PathObject === void 0 ? void 0 : PathObject.addEventListener('input', () => {
+        //@ts-expect-error
+        ProPath = PathObject === null || PathObject === void 0 ? void 0 : PathObject.value.replaceAll(' ', '_');
+        //@ts-expect-error
+        PathObject.value = ProPath;
+    });
     (_a = document.querySelector('#back-btn')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
         window.location.href = '../index.html';
     }),

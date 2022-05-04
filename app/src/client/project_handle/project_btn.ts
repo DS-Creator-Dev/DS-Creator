@@ -6,6 +6,21 @@ var ProPath: any;
 (() => {
     let NameObject = document.getElementById("name-input");
     let PathObject = document.getElementById("path-input");
+
+    NameObject?.addEventListener('input', () => {
+        //@ts-expect-error
+        ProName = NameObject?.value.replaceAll(' ', '_');
+        //@ts-expect-error
+        NameObject.value = ProName;
+    });
+
+    PathObject?.addEventListener('input', () => {
+        //@ts-expect-error
+        ProPath = PathObject?.value.replaceAll(' ', '_');
+        //@ts-expect-error
+        PathObject.value = ProPath;
+    });
+
     document.querySelector('#back-btn')?.addEventListener('click', () => {
         window.location.href = '../index.html';
     }),
