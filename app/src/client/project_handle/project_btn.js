@@ -33,6 +33,6 @@ var ProPath;
             ProPath = PathObject === null || PathObject === void 0 ? void 0 : PathObject.value.replaceAll(' ', '_');
             //@ts-expect-error
             PathObject.value = ProPath;
-            api.saveBox(ProName, ProPath);
+            api.MakeBlankProject(ProName, ProPath);
         });
 })();

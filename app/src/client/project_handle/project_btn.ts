@@ -38,6 +38,6 @@ var ProPath: any;
         ProPath = PathObject?.value.replaceAll(' ', '_');
         //@ts-expect-error
         PathObject.value = ProPath;
-        api.saveBox(ProName, ProPath);
+        api.MakeBlankProject(ProName, ProPath);
     })
 })()

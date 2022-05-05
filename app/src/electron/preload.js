@@ -104,7 +104,18 @@ contextBridge.exposeInMainWorld("api", {
         localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
         console.log("Done Setting localStorage!")
     })(),
-    saveBox: (ProName, ProPath) => void(() => {
-        console.log(ProPath + '\\' + ProName);
-    })()
+    MakeBlankProject: (ProName, ProPath) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && exit`, (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`Output: ${stdout}`);
+        if(!error){
+
+        }
+    })
 });
