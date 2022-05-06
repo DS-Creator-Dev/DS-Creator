@@ -104,8 +104,9 @@ contextBridge.exposeInMainWorld("api", {
         localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
         console.log("Done Setting localStorage!")
     })(),
-    MakeBlankProject: (ProName, ProPath) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && exit`, (error, stdout, stderr) => {
+    MakeBlankProject: (ProName, ProPath, MakefileText, MainCText) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && exit`, (error, stdout, stderr) => {
         if (error) {
+            confirm(`Error: ${error.message}`);
             console.log(`error: ${error.message}`);
             return;
         }
@@ -115,7 +116,21 @@ contextBridge.exposeInMainWorld("api", {
         }
         console.log(`Output: ${stdout}`);
         if(!error){
-
+            var Path = ProPath + '\\' + ProName;
+            CreateBlankProjFiles(Path, MakefileText, MainCText);
         }
     })
 });
+
+function CreateBlankProjFiles(CdPath, MakefileText, MainCText){
+    fs.writeFile(`${CdPath}\\Makefile`, MakefileText, err => {
+        if(err){
+            confirm("Error: Error Making Makefile");
+        }
+    });
+    fs.writeFile(`${CdPath}\\src\\main.c`, MainCText, err => {
+        if(err){
+            confirm("Error: Error Making main.c");
+        }
+    });
+}

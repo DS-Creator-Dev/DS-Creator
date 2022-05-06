@@ -106,7 +106,6 @@ function openEmu() {
 }
 
 app.on('ready', () => {
-    //mainWindow.setApplicationMenu(null);
     mainWindow = createMainWindow();
     discordWindow = createDiscordWindow();
 });
