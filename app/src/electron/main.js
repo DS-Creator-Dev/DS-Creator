@@ -1,4 +1,4 @@
-const { app } = require('electron')
+const { app } = require('electron');
 const electronBrowserWindow = require('electron').BrowserWindow;
 const electronDialog = require('electron').dialog;
 const electronIpcMain = require('electron').ipcMain;

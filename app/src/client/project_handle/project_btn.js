@@ -3,6 +3,7 @@ var ProName;
 var ProPath;
 var MakefileText;
 var MainCText;
+var PathLastChar;
 MakefileText = `#---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
@@ -294,14 +295,14 @@ int main(void) {
 	mmInitDefaultMem((mm_addr)soundbank_bin);
 	
 	// load the module
-	mmLoad( MOD_MYSONG );
+	//mmLoad( MOD_MYSONG );
 
 	// load sound effects
 	//mmLoadEffect( SFX_AMBULANCE );
 	//mmLoadEffect( SFX_BOOM );
 
 	// Start playing module
-	mmStart( MOD_MYSONG, MM_PLAY_LOOP );
+	//mmStart( MOD_MYSONG, MM_PLAY_LOOP );
 
 /*
 	mm_sound_effect ambulance = {
@@ -347,6 +348,7 @@ int main(void) {
         ProPath = PathObject === null || PathObject === void 0 ? void 0 : PathObject.value.replaceAll(' ', '_');
         //@ts-expect-error
         PathObject.value = ProPath;
+        PathLastChar = ProPath.slice(-1);
     });
     (_a = document.querySelector('#back-btn')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
         window.location.href = '../index.html';
@@ -364,6 +366,10 @@ int main(void) {
             ProPath = PathObject === null || PathObject === void 0 ? void 0 : PathObject.value.replaceAll(' ', '_');
             //@ts-expect-error
             PathObject.value = ProPath;
+            PathLastChar = ProPath.slice(-1);
+            if (PathLastChar == "\\") {
+                ProPath = ProPath.slice(0, -1);
+            }
             api.MakeBlankProject(ProName, ProPath, MakefileText, MainCText);
         });
 })();

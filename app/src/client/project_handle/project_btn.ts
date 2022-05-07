@@ -5,6 +5,8 @@ var ProPath: any;
 var MakefileText: string;
 var MainCText: string;
 
+var PathLastChar: string;
+
 MakefileText = `#---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
@@ -297,14 +299,14 @@ int main(void) {
 	mmInitDefaultMem((mm_addr)soundbank_bin);
 	
 	// load the module
-	mmLoad( MOD_MYSONG );
+	//mmLoad( MOD_MYSONG );
 
 	// load sound effects
 	//mmLoadEffect( SFX_AMBULANCE );
 	//mmLoadEffect( SFX_BOOM );
 
 	// Start playing module
-	mmStart( MOD_MYSONG, MM_PLAY_LOOP );
+	//mmStart( MOD_MYSONG, MM_PLAY_LOOP );
 
 /*
 	mm_sound_effect ambulance = {
@@ -352,25 +354,30 @@ int main(void) {
         ProPath = PathObject?.value.replaceAll(' ', '_');
         //@ts-expect-error
         PathObject.value = ProPath;
+        PathLastChar = ProPath.slice(-1);
     });
 
     document.querySelector('#back-btn')?.addEventListener('click', () => {
-        window.location.href = '../index.html';
+      window.location.href = '../index.html';
     }),
     document.querySelector('#sample-proj-btn')?.addEventListener('click', () => {
         
     }),
     document.querySelector('#blank-proj-btn')?.addEventListener('click', () => {
-        NameObject = document.getElementById("name-input");
-        PathObject = document.getElementById("path-input");
-        //@ts-expect-error
-        ProName = NameObject?.value.replaceAll(' ', '_');
-        //@ts-expect-error
-        NameObject.value = ProName;
-        //@ts-expect-error
-        ProPath = PathObject?.value.replaceAll(' ', '_');
-        //@ts-expect-error
-        PathObject.value = ProPath;
-        api.MakeBlankProject(ProName, ProPath, MakefileText, MainCText);
+      NameObject = document.getElementById("name-input");
+      PathObject = document.getElementById("path-input");
+      //@ts-expect-error
+      ProName = NameObject?.value.replaceAll(' ', '_');
+      //@ts-expect-error
+      NameObject.value = ProName;
+      //@ts-expect-error
+      ProPath = PathObject?.value.replaceAll(' ', '_');
+      //@ts-expect-error
+      PathObject.value = ProPath;
+      PathLastChar = ProPath.slice(-1);
+      if(PathLastChar == "\\"){
+        ProPath = ProPath.slice(0, -1);
+      }
+      api.MakeBlankProject(ProName, ProPath, MakefileText, MainCText);
     })
 })()

@@ -1,4 +1,5 @@
 // Import the necessary Electron components.
+const { app } = require('electron')
 const contextBridge = require('electron').contextBridge;
 const ipcRenderer = require('electron').ipcRenderer;
 const { exec } = require('child_process');
@@ -99,38 +100,49 @@ contextBridge.exposeInMainWorld("api", {
     })(),
     GetPaths: (filePath) => void(() => {
         //Sets the localStorage
-        localStorage.setItem('ProjectFile', filePath)
+        localStorage.setItem('ProjectFile', filePath);
         localStorage.setItem('ProjectDir', store.get('ProjectDir'));
         localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
-        console.log("Done Setting localStorage!")
+        console.log("Done Setting localStorage!");
     })(),
     MakeBlankProject: (ProName, ProPath, MakefileText, MainCText) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && exit`, (error, stdout, stderr) => {
         if (error) {
-            confirm(`Error: ${error.message}`);
+            confirm(`Error: There was an error making your project. This is most likely due to a misspelling in the Project Path.\n Close DS Creator.`);
             console.log(`error: ${error.message}`);
-            return;
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
-            return;
         }
         console.log(`Output: ${stdout}`);
         if(!error){
             var Path = ProPath + '\\' + ProName;
-            CreateBlankProjFiles(Path, MakefileText, MainCText);
+            CreateBlankProjFiles(Path, MakefileText, MainCText, ProName);
         }
     })
 });
 
-function CreateBlankProjFiles(CdPath, MakefileText, MainCText){
+function CreateBlankProjFiles(CdPath, MakefileText, MainCText, Name){
+    let ProjectFileErr = false;
     fs.writeFile(`${CdPath}\\Makefile`, MakefileText, err => {
         if(err){
-            confirm("Error: Error Making Makefile");
+            confirm("Error: Error Making Makefile.\n Close DS Creator.");
         }
     });
     fs.writeFile(`${CdPath}\\src\\main.c`, MainCText, err => {
         if(err){
-            confirm("Error: Error Making main.c");
+            confirm("Error: Error Making main.c.\n Close DS Creator.");
         }
     });
+    fs.writeFile(`${CdPath}\\${Name}.DSCProj`, MainCText, err => {
+        if(err){
+            confirm("Error: Error Making Project File.\n Close DS Creator.");
+            ProjectFileErr = true;
+        }
+    });
+    if(ProjectFileErr == false){
+        localStorage.setItem('ProjectFile', `${CdPath}\\${Name}.DSCProj`);
+        localStorage.setItem('ProjectDir', `${CdPath}`);
+        localStorage.setItem('ProjectFileName', `${Name}`);
+        location.href = './projectOpen.html';
+    }
 }
