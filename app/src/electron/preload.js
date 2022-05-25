@@ -132,10 +132,9 @@ contextBridge.exposeInMainWorld("api", {
             PathApp = PathApp + ".obj";
             PathApp = nodePath.parse(PathApp).dir;
         }
-        confirm(PathApp);
-        localStorage.setItem("SoundBank", `${PathApp}\\soundbank.bin`)
+        localStorage.setItem("SoundBank", `${PathApp}`)
     })(),
-    MakeBlankProject: (ProName, ProPath, MakefileText, MainCText, SoundbankBinHText, SoundbankHText, SoundBankBinText) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && mkdir build && exit`, (error, stdout, stderr) => {
+    MakeBlankProject: (ProName, ProPath, MakefileText, MainCText, SoundbankBinHText, SoundbankHText) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && mkdir build && exit`, (error, stdout, stderr) => {
         if (error) {
             confirm(`Error: There was an error making your project. This is most likely due to a misspelling in the Project Path.\n Close DS Creator.`);
             console.log(`error: ${error.message}`);
@@ -146,12 +145,12 @@ contextBridge.exposeInMainWorld("api", {
         console.log(`Output: ${stdout}`);
         if(!error){
             var Path = ProPath + '\\' + ProName;
-            CreateBlankProjFiles(Path, MakefileText, MainCText, ProName, SoundbankBinHText, SoundbankHText, SoundBankBinText);
+            CreateBlankProjFiles(Path, MakefileText, MainCText, ProName, SoundbankBinHText, SoundbankHText);
         }
     })
 });
 
-function CreateBlankProjFiles(CdPath, MakefileText, MainCText, Name, SoundbankBinHText, SoundbankHText, SoundBankBinText){
+function CreateBlankProjFiles(CdPath, MakefileText, MainCText, Name, SoundbankBinHText, SoundbankHText){
     let ProjectFileErr = false;
     fs.writeFile(`${CdPath}\\Makefile`, MakefileText, err => {
         if(err){
@@ -181,12 +180,13 @@ function CreateBlankProjFiles(CdPath, MakefileText, MainCText, Name, SoundbankBi
             ProjectFileErr = true;
         }
     });
-    fs.copyFile(localStorage.getItem("SoundBank"), `${CdPath}\\build\\soundbank.bin`);
+    fs.copyFile(`${localStorage.getItem("SoundBank")}\\soundbank.bin`, `${CdPath}\\build\\soundbank.bin`);
+    fs.copyFile(`${localStorage.getItem("SoundBank")}\\events.dll`, `${CdPath}\\include\\events.c`);
     
     if(ProjectFileErr == false){
         localStorage.setItem('ProjectFile', `${CdPath}\\${Name}.DSCProj`);
         localStorage.setItem('ProjectDir', `${CdPath}`);
         localStorage.setItem('ProjectFileName', `${Name}`);
-        //location.href = './projectOpen.html';
+        location.href = './projectOpen.html';
     }
 }
