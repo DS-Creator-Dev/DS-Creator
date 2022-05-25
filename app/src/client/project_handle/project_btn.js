@@ -1018,7 +1018,7 @@ static const size_t soundbank_bin_size=25364;
         (_b = document.querySelector('#sample-proj-btn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
         }),
         (_c = document.querySelector('#blank-proj-btn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
-            SoundbankBinText = api.SoundbankBin();
+            api.SoundbankBin();
             NameObject = document.getElementById("name-input");
             PathObject = document.getElementById("path-input");
             //@ts-expect-error

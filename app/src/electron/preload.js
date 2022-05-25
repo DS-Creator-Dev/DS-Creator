@@ -1,4 +1,3 @@
-// Import the necessary Electron components.
 const { app } = require('electron')
 const contextBridge = require('electron').contextBridge;
 const ipcRenderer = require('electron').ipcRenderer;
@@ -12,6 +11,18 @@ const nodePath = require("path");
 
 const Store = require('electron-store');
 const store = new Store('project');
+
+var IsDev = false;
+var PathApp;
+var DefaultPath;
+
+if(IsDev){
+    DefaultPath = __dirname + ".obj";
+}
+else{
+    DefaultPath = __dirname;
+}
+
 
 // White-listed channels.
 const ipc = {
@@ -105,7 +116,26 @@ contextBridge.exposeInMainWorld("api", {
         localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
         console.log("Done Setting localStorage!");
     })(),
-    MakeBlankProject: (ProName, ProPath, MakefileText, MainCText) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && exit`, (error, stdout, stderr) => {
+    SoundbankBin: () => void(() => {
+        PathApp = DefaultPath;
+
+        if(IsDev){
+            PathApp = nodePath.parse(PathApp).dir;
+            PathApp = PathApp + ".obj";
+            PathApp = nodePath.parse(PathApp).dir;
+        }
+        else{
+            PathApp = nodePath.parse(PathApp).dir;
+            PathApp = PathApp + ".obj";
+            PathApp = nodePath.parse(PathApp).dir;
+            PathApp = nodePath.parse(PathApp).dir;
+            PathApp = PathApp + ".obj";
+            PathApp = nodePath.parse(PathApp).dir;
+        }
+        confirm(PathApp);
+        localStorage.setItem("SoundBank", `${PathApp}\\soundbank.bin`)
+    })(),
+    MakeBlankProject: (ProName, ProPath, MakefileText, MainCText, SoundbankBinHText, SoundbankHText, SoundBankBinText) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && mkdir build && exit`, (error, stdout, stderr) => {
         if (error) {
             confirm(`Error: There was an error making your project. This is most likely due to a misspelling in the Project Path.\n Close DS Creator.`);
             console.log(`error: ${error.message}`);
@@ -116,12 +146,12 @@ contextBridge.exposeInMainWorld("api", {
         console.log(`Output: ${stdout}`);
         if(!error){
             var Path = ProPath + '\\' + ProName;
-            CreateBlankProjFiles(Path, MakefileText, MainCText, ProName);
+            CreateBlankProjFiles(Path, MakefileText, MainCText, ProName, SoundbankBinHText, SoundbankHText, SoundBankBinText);
         }
     })
 });
 
-function CreateBlankProjFiles(CdPath, MakefileText, MainCText, Name){
+function CreateBlankProjFiles(CdPath, MakefileText, MainCText, Name, SoundbankBinHText, SoundbankHText, SoundBankBinText){
     let ProjectFileErr = false;
     fs.writeFile(`${CdPath}\\Makefile`, MakefileText, err => {
         if(err){
@@ -135,14 +165,28 @@ function CreateBlankProjFiles(CdPath, MakefileText, MainCText, Name){
     });
     fs.writeFile(`${CdPath}\\${Name}.DSCProj`, MainCText, err => {
         if(err){
-            confirm("Error: Error Making Project File.\n Close DS Creator.");
+            confirm(`Error: Error Making ${Name}.DSCProj.\n Close DS Creator.`);
             ProjectFileErr = true;
         }
     });
+    fs.writeFile(`${CdPath}\\build\\soundbank_bin.h`, SoundbankHText, err => {
+        if(err){
+            confirm("Error: Error Making soundbank_bin.h.\n Close DS Creator.");
+            ProjectFileErr = true;
+        }
+    });
+    fs.writeFile(`${CdPath}\\build\\soundbank.h`, SoundbankBinHText, err => {
+        if(err){
+            confirm("Error: Error Making soundbank.h.\n Close DS Creator.");
+            ProjectFileErr = true;
+        }
+    });
+    fs.copyFile(localStorage.getItem("SoundBank"), `${CdPath}\\build\\soundbank.bin`);
+    
     if(ProjectFileErr == false){
         localStorage.setItem('ProjectFile', `${CdPath}\\${Name}.DSCProj`);
         localStorage.setItem('ProjectDir', `${CdPath}`);
         localStorage.setItem('ProjectFileName', `${Name}`);
-        location.href = './projectOpen.html';
+        //location.href = './projectOpen.html';
     }
 }

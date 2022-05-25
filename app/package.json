@@ -5,7 +5,8 @@
   "main": "./src/electron/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && electron ."
+    "start": "npm run build && electron .",
+    "build-win": "electron-packager . DS-Creator --overwrite --asar=true --platform=win32 --arch=ia32 --icon=images/icons/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"DS Creator\""
   },
   "repository": {
     "type": "git",

@@ -1032,7 +1032,7 @@ static const size_t soundbank_bin_size=25364;
         
     }),
     document.querySelector('#blank-proj-btn')?.addEventListener('click', () => {
-      SoundbankBinText = api.SoundbankBin();
+      api.SoundbankBin();
       NameObject = document.getElementById("name-input");
       PathObject = document.getElementById("path-input");
       //@ts-expect-error
@@ -1047,6 +1047,6 @@ static const size_t soundbank_bin_size=25364;
       if(PathLastChar == "\\"){
         ProPath = ProPath.slice(0, -1);
       }
-      api.MakeBlankProject(ProName, ProPath, MakefileText, MainCText, SoundbankBinHText, SoundbankHText, SoundbankBinText);
+      api.MakeBlankProject(ProName, ProPath, MakefileText, MainCText, SoundbankBinHText, SoundbankHText, localStorage.getItem("SoundBank"));
     })
 })()
