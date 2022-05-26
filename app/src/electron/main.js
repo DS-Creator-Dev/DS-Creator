@@ -9,7 +9,7 @@ const { localStorage } = require('electron-browser-storage');
 
 const nodePath = require("path");
 
-const Menu = require('electron').menu;
+const { Menu } = require('electron');
 
 const Store = require('electron-store');
 const { fstat } = require('fs');
@@ -90,9 +90,10 @@ function getNDSPath() {
 function openEmu() {   
 
     const emulatorWindow = new electronBrowserWindow({
-        width: 256 + 20, 
-        height: 192 * 2 + 20,
+        width: 256 + 21, 
+        height: 192 * 2 + 55,
         show: false,
+        resizable: false,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -108,6 +109,8 @@ function openEmu() {
 app.on('ready', () => {
     mainWindow = createMainWindow();
     discordWindow = createDiscordWindow();
+
+    Menu.setApplicationMenu(null);
 });
 
 app.on('window-all-closed', () => {
@@ -118,7 +121,10 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
     if (electronBrowserWindow.getAllWindows().length === 0) {
-        createWindow();
+        mainWindow = createMainWindow();
+        discordWindow = createDiscordWindow();
+
+        Menu.setApplicationMenu(null);
     }
 });
 

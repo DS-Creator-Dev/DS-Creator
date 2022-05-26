@@ -16,6 +16,7 @@ var IsDev = false;
 var PathApp;
 var DefaultPath;
 
+//Check If isDev to See Where We Need to Start Looking
 if(IsDev){
     DefaultPath = __dirname + ".obj";
 }
@@ -68,7 +69,9 @@ contextBridge.exposeInMainWorld(
     }
 );
 
+//Create Api Functions
 contextBridge.exposeInMainWorld("api", {
+    //Open The CMD/Terminal
     OpenCmd: (path, isPlay) => exec(`cd ${path} && make && exit`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
@@ -91,6 +94,7 @@ contextBridge.exposeInMainWorld("api", {
                 });
         }
     }),
+    //Saves The Project
     SaveProject: () => void(() => {
         localStorage.setItem('Contents', "No");
         console.log("\nFile Contents of file before append:",
@@ -106,9 +110,11 @@ contextBridge.exposeInMainWorld("api", {
         }
     });
     })(),
+    //Opnes The Settings
     Settings: () => void(() => {
         console.log('Settings');
     })(),
+    //Sets LocalStorage Stuff
     GetPaths: (filePath) => void(() => {
         //Sets the localStorage
         localStorage.setItem('ProjectFile', filePath);
@@ -116,7 +122,8 @@ contextBridge.exposeInMainWorld("api", {
         localStorage.setItem('ProjectFileName', nodePath.parse(filePath).name);
         console.log("Done Setting localStorage!");
     })(),
-    SoundbankBin: () => void(() => {
+    //Gets The Path to The App
+    GetAppPath: () => void(() => {
         PathApp = DefaultPath;
 
         if(IsDev){
@@ -134,6 +141,7 @@ contextBridge.exposeInMainWorld("api", {
         }
         localStorage.setItem("SoundBank", `${PathApp}`)
     })(),
+    //Makes A Blank Project
     MakeBlankProject: (ProName, ProPath, MakefileText, MainCText, SoundbankBinHText, SoundbankHText) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && mkdir build && exit`, (error, stdout, stderr) => {
         if (error) {
             confirm(`Error: There was an error making your project. This is most likely due to a misspelling in the Project Path.\n Close DS Creator.`);
@@ -150,6 +158,7 @@ contextBridge.exposeInMainWorld("api", {
     })
 });
 
+//Creates Blank Project Files
 function CreateBlankProjFiles(CdPath, MakefileText, MainCText, Name, SoundbankBinHText, SoundbankHText){
     let ProjectFileErr = false;
     fs.writeFile(`${CdPath}\\Makefile`, MakefileText, err => {

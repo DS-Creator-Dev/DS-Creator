@@ -1672,7 +1672,7 @@ bool TextBox(char *Text, int pressed, bool Open){
         
     }),
     document.querySelector('#blank-proj-btn')?.addEventListener('click', () => {
-      api.SoundbankBin();
+      api.GetAppPath();
       NameObject = document.getElementById("name-input");
       PathObject = document.getElementById("path-input");
       //@ts-expect-error
