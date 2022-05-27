@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSC : New Project</title>
+    <title>DSC : Create New Project</title>
+    <link rel="stylesheet" href="../styles/new.css" />
 </head>
 <body>
-    <h1>New Project</h1>
+    <div>
+        <p>Project Name</p>
+        <input type="text" class="text-box" id="name-input"/>
+        <p>Project Path</p>
+        <input type="text" class="text-box" id="path-input"/>
+    </div>
+    <br>
+    
+    <input class="btn-menu" type="button" id="sample-proj-btn" value="Create Sample Project"/>
+    <input class="btn-menu" type="button" id="blank-proj-btn" value="Create Blank Project"/>
+    <input class="btn-menu" type="button" id="back-btn" value="Back"/>
+
+    <script src="../src/client/project_handle/project_btn.js"></script>
 </body>
 </html>

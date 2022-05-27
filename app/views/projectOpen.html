@@ -4,14 +4,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSC : Project Name</title>
+    <title></title>
+
+    <link rel="stylesheet" href="../styles/engine.css" />
 </head>
 <body>
-    <!--Need to set up some way for me to get the file that was chosen the the dir.-->
-    <h1>Opened : File Name</h1>
-    <h2 id="hi" >File directory</h2>
+    <div class="Header">
+        <input type="image" src="../images/SaveButton.png" id="SaveButton" />
+        <input type="image" src="../images/PlayButton.png" id="PlayButton" />
+        <input type="image" src="../images/CompileButton.png" id="CompileButton" />
+        <input type="image" src="../images/SettingButton.png" id="SettingsButton" />
+    </div>
 
-    <button id="CompileButton" >Compile</button>
+    <div id="Console">
+        <p id="Console-Text"></p>
+    </div>
+
+    <div class="Left-Bar">
+        <div class="Art-Left">
+            <p><b>Art</b>
+            <br>Backgrounds <button>+</button><br>
+            Sprites <button>+</button></br></br></p>
+        </div>
+
+        <div class="Objects-Left">
+            <p><b>Objects</b>
+            <br>Scenes <button>+</button><br>
+            Actors <button>+</button></br></br></p>
+        </div>
+    
+        <div class="Music-Left">
+            <p><b>Sound</b>
+            <br>Music <button>+</button><br>
+            Sound Effects <button>+</button></br></br></p>
+        </div>
+    </div>
 
     <script src="../src/client/compiler/cmd.js"></script>
     

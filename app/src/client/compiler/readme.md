@@ -4,4 +4,4 @@ CMD for Windows
 
 Terminal for MacOs
 
-Something for Linux
+Terminal for Linux

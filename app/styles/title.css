@@ -1,23 +1,28 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 h1 {
     color: black;
+    transition: 150ms;
 }
 
 .btn-menu {
     background-color: white;
     border: none;
-    width: 10%;
+    width: 12%;
     height: 7%;
 }
 
 #Version{
-    position:absolute;
-    bottom:0;
+    position: absolute;
+    bottom: 0;
     left: 1%;
 }
 
 #btn-new-project{
-    position:absolute;
-    top: 45%;
+    position: absolute;
+    top: 40%;
     transition: 150ms;
 }
 
@@ -27,8 +32,8 @@ h1 {
 }
 
 #btn-open-project{
-    position:absolute;
-    top: 55%;
+    position: absolute;
+    top: 50%;
     transition: 150ms;
 }
 
@@ -48,4 +53,35 @@ h1 {
 
 #DSC-Logo:hover{
     position: absolute;
+    max-width: 75%;
+    max-height: 75%;
+    left: 47%;
+    top: 10%;
+}
+
+#btn-hidden{
+    position: absolute;
+
+    width: 5%;
+    height: 5%;
+
+    top: 92%;
+    right: 1%;
+    transition: 150ms;
+}
+
+#btn-hidden:hover{
+    position: absolute;
+    background-color: gray;
+}
+
+#btn-documentation{
+    position: absolute;
+    top: 60%;
+    transition: 150ms;
+}
+
+#btn-documentation:hover{
+    position: absolute;
+    background-color: gray;
 }

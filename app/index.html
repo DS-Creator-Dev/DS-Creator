@@ -20,11 +20,44 @@
     <div id="btn-project-div">
         <input class="btn-menu" type="button" id="btn-new-project" value="New Project" />
         <input class="btn-menu" type="button" id="btn-open-project" value="Open Project" />
+        <input class="btn-menu" type="button" id="btn-documentation" value="Documentation" onclick="location.href='https://bowersindustry.github.io/Pages/DSC_Docs/documentation_main.html';"/>
     </div>
 
     <div id="version-box" content="width=device-width, initial-scale=1.0">
         <p id="Version">v1.0.0</p>
     </div>
 
-    <script src="./src/client/file_management/NewProject.js"></script>
+    <div>
+        <input class="btn-menu" type="button" id="btn-hidden" value="" onclick="location.href='https://bowersindustry.github.io/';" />
+    </div>
+
+    <script>
+        var _a, _b, _c, _d;
+
+        document.getElementById('btn-new-project').addEventListener('click', () => {
+            window.location = './views/projectNew.html';
+         });
+
+        document.getElementById('btn-open-project').addEventListener('click', () => {
+            openProject();
+         });
+
+        function openProject() {
+            window.ipcRender.invoke('getPath')
+                .then((Path) => {
+                    console.log(Path);
+                    if(Path === undefined){
+                    }
+                    else{
+                        api.GetPaths(Path);
+
+                        console.log("Project File: " + localStorage.getItem('ProjectFile'));
+                        console.log("Project Dir: " + localStorage.getItem('ProjectDir'));
+                        console.log("Project File Name: " + localStorage.getItem('ProjectFileName'));
+                        location.href="./views/projectOpen.html";
+                    }
+                    
+                });
+        }
+    </script>
 </html>
