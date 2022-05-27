@@ -12,7 +12,7 @@ const nodePath = require("path");
 const Store = require('electron-store');
 const store = new Store('project');
 
-var IsDev = false;
+var IsDev = true;
 var PathApp;
 var DefaultPath;
 
