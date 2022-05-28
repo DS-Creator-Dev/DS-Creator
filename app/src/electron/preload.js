@@ -7,6 +7,7 @@ const { dialog } = require('electron');
 const fs = require('fs/promises');
 const remote_1 = require('@electron/remote');
 
+
 const nodePath = require("path");
 
 const Store = require('electron-store');
@@ -130,6 +131,7 @@ contextBridge.exposeInMainWorld("api", {
             PathApp = nodePath.parse(PathApp).dir;
             PathApp = PathApp + ".obj";
             PathApp = nodePath.parse(PathApp).dir;
+            PathApp = PathApp + "\\copy_files"
         }
         else{
             PathApp = nodePath.parse(PathApp).dir;
@@ -139,10 +141,18 @@ contextBridge.exposeInMainWorld("api", {
             PathApp = PathApp + ".obj";
             PathApp = nodePath.parse(PathApp).dir;
         }
-        localStorage.setItem("SoundBank", `${PathApp}`)
+        localStorage.setItem("AppPath", `${PathApp}`)
     })(),
     //Makes A Blank Project
-    MakeBlankProject: (ProName, ProPath, MakefileText, MainCText, SoundbankBinHText, SoundbankHText) => exec(`cd ${ProPath}\\ && mkdir ${ProName} && cd ${ProName} && mkdir art && mkdir src && mkdir include && mkdir sound && mkdir data && mkdir build && exit`, (error, stdout, stderr) => {
+    MakeBlankProject: (ProName, ProPath) => void(() => {
+        CreateBlankProjFiles(ProPath, ProName);
+    })()
+});
+
+//Creates Blank Project Files
+function CreateBlankProjFiles(CdPath, Name){
+
+    exec(`cd ${CdPath}\\ && mkdir ${Name} && cd ${Name} && mkdir art && mkdir source && mkdir include && mkdir audio && mkdir data && exit`, (error, stdout, stderr) => {
         if (error) {
             confirm(`Error: There was an error making your project. This is most likely due to a misspelling in the Project Path.\n Close DS Creator.`);
             console.log(`error: ${error.message}`);
@@ -152,50 +162,17 @@ contextBridge.exposeInMainWorld("api", {
         }
         console.log(`Output: ${stdout}`);
         if(!error){
-            var Path = ProPath + '\\' + ProName;
-            CreateBlankProjFiles(Path, MakefileText, MainCText, ProName, SoundbankBinHText, SoundbankHText);
+            CdPath = CdPath + "\\" + Name;
+
+            fs.copyFile(`${localStorage.getItem("AppPath")}\\Makefile.bin`, `${CdPath}\\Makefile`);
+            fs.writeFile(`${CdPath}\\${Name}.DSCProj`, "");
+            fs.copyFile(`${localStorage.getItem("AppPath")}\\events.dll`, `${CdPath}\\include\\events.c`);
+            fs.copyFile(`${localStorage.getItem("AppPath")}\\main.dll`, `${CdPath}\\source\\main.c`);
+                
+            localStorage.setItem('ProjectFile', `${CdPath}\\${Name}.DSCProj`);
+            localStorage.setItem('ProjectDir', `${CdPath}`);
+            localStorage.setItem('ProjectFileName', `${Name}`);
+            //location.href = './projectOpen.html';
         }
     })
-});
-
-//Creates Blank Project Files
-function CreateBlankProjFiles(CdPath, MakefileText, MainCText, Name, SoundbankBinHText, SoundbankHText){
-    let ProjectFileErr = false;
-    fs.writeFile(`${CdPath}\\Makefile`, MakefileText, err => {
-        if(err){
-            confirm("Error: Error Making Makefile.\n Close DS Creator.");
-        }
-    });
-    fs.writeFile(`${CdPath}\\src\\main.c`, MainCText, err => {
-        if(err){
-            confirm("Error: Error Making main.c.\n Close DS Creator.");
-        }
-    });
-    fs.writeFile(`${CdPath}\\${Name}.DSCProj`, MainCText, err => {
-        if(err){
-            confirm(`Error: Error Making ${Name}.DSCProj.\n Close DS Creator.`);
-            ProjectFileErr = true;
-        }
-    });
-    fs.writeFile(`${CdPath}\\build\\soundbank_bin.h`, SoundbankHText, err => {
-        if(err){
-            confirm("Error: Error Making soundbank_bin.h.\n Close DS Creator.");
-            ProjectFileErr = true;
-        }
-    });
-    fs.writeFile(`${CdPath}\\build\\soundbank.h`, SoundbankBinHText, err => {
-        if(err){
-            confirm("Error: Error Making soundbank.h.\n Close DS Creator.");
-            ProjectFileErr = true;
-        }
-    });
-    fs.copyFile(`${localStorage.getItem("SoundBank")}\\soundbank.bin`, `${CdPath}\\build\\soundbank.bin`);
-    fs.copyFile(`${localStorage.getItem("SoundBank")}\\events.dll`, `${CdPath}\\include\\events.c`);
-    
-    if(ProjectFileErr == false){
-        localStorage.setItem('ProjectFile', `${CdPath}\\${Name}.DSCProj`);
-        localStorage.setItem('ProjectDir', `${CdPath}`);
-        localStorage.setItem('ProjectFileName', `${Name}`);
-        location.href = './projectOpen.html';
-    }
 }

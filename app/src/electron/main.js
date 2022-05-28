@@ -110,7 +110,7 @@ app.on('ready', () => {
     mainWindow = createMainWindow();
     discordWindow = createDiscordWindow();
 
-    Menu.setApplicationMenu(null);
+    //Menu.setApplicationMenu(null);
 });
 
 app.on('window-all-closed', () => {
