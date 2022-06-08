@@ -1,5 +1,20 @@
 declare var api: any;
 
-var Events = api.LoadEvents();
+let ReloadBtn = document.getElementById("ReloadButton");
 
-console.log(Events);
+ReloadBtn?.addEventListener('click', () => {
+    LoadTheEventsWait();
+});
+
+LoadTheEventsWait();
+
+async function LoadTheEvents() {
+}
+  
+async function LoadTheEventsWait(){
+    await api.GetAppPath();
+    await api.LoadEvents();
+    //@ts-expect-error
+    var Events = JSON.parse(localStorage.getItem("Events"));
+    console.log(Events);
+};
