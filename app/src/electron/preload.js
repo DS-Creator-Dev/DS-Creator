@@ -146,6 +146,21 @@ contextBridge.exposeInMainWorld("api", {
     //Makes A Blank Project
     MakeBlankProject: (ProName, ProPath) => void(() => {
         CreateBlankProjFiles(ProPath, ProName);
+    })(),
+    LoadEvents: () => void(() => {
+        let events = fs.readdir(`${nodePath.parse(localStorage.getItem("AppPath")).dir}\\Events`, (err, files) => {
+            var theFiles = new Array(files.length);
+            var theNum;
+            files.forEach(file => {
+              theFiles[theNum] = file;
+              console.log(theFiles[theNum]);
+              theNum++;
+              if(theNum > files.length - 1){
+                return theFiles;
+              }
+            });
+            
+        })
     })()
 });
 
