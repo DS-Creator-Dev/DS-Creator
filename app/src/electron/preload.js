@@ -149,8 +149,10 @@ contextBridge.exposeInMainWorld("api", {
     })(),
     LoadEvents: () => void(() => {
         fs.readdir(`${nodePath.parse(localStorage.getItem("AppPath")).dir}\\Events`, (err, files) => {
+            //confirm(files);
             localStorage.removeItem("Events");
             localStorage.setItem("Events", JSON.stringify(files));
+            console.log(files);
         })
     })()
 });

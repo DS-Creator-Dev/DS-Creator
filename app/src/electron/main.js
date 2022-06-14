@@ -68,6 +68,30 @@ function createDiscordWindow() {
 
     return discordWindow;
 }
+
+//App Ready/Done Stuff
+app.on('ready', () => {
+    mainWindow = createMainWindow();
+    discordWindow = createDiscordWindow();
+
+    //Menu.setApplicationMenu(null);
+});
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', () => {
+    if (electronBrowserWindow.getAllWindows().length === 0) {
+        mainWindow = createMainWindow();
+        discordWindow = createDiscordWindow();
+
+        Menu.setApplicationMenu(null);
+    }
+});
+
 //Gets the .nds file to play
 function getNDSPath() {
     fs.readdir(store.get('ProjectDir'), (err, files) => {
@@ -106,30 +130,6 @@ function openEmu() {
     return emulatorWindow;
 }
 
-app.on('ready', () => {
-    mainWindow = createMainWindow();
-    discordWindow = createDiscordWindow();
-
-    //Menu.setApplicationMenu(null);
-});
-
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
-
-app.on('activate', () => {
-    if (electronBrowserWindow.getAllWindows().length === 0) {
-        mainWindow = createMainWindow();
-        discordWindow = createDiscordWindow();
-
-        Menu.setApplicationMenu(null);
-    }
-});
-
-// -----
-
 // Let's listen for a call on the 'getPath' channel
 electronIpcMain.handle('getPath', async () => {
     // Dialog options.
@@ -138,7 +138,7 @@ electronIpcMain.handle('getPath', async () => {
         filters: [
             {
                 name: "DSC Projects",
-                extensions: ["DSCProj"],
+                extensions: ["DSCProj", "JSON"],
             }
         ]
     }
@@ -163,43 +163,6 @@ electronIpcMain.handle('getPath', async () => {
 
 function openDialog(parentWindow, options) {
     return electronDialog.showOpenDialog(parentWindow, options)
-        .then((result) => { if (result) { return result; } })
-        .catch((error) => { console.error('Show open dialog error: ' + error); });
-}
-
-electronIpcMain.handle('blankProject', async () => {
-
-    console.log('hi');
-    // Dialog options.
-    const options = {
-        filters: [
-            {
-                name: "DSC Projects",
-                extensions: ["DSCProj"],
-            }
-        ]
-    }
-
-    // When available, return the modified path back to the render thread via IPC
-    return await saveDialog(mainWindow, options)
-        .then((result) => {
-            // User cancelled the dialog
-            if (result.canceled === true) { return; }
-
-            let path = result.filePaths[0];
-
-            if(result.canceled === true){
-                return result.canceled;
-            }
-            else{
-                store.set('ProjectDir', nodePath.parse(path).dir);
-                return path;
-            }
-        })
-})
-
-function saveDialog(parentWindow, options) {
-    return electronDialog.showSaveDialog(parentWindow, options)
         .then((result) => { if (result) { return result; } })
         .catch((error) => { console.error('Show open dialog error: ' + error); });
 }

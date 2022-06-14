@@ -8,22 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var Events;
 let ReloadBtn = document.getElementById("ReloadButton");
 ReloadBtn === null || ReloadBtn === void 0 ? void 0 : ReloadBtn.addEventListener('click', () => {
     LoadTheEventsWait();
 });
 LoadTheEventsWait();
-function LoadTheEvents() {
-    return __awaiter(this, void 0, void 0, function* () {
-    });
-}
 function LoadTheEventsWait() {
     return __awaiter(this, void 0, void 0, function* () {
+        Events = undefined;
         yield api.GetAppPath();
         yield api.LoadEvents();
         //@ts-expect-error
-        var Events = JSON.parse(localStorage.getItem("Events"));
-        console.log(Events);
+        Events = JSON.parse(localStorage.getItem("Events"));
     });
 }
 ;
