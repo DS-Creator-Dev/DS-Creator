@@ -42,6 +42,10 @@
             openProject();
          });
 
+        document.getElementById('btn-documentation').addEventListener('click', () => {
+            location.href = "https://bowersindustry.github.io/ds-creator-docs/";
+         });
+
         function openProject() {
             window.ipcRender.invoke('getPath')
                 .then((Path) => {
