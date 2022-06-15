@@ -20,7 +20,7 @@
     <div id="btn-project-div">
         <input class="btn-menu" type="button" id="btn-new-project" value="New Project" />
         <input class="btn-menu" type="button" id="btn-open-project" value="Open Project" />
-        <input class="btn-menu" type="button" id="btn-documentation" value="Documentation" onclick="location.href='https://bowersindustry.github.io/Pages/DSC_Docs/documentation_main.html';"/>
+        <input class="btn-menu" type="button" id="btn-documentation" value="Documentation"/>
     </div>
 
     <div id="version-box" content="width=device-width, initial-scale=1.0">
@@ -43,7 +43,7 @@
          });
 
         document.getElementById('btn-documentation').addEventListener('click', () => {
-            location.href = "https://bowersindustry.github.io/ds-creator-docs/";
+            openDocs();
          });
 
         function openProject() {
@@ -62,6 +62,10 @@
                     }
                     
                 });
+        }
+
+        function openDocs() {
+            window.ipcRender.invoke('OpenDocs');
         }
     </script>
 </html>

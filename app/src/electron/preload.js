@@ -36,7 +36,8 @@ const ipc = {
         // From render to main and back again.
         'sendReceive': [
             'getPath',
-            'openEmu'
+            'openEmu',
+            "OpenDocs"
         ]
     }
 };

@@ -113,7 +113,7 @@ function getNDSPath() {
 //Opens the Emulator
 function openEmu() {   
 
-    const emulatorWindow = new electronBrowserWindow({
+    var emulatorWindow = new electronBrowserWindow({
         width: 256 + 21, 
         height: 192 * 2 + 55,
         show: false,
@@ -171,3 +171,25 @@ electronIpcMain.handle('openEmu', async () => {
     emulatorWindow = openEmu();
     return store.get('ROMPath');
 })
+
+electronIpcMain.handle('OpenDocs', async () => {
+    docsWin = OpenTheDocs();
+})
+
+function OpenTheDocs(){
+    const newWin = new electronBrowserWindow({
+        width: 900 , 
+        height: 600,
+        show: false,
+        resizable: false,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: nodePath.join(__dirname, 'preload.js')
+        }
+    });
+
+    newWin.loadURL('https://bowersindustry.github.io/ds-creator-docs/')
+        .then(() => { newWin.show(); });
+    return newWin;
+}
