@@ -82,15 +82,15 @@ contextBridge.exposeInMainWorld("api", {
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
-            return;
         }
         console.log(`Output: ${stdout}`);
         if(!error){
             document.getElementById('Console-Text').textContent = stdout;
         }
         if(isPlay){
+            console.log("isPlay")
             ipcRenderer.invoke('openEmu')
-                .then((ROM) => {
+                .then(() => {
                     localStorage.setItem('ROMPath', localStorage.getItem('ProjectDir') + "\\" + localStorage.getItem('ProjectFileName') + '.nds');
                     console.log(localStorage.getItem('ROMPath'));
                 });
@@ -161,7 +161,7 @@ contextBridge.exposeInMainWorld("api", {
 //Creates Blank Project Files
 function CreateBlankProjFiles(CdPath, Name){
 
-    exec(`cd ${CdPath}\\ && mkdir ${Name} && cd ${Name} && mkdir art && mkdir source && mkdir include && mkdir audio && mkdir data && exit`, (error, stdout, stderr) => {
+    exec(`cd ${CdPath}\\ && mkdir ${Name} && cd ${Name} && mkdir sprites && mkdir backgrounds && mkdir source && mkdir include && mkdir audio && mkdir data && exit`, (error, stdout, stderr) => {
         if (error) {
             confirm(`Error: There was an error making your project. This is most likely due to a misspelling in the Project Path.\n Close DS Creator.`);
             console.log(`error: ${error.message}`);
@@ -181,7 +181,7 @@ function CreateBlankProjFiles(CdPath, Name){
             localStorage.setItem('ProjectFile', `${CdPath}\\${Name}.DSCProj`);
             localStorage.setItem('ProjectDir', `${CdPath}`);
             localStorage.setItem('ProjectFileName', `${Name}`);
-            //location.href = './projectOpen.html';
+            location.href = './Engine.html';
         }
     })
 }

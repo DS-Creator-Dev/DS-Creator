@@ -113,9 +113,9 @@ function getNDSPath() {
 //Opens the Emulator
 function openEmu() {   
 
-    var emulatorWindow = new electronBrowserWindow({
+    const emulatorWindow = new electronBrowserWindow({
         width: 256 + 21, 
-        height: 192 * 2 + 55,
+        height: 192 * 2 + 75,
         show: false,
         resizable: false,
         webPreferences: {
@@ -169,7 +169,6 @@ function openDialog(parentWindow, options) {
 
 electronIpcMain.handle('openEmu', async () => {
     emulatorWindow = openEmu();
-    return store.get('ROMPath');
 })
 
 electronIpcMain.handle('OpenDocs', async () => {
