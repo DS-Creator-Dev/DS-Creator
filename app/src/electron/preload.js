@@ -4,6 +4,7 @@ const ipcRenderer = require('electron').ipcRenderer;
 const { exec } = require('child_process');
 const { dialog } = require('electron');
 const fs = require('fs/promises');
+const fs2 =  require("fs");
 
 
 const nodePath = require("path");
@@ -155,13 +156,20 @@ contextBridge.exposeInMainWorld("api", {
         })
     })(),
     LoadMusicAndSfx: () => void(() => {
-        var mods = fs.readdirSync(`${localStorage.getItem('ProjectDir')}\\audio`).filter(f=> f.endsWith(".mod"))
-        var wavs = fs.readdirSync(localStorage.getItem('ProjectDir')).filter(f=> f.endsWith(".wav"))
+        var mods = fs2.readdirSync(`${localStorage.getItem('ProjectDir')}\\audio`).filter(f=> f.endsWith(".mod"));
+        var wavs = fs2.readdirSync(`${localStorage.getItem('ProjectDir')}\\audio`).filter(f=> f.endsWith(".wav"));
         localStorage.setItem(".MODs",  JSON.stringify(mods));
         localStorage.setItem(".WAVs",  JSON.stringify(wavs));
 
+        var backrounds = fs2.readdirSync(`${localStorage.getItem('ProjectDir')}\\backgrounds`).filter(f=> f.endsWith(".png"));
+        var sprites = fs2.readdirSync(`${localStorage.getItem('ProjectDir')}\\sprites`).filter(f=> f.endsWith(".png"));
+        localStorage.setItem("Backgrounds",  JSON.stringify(backrounds));
+        localStorage.setItem("Sprites",  JSON.stringify(sprites));
+
         console.log(mods);
         console.log(wavs);
+        console.log(backrounds);
+        console.log(sprites);
     })()
 });
 
