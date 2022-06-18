@@ -153,6 +153,15 @@ contextBridge.exposeInMainWorld("api", {
             localStorage.setItem("Events", JSON.stringify(files));
             console.log(files);
         })
+    })(),
+    LoadMusicAndSfx: () => void(() => {
+        var mods = fs.readdirSync(`${localStorage.getItem('ProjectDir')}\\audio`).filter(f=> f.endsWith(".mod"))
+        var wavs = fs.readdirSync(localStorage.getItem('ProjectDir')).filter(f=> f.endsWith(".wav"))
+        localStorage.setItem(".MODs",  JSON.stringify(mods));
+        localStorage.setItem(".WAVs",  JSON.stringify(wavs));
+
+        console.log(mods);
+        console.log(wavs);
     })()
 });
 
