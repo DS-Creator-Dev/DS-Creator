@@ -5,8 +5,6 @@ const electronIpcMain = require('electron').ipcMain;
 
 const fs = require('fs');
 
-const { localStorage } = require('electron-browser-storage');
-
 const nodePath = require("path");
 
 const { Menu } = require('electron');

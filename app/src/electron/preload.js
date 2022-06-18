@@ -2,10 +2,8 @@ const { app } = require('electron')
 const contextBridge = require('electron').contextBridge;
 const ipcRenderer = require('electron').ipcRenderer;
 const { exec } = require('child_process');
-//const { remote } = require('electron').remote;
 const { dialog } = require('electron');
 const fs = require('fs/promises');
-const remote_1 = require('@electron/remote');
 
 
 const nodePath = require("path");
