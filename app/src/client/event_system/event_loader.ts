@@ -13,6 +13,8 @@ async function LoadTheEventsWait(){
     Events = undefined;
     await api.GetAppPath();
     await api.LoadEvents();
-    //@ts-expect-error
-    Events = JSON.parse(localStorage.getItem("Events"));
+    setTimeout(function() {
+        //@ts-expect-error
+        Events = JSON.parse(localStorage.getItem("Events"));
+    }, 1000)
 };

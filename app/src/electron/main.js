@@ -74,7 +74,7 @@ app.on('ready', () => {
 
     //Menu.setApplicationMenu(null);
 });
-
+//If all windows are closed
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
@@ -90,24 +90,6 @@ app.on('activate', () => {
     }
 });
 
-//Gets the .nds file to play
-function getNDSPath() {
-    fs.readdir(store.get('ProjectDir'), (err, files) => {
-        if (err)
-          console.log(err);
-        else {
-          //console.log("\nCurrent directory filenames:");
-          files.forEach(file => {
-            var rom = nodePath.parse(file).ext;
-            if(rom == '.nds'){
-                var MainPath = store.get('ProjectDir');
-                store.set('ROMPath', MainPath + "\\" + file);
-                emulatorWindow = openEmu();
-            }
-          })
-        }
-      })
-}
 //Opens the Emulator
 function openEmu() {   
 

@@ -19,8 +19,10 @@ function LoadTheEventsWait() {
         Events = undefined;
         yield api.GetAppPath();
         yield api.LoadEvents();
-        //@ts-expect-error
-        Events = JSON.parse(localStorage.getItem("Events"));
+        setTimeout(function () {
+            //@ts-expect-error
+            Events = JSON.parse(localStorage.getItem("Events"));
+        }, 1000);
     });
 }
 ;
