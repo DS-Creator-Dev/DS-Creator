@@ -2,57 +2,11 @@
 #include <maxmod9.h>
 #include <stdio.h>
 
-#include "soundbank.h"
-#include "soundbank_bin.h"
-
 int main() {
 
 	consoleDemoInit();
 
-	mmInitDefaultMem((mm_addr)soundbank_bin);
-	
-	// load the module
-	mmLoad( MOD_MYSONG );
-
-	// load sound effects
-	//mmLoadEffect( SFX_AMBULANCE );
-	//mmLoadEffect( SFX_BOOM );
-
-	// Start playing module
-	mmStart( MOD_MYSONG, MM_PLAY_LOOP );
-	
-	/*
-	mm_sound_effect ambulance = {
-		{ SFX_AMBULANCE } ,			// id
-		(int)(1.0f * (1<<10)),	// rate
-		0,		// handle
-		255,	// volume
-		0,		// panning
-	};
-
-	mm_sound_effect boom = {
-		{ SFX_BOOM } ,			// id
-		(int)(1.0f * (1<<10)),	// rate
-		0,		// handle
-		255,	// volume
-		255,	// panning
-	};
-	*/
-
-	// ansi escape sequence to clear screen and home cursor
-	// /x1b[line;columnH
-	iprintf("\x1b[2J");
-
-	// ansi escape sequence to set print co-ordinates
-	// /x1b[line;columnH
-	iprintf("\x1b[0;8HMaxMod Audio demo");
-	iprintf("\x1b[3;0HHold A for ambulance sound");
-	iprintf("\x1b[4;0HPress B for boom sound");
-	
-	// sound effect handle (for cancelling it later)
-	mm_sfxhand amb = 0;
-
-	do {
+	while(1){
 
 		int keys_pressed, keys_released;
 		
@@ -62,22 +16,45 @@ int main() {
 		keys_pressed = keysDown();
 		keys_released = keysUp();
 
-		// Play looping ambulance sound effect out of left speaker if A button is pressed
 		if ( keys_pressed & KEY_A ) {
-			//amb = mmEffectEx(&ambulance);
+			printf("A");
 		}
-
-		// stop ambulance sound when A button is released
-		if ( keys_released & KEY_A ) {
-			//mmEffectCancel(amb);
+		else if ( keys_pressed & KEY_B ) {
+			printf("B");
 		}
-
-		// Play explosion sound effect out of right speaker if B button is pressed
-		if ( keys_pressed & KEY_B ) {
-			//mmEffectEx(&boom);
+		else if ( keys_pressed & KEY_Y ) {
+			printf("Y");
 		}
-		if( keys_pressed & KEY_START) break;
-
-	} while(1);
+		else if ( keys_pressed & KEY_X ) {
+			printf("X");
+		}
+		else if ( keys_pressed & KEY_L ) {
+			printf("L");
+		}
+		else if ( keys_pressed & KEY_R ) {
+			printf("R");
+		}
+		else if ( keys_pressed & KEY_RIGHT ) {
+			printf("RIGHT");
+		}
+		else if ( keys_pressed & KEY_LEFT ) {
+			printf("LEFT");
+		}
+		else if ( keys_pressed & KEY_UP ) {
+			printf("UP");
+		}
+		else if ( keys_pressed & KEY_DOWN ) {
+			printf("DOWN");
+		}
+		else if ( keys_pressed & KEY_START ) {
+			printf("START");
+		}
+		else if ( keys_pressed & KEY_SELECT ) {
+			printf("SELECT");
+		}
+		else if ( keys_pressed & KEY_TOUCH ) {
+			printf("TOUCH");
+		}
+	}
 	return 0;
 }
