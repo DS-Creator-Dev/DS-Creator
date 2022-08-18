@@ -11,10 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var Events;
 let ReloadBtn = document.getElementById("ReloadButton");
 ReloadBtn === null || ReloadBtn === void 0 ? void 0 : ReloadBtn.addEventListener('click', () => {
-    LoadTheEventsWait();
+    LoadTheEvents();
 });
-LoadTheEventsWait();
-function LoadTheEventsWait() {
+LoadTheEvents();
+function LoadTheEvents() {
     return __awaiter(this, void 0, void 0, function* () {
         Events = undefined;
         yield api.GetAppPath();

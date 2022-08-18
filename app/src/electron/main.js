@@ -152,23 +152,5 @@ electronIpcMain.handle('openEmu', async () => {
 })
 
 electronIpcMain.handle('OpenDocs', async () => {
-    docsWin = OpenTheDocs();
+    require('electron').shell.openExternal('https://bowersindustry.github.io/ds-creator-docs/');
 })
-
-function OpenTheDocs(){
-    const newWin = new electronBrowserWindow({
-        width: 900 , 
-        height: 600,
-        show: false,
-        resizable: false,
-        webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true,
-            preload: nodePath.join(__dirname, 'preload.js')
-        }
-    });
-
-    newWin.loadURL('https://bowersindustry.github.io/ds-creator-docs/')
-        .then(() => { newWin.show(); });
-    return newWin;
-}

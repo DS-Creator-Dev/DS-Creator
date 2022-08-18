@@ -4,12 +4,12 @@ var Events;
 let ReloadBtn = document.getElementById("ReloadButton");
 
 ReloadBtn?.addEventListener('click', () => {
-    LoadTheEventsWait();
+    LoadTheEvents();
 });
 
-LoadTheEventsWait();
+LoadTheEvents();
   
-async function LoadTheEventsWait(){
+async function LoadTheEvents(){
     Events = undefined;
     await api.GetAppPath();
     await api.LoadEvents();
