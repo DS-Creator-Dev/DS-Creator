@@ -24,24 +24,26 @@
         <input type="image" src="../images/Reload.png" id="ReloadButton" />
         <div class="Art-Left">
             <p><b>Art</b>
-            <br>Backgrounds <button>+</button><br>
-            Sprites <button>+</button></br></br></p>
+            <br>Backgrounds <button id="bgBtn">+</button><br>
+            Sprites <button id="sprBtn">+</button></br></br></p>
         </div>
 
         <div class="Objects-Left">
             <p><b>Objects</b>
-            <br>Scenes <button>+</button><br>
-            Actors <button>+</button></br></br></p>
+            <br>Scenes <button id="sceneBtn">+</button><br>
+            Actors <button id="actorBtn">+</button></br></br></p>
         </div>
     
         <div class="Music-Left">
             <p><b>Sound</b>
-            <br>Music <button>+</button><br>
-            Sound Effects <button>+</button></br></br></p>
+            <br>Music <button id="musicBtn">+</button><br>
+            Sound Effects <button id="sfxBtn">+</button></br></br></p>
         </div>
     </div>
 
     <script src="../src/client/compiler/cmd.js"></script>
+
+    <script src="../src/client/engine_handler/hierarchy_btns.js"></script>
 
     <script src="../src/client/event_system/event_loader.js"></script>
     <script src="../src/client/resources_loaders/load_resources.js"></script>
