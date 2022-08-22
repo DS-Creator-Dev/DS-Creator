@@ -70,7 +70,9 @@ function createDiscordWindow() {
 //App Ready/Done Stuff
 app.on('ready', () => {
     mainWindow = createMainWindow();
-    discordWindow = createDiscordWindow();
+    if(store.get("discordbtnclicked") != "clicked"){
+        discordWindow = createDiscordWindow();
+    }
 
     //Menu.setApplicationMenu(null);
 });
@@ -84,7 +86,9 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     if (electronBrowserWindow.getAllWindows().length === 0) {
         mainWindow = createMainWindow();
-        discordWindow = createDiscordWindow();
+        if(store.get("discordbtnclicked") != "clicked"){
+            discordWindow = createDiscordWindow();
+        }
 
         Menu.setApplicationMenu(null);
     }

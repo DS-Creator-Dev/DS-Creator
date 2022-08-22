@@ -170,6 +170,9 @@ contextBridge.exposeInMainWorld("api", {
         console.log(wavs);
         console.log(backrounds);
         console.log(sprites);
+    })(),
+    clickedDisBtn: () => void(() => {
+        store.set("discordbtnclicked", "clicked")
     })()
 });
 
