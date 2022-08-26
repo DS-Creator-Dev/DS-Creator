@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DSCEngine/events/event.hpp"
+
 namespace DSC
 {
 	class Scene
@@ -7,15 +9,16 @@ namespace DSC
 	public:
 		Scene() = default;				
 		
-		virtual void init() = 0;
-		virtual void frame() = 0;
+		virtual void init();
+		virtual void frame();
 		
 		__attribute__((noinline))
-		virtual void run();
+		virtual void run();		
+				
 		
-		virtual void on_key_down(int keys);
-		virtual void on_key_held(int keys);
-		virtual void on_key_up(int keys);		
+		Event key_down;
+		Event key_held;
+		Event key_up;	
 		
 		virtual ~Scene() = default;
 	};

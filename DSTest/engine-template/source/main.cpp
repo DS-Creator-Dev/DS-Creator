@@ -6,45 +6,85 @@
 
 using namespace DSC;
 
-void on_key_press_1(void*, void*)
-{
-	iprintf("Action 1\n");
-}
-
-void on_key_press_2(void*, void*)
-{
-	iprintf("Action 2\n");
-}
-
-int main(void) 
-{
-	consoleDemoInit();
-	
-	iprintf("%i\n", f());
-	
-	Vector<int> v;
-	v.clear();
-	v.push_back(1);
-	v.push_back(2);
-	v.push_back(3);
-	
-	Event key_pressed_ev;
-	key_pressed_ev += on_key_press_1;
-	key_pressed_ev += on_key_press_2;
-	
-	int 
-		
-	for(int i=0;i<v.size();i++)
-		iprintf("%i ", v[i]);
-	
-	while(1) 
+class TestScene : public Scene
+{		
+public:
+	void init() override
 	{
-		swiWaitForVBlank();				
-		scanKeys();
-		if(keysDown()!=0)
-		{
-			key_pressed_ev.trigger(nullptr, nullptr);
-		}
+		consoleDemoInit();	
+		iprintf("%i\n", f());	
+	
+		iprintf("Vector:\n");
+		Vector<int> v;
+		v.clear();
+		v.push_back(1);
+		v.push_back(2);
+		v.push_back(3);		
+			
+		for(int i=0;i<v.size();i++)
+			iprintf("%i ", v[i]);	
+		
+		iprintf("\n");
+		
+		key_down += key_down_hanlder;
+		key_up += key_up_hanlder;
 	}
 
+	int events_count = 0;
+	
+private:
+	static constexpr int KEYS_COUNT = 14;
+	static const int keyIds[KEYS_COUNT];
+	static const char* keyNames[KEYS_COUNT];
+	
+	static void key_down_hanlder(void* sender, void* _keys)
+	{
+		const int& keys = (int)_keys;
+		TestScene*& scene = (TestScene*&)sender;
+		
+		scene->events_count++;
+		
+		iprintf("Key pressed  : %08X\n", keys);
+		for(int i=0;i<KEYS_COUNT;i++)
+		{
+			if(keys & keyIds[i]) iprintf("%s ",keyNames[i]);
+		}	
+		iprintf("Events count: %i\n\n", scene->events_count);
+		
+		if(keys & KEY_TOUCH)
+		{
+			scene->key_up -= key_up_hanlder;
+			iprintf("Removed keys up handler\n\n");
+		}
+	}
+	
+	static void key_up_hanlder(void* sender, void* _keys)
+	{
+		const int& keys = (int)_keys;
+		TestScene*& scene = (TestScene*&)sender;
+		
+		scene->events_count++;
+		
+		iprintf("Key released : %08X\n", keys);
+		for(int i=0;i<KEYS_COUNT;i++)
+		{
+			if(keys & keyIds[i]) iprintf("%s ",keyNames[i]);
+		}
+		iprintf("Events count: %i\n\n", scene->events_count);
+	}
+};
+
+		  
+int main(void) 
+{	
+	TestScene scene;
+	scene.init();
+	scene.run();
+	return 0;
 }
+
+
+const int TestScene::keyIds[TestScene::KEYS_COUNT] = {KEY_A, KEY_B, KEY_SELECT, KEY_START, KEY_RIGHT, KEY_LEFT,
+          KEY_UP, KEY_DOWN, KEY_R, KEY_L, KEY_X, KEY_Y, KEY_TOUCH, KEY_LID};
+const char* TestScene::keyNames[TestScene::KEYS_COUNT] = {"A", "B", "Select", "Start", "Right", "Left",
+          "Up", "Down", "R", "L", "X", "Y", "Touch", "Lid"};
