@@ -12,10 +12,9 @@ namespace DSC
 		virtual void init();
 		virtual void frame();
 		
-		__attribute__((noinline))
+		__attribute__((noinline))		
 		virtual void run();		
-				
-		
+						
 		Event key_down;
 		Event key_held;
 		Event key_up;	

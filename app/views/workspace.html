@@ -4,18 +4,35 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		
 		<link rel="stylesheet" href="../styles/workspace.css" />
+		<link rel="stylesheet" href="../dependencies/style/bootstrap.min.css" />
 	</head>
 	
-	<body>
-		<div class="body">
-			<div class="col c1">
+	<body>		
+			<div class="row body">
+				<div class="col-sm-3">
+					<h2>A</h2>
+				</div>
 				
-			</div><div class="col c2">
-			
-			</div><div class="col c3">
-			
-			</div>
-		</div>
+				<div class="col-sm-6 tabs-container">					
+					<div class="tab-headers" id="TabHeaders">
+						<div class="tab-header" text="tab1" content="TabContent">
+						</div><div class="tab-header" text="tab2" content="TabContent">
+						</div><div class="tab-header" text="tab3" content="TabContent"></div>
+					</div>
+					<div class="tab-content" id="TabContent">
+						Contents
+					</div>
+				</div>
+				
+				<div class="col-sm-3">
+					<h2>C</h2>
+				</div>
+				
+			</div>					
 	</body>
-	<script src="../src/client/workspace/workspace.js"></script>
+	
+	<script src="../dependencies/src/jquery.min.js"></script>
+	<script src="../dependencies/src/bootstrap.min.js"></script>
+	
+	<script src="../src/client/workspace/workspace.js"></script>	
 </html>

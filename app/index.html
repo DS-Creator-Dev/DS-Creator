@@ -21,6 +21,7 @@
         <input class="btn-menu" type="button" id="btn-new-project" value="New Project" />
         <input class="btn-menu" type="button" id="btn-open-project" value="Open Project" />
         <input class="btn-menu" type="button" id="btn-documentation" value="Documentation"/>
+        <input class="btn-menu" type="button" id="btn-test-workspace" value="Workspace (temp link)"/>
     </div>
 
     <div id="version-box" content="width=device-width, initial-scale=1.0">
@@ -44,6 +45,10 @@
 
         document.getElementById('btn-documentation').addEventListener('click', () => {
             openDocs();
+         });
+		 
+		 document.getElementById('btn-test-workspace').addEventListener('click', () => {
+            window.location = './views/workspace.html';
          });
 
         function openProject() {
