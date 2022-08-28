@@ -1,5 +1,5 @@
 #include "DSCEngine/video/allocator.hpp"
-#includ "allocs_table.h"
+#include "allocs_table.h"
 
 using namespace DSC;
 
