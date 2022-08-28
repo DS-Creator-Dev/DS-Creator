@@ -26,7 +26,7 @@ $(document).ready(function(){
 	
 	function createNode(parent, name, type) {
 		
-		var item = $(`<li><span class="label"><span>${name}</span></span></li>`);	
+		var item = $(`<li><span class="label"><span>${name}</span>&nbsp;</span></li>`);	
 
 		if(type!==undefined) {
 			if(type["node"]=="folder") {
