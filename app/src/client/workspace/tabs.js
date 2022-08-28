@@ -1,5 +1,10 @@
 $(document).ready(function(){
 	
+	$.fn.hasAttr = function(name) {  
+	   return this.attr(name) !== undefined;
+	};
+
+	
 	var tab_selected = null;
 	
 	$("div.tab-headers > div.tab-header").each(function() {		
@@ -17,9 +22,26 @@ $(document).ready(function(){
 		
 		elem.addClass("focus");
 		tab_selected = elem;
+				
+		var content_elem = $(`#${elem.attr("content")}`);
+		
+		if(elem.hasAttr("template")) {
+			var template_name = elem.attr("template");
+			console.log("has template");
+			
+			// what does AppPath do? 
+			api.GetAppPath()
+			var path = localStorage.getItem("AppPath");			
+			path += `/../src/client/workspace/templates/${template_name}.html`;
+			template = api.readTextFile(path);
+			
+			var tab_page = template;
+			
+			set_content(content_elem, tab_page);
+			return;
+		}
 		
 		var text = elem.attr("text");
-		var content_elem = $(`#${elem.attr("content")}`);
 		set_content(content_elem, text);
 	}
 	

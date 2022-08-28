@@ -38,7 +38,7 @@ function createMainWindow() {
         show: false,
         webPreferences: {
             nodeIntegration: false,
-            contextIsolation: true,
+            contextIsolation: true,			
             preload: nodePath.join(__dirname, 'preload.js')
         }
     });
@@ -158,3 +158,9 @@ electronIpcMain.handle('openEmu', async () => {
 electronIpcMain.handle('OpenDocs', async () => {
     require('electron').shell.openExternal('https://bowersindustry.github.io/ds-creator-docs/');
 })
+
+
+
+
+
+

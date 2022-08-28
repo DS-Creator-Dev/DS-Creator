@@ -36,7 +36,7 @@ const ipc = {
         'sendReceive': [
             'getPath',
             'openEmu',
-            "OpenDocs"
+            "OpenDocs",			
         ]
     }
 };
@@ -146,7 +146,7 @@ contextBridge.exposeInMainWorld("api", {
     //Makes A Blank Project
     MakeBlankProject: (ProName, ProPath) => void(() => {
         CreateBlankProjFiles(ProPath, ProName);
-    })(),
+    })(),	
     LoadEvents: () => void(() => {
         fs.readdir(`${nodePath.parse(localStorage.getItem("AppPath")).dir}\\Events`, (err, files) => {
             //confirm(files);
@@ -173,7 +173,17 @@ contextBridge.exposeInMainWorld("api", {
     })(),
     clickedDisBtn: () => void(() => {
         store.set("discordbtnclicked", "clicked")
-    })()
+    })(),
+	
+	
+	readFile: (filename) => {
+		const data = fs2.readFileSync(filename);
+		return data;
+	},	
+	readTextFile: (filename) => {
+		const data = fs2.readFileSync(filename, 'utf8');
+		return data;
+	},
 });
 
 //Creates Blank Project Files

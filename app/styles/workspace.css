@@ -57,6 +57,7 @@ div.tabs-container div.tab-headers > div.tab-header button.tab-close-btn {
 	background-image:url("../resources/close-btn.png");
 	background-size: contain;
 	background-repeat: no-repeat;	
+	image-rendering: crisp-edges;
 }
 
 div.tabs-container div.tab-headers > div.tab-header.focus {
