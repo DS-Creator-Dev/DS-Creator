@@ -1,0 +1,49 @@
+projtree {
+	margin-left:15px;
+	display:block;	
+}
+
+projtree ul {
+	list-style: none;
+	padding-top:0;
+	padding-bottom:0;
+}
+
+projtree li::before  {	
+	display:inline-block;
+	content:"";		
+	width:10px;
+	height:10px;
+	image-rendering:pixelated;
+	margin-right:7px;
+}
+
+projtree li.expandable::before  {
+	background-image:url("../../resources/node-expand.png");
+	display:inline-block;
+	content:"";
+	background-size:10px;
+	width:10px;
+	height:10px;
+	image-rendering:pixelated;
+	margin-right:7px;	
+}
+
+projtree li.expandable.expanded::before  {
+	background-image:url("../../resources/node-collapse.png");
+	display:inline-block;
+	content:"";
+	background-size:10px;
+	width:10px;
+	height:10px;
+	image-rendering:pixelated;
+	margin-right:7px;
+}
+
+projtree li.expandable ul {
+	display:none;
+}
+
+projtree li.expandable.expanded ul {
+	display:block;
+}

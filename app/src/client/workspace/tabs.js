@@ -103,5 +103,7 @@ $(document).ready(function(){
 			activate_tab($(this));
 		});
 	}
-		
+	
+	activate_tab($("div","#TabHeaders").first())	
+	
 });
