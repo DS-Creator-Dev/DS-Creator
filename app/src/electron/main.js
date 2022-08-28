@@ -33,8 +33,10 @@ const menuTemplate = [
 //Creates Main Window
 function createMainWindow() {
     const mainWindow = new electronBrowserWindow({
-        width: 900,
-        height: 600,
+        width: 1000,
+        height: 700,
+        minWidth: 1000,
+        minHeight: 700,
         show: false,
         webPreferences: {
             nodeIntegration: false,
@@ -158,9 +160,3 @@ electronIpcMain.handle('openEmu', async () => {
 electronIpcMain.handle('OpenDocs', async () => {
     require('electron').shell.openExternal('https://bowersindustry.github.io/ds-creator-docs/');
 })
-
-
-
-
-
-
