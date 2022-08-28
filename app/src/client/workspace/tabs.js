@@ -11,44 +11,57 @@ $(document).ready(function(){
 		render_tab($(this));
 	})
 	
-	function set_content(content_elem, content) {		
+	function set_tab_view(content_elem, elem, view) {		
+		view = $(`<div class="tab_view">${view}</div>`);
+		content_elem.append(view);
+		elem.data("tab_view", view);
+	}
+	
+	function show_tab(content_elem, elem) {
+		$("div.tab_view",content_elem).addClass("hidden");
+		elem.data("tab_view").removeClass("hidden");
+	}
+	
+	function set_content(content_elem, content) {				
+		
 		content_elem.html(content);
 	}
 	
 	function activate_tab(elem) {
 		if(tab_selected!==null) {
 			tab_selected.removeClass("focus");				
-		}
+		}		
 		
 		elem.addClass("focus");
-		tab_selected = elem;
+		tab_selected = elem;		
 				
 		var content_elem = $(`#${elem.attr("content")}`);
 		
-		if(elem.hasAttr("template")) {
-			var template_name = elem.attr("template");
-			console.log("has template");
-			
-			// what does AppPath do? 
-			api.GetAppPath()
-			var path = localStorage.getItem("AppPath");			
-			path += `/../src/client/workspace/templates/${template_name}.html`;
-			template = api.readTextFile(path);
-			
-			var tab_page = template;
-			
-			set_content(content_elem, tab_page);
-			return;
+		if(elem.data("tab_view")===undefined) {
+			if(elem.hasAttr("template")) {
+				var template_name = elem.attr("template");
+				console.log("has template");
+				
+				// what does AppPath do? 
+				api.GetAppPath()
+				var path = localStorage.getItem("AppPath");			
+				path += `/../src/client/workspace/templates/${template_name}.html`;
+				template = api.readTextFile(path);
+				
+				var tab_page = template;
+				
+				set_tab_view(content_elem, elem, tab_page);							
+			}
+			else {
+				set_tab_view(content_elem, elem, elem.attr("text"));
+			}
 		}
 		
-		var text = elem.attr("text");
-		set_content(content_elem, text);
+		show_tab(content_elem, elem);				
+		
 	}
 	
-	function close_tab(elem) {		
-		console.log(elem[0]);
-		console.log(tab_selected[0]);
-		console.log(Object.is(elem[0], tab_selected[0]));
+	function close_tab(elem) {				
 		if(elem[0]===tab_selected[0]) {			
 			var content_elem = $(`#${elem.attr("content")}`);
 			var prev = elem.prev();
@@ -67,7 +80,9 @@ $(document).ready(function(){
 				console.log("choose prev");
 				activate_tab(prev);
 			}
-		}				
+		}	
+		// TO DO: ask for save progress here
+		elem.data("tab_view").remove();
 		elem.remove();
 	}
 	

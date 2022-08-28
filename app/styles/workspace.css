@@ -73,3 +73,7 @@ div.tabs-container div.tab-headers > div.tab-header.focus button.tab-close-btn {
 div.tabs-container {
 	background:lightgray;
 }
+
+div.hidden {
+	display:none;
+}
