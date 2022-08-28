@@ -10,7 +10,6 @@ projtree ul {
 }
 
 projtree li::before  {	
-	display:inline-block;
 	content:"";		
 	width:10px;
 	height:10px;
