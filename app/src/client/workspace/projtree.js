@@ -9,12 +9,12 @@ $(document).ready(function(){
 	ptree.append(root);
 	root=ptree;
 	
-	var actors = createNode(root, "actors");
-	var assets = createNode(root, "assets");
-	var scenes = createNode(root, "scenes");
-	var sound = createNode(root, "sound");	
+	var actors = createNode(root, "actors", {"node":"folder", "spec":"actor"});
+	var assets = createNode(root, "assets", {"node":"folder", "spec":"asset"});
+	var scenes = createNode(root, "scenes", {"node":"folder", "spec":"scene"});
+	var sound = createNode(root, "sound", {"node":"folder", "spec":"sound"});	
 	
-	console.log(actors);
+	
 	createNode(actors,"actor1");
 	createNode(actors,"actor2");
 	createNode(actors,"actor3");
@@ -26,7 +26,19 @@ $(document).ready(function(){
 	
 	function createNode(parent, name, type) {
 		
-		var item = $(`<li><span class="label">${name}</span></li>`);		
+		var item = $(`<li><span class="label"><span>${name}</span></span></li>`);	
+
+		if(type!==undefined) {
+			if(type["node"]=="folder") {
+				var new_btn = $(`<a class="create_new" href="#">(new)</a>`);
+				new_btn.attr("what",type["spec"]);
+				$("span.label",item).append(new_btn);
+				new_btn.click(function(){
+					alert(`To create: new ${$(this).attr("what")}`);
+				});
+			}
+		}
+		
 		item.click(function(e){
 			if(!$(this).hasClass("expandable")) {				
 				console.log($("span.label",this).html())

@@ -44,6 +44,26 @@ projtree li.expandable ul {
 	display:none;
 }
 
+projtree li a.create_new {
+	display:none;
+	vertical-align:super;
+	font-size:10px;
+}
+
+projtree li span.label {	
+	display:inline-block;	
+	padding-right:100px;
+}
+
+projtree li span.label span {
+	display:inline;
+}
+
+projtree li span.label:hover > a.create_new {
+	display:inline;	
+}
+
+
 projtree li.expandable.expanded ul {
 	display:block;
 }
