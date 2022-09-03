@@ -1,8 +1,6 @@
+#include <DSC>
 #include <nds.h>
 #include <stdio.h>
-#include <test.h>
-
-#include <DSC>
 
 using namespace DSC;
 
@@ -10,7 +8,7 @@ class Scene1 : public Scene
 {
 public:
 	void init() override
-	{
+	{		
 		consoleDemoInit();		
 	
 		iprintf("This is Scene 1\n");
@@ -45,8 +43,5 @@ void Scene2::key_down_hanlder(void* sender, void* _keys)
 {
 	reinterpret_cast<Scene*>(sender)->close()->next(new Scene1());
 }
-	
-	
-
 
 dsc_launch(Scene1);

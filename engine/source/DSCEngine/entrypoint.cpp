@@ -12,6 +12,11 @@ volatile int __entrypoint_r15;
 
 int main()
 {
+	// On startup, some emulators may close/open the LID (?)
+	// which counts as a key event potentially captured by Scene.
+	// so we leave a window of some VBlanks for the KEY_LID 
+	// stuff to pass
+	for(int i=0;i<3;i++) swiWaitForVBlank();
 	
 	init_main_scene();
 	
