@@ -11,8 +11,7 @@ class TestScene : public Scene
 public:
 	void init() override
 	{
-		consoleDemoInit();	
-		iprintf("%i\n", f());	
+		consoleDemoInit();		
 	
 		iprintf("Vector:\n");
 		Vector<int> v;
@@ -74,14 +73,8 @@ private:
 	}
 };
 
-		  
-int main(void) 
-{	
-	TestScene scene;
-	scene.init();
-	scene.run();
-	return 0;
-}
+
+dsc_launch(TestScene);
 
 
 const int TestScene::keyIds[TestScene::KEYS_COUNT] = {KEY_A, KEY_B, KEY_SELECT, KEY_START, KEY_RIGHT, KEY_LEFT,

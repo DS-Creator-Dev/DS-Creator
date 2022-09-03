@@ -1,4 +1,7 @@
+#define DSC_INTERNAL
+
 #include "DSCEngine/scenes/scene.hpp"
+#include "../entrypoint.hpp"
 
 #include <nds.h>
 
@@ -35,4 +38,21 @@ void DSC::Scene::run()
 		
 		frame();		
 	}	
+}
+
+
+DSC::Scene* DSC::__MAIN_SCENE__ = nullptr;
+DSC::SceneCom DSC::__SceneComInstance__;
+
+void DSC::SceneCom::next(Scene* new_scene)
+{	
+	__MAIN_SCENE__ = new_scene;		
+	__entrypoint_return();
+	//...
+}
+
+DSC::SceneCom* DSC::Scene::close()
+{		
+	delete this;	
+	return &__SceneComInstance__;
 }
