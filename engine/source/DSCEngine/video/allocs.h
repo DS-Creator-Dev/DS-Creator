@@ -7,13 +7,13 @@ inline int create_alloc_id()
 	for(int i=0;i<16;i++)
 	{
 		if(alloc_ids[i]==0xFFFF) continue;
-		int j=0;
+		int j= (i==0 ? 1 : 0);
 		for(;alloc_ids[i] & (1<<j); j++);
 		
 		alloc_ids[i] |= (1<<j);
 		return (i<<4)|j;
 	}
-	return -1;
+	return 0;
 }
 
 inline void release_alloc_id(int id)

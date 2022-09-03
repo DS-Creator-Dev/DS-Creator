@@ -26,8 +26,8 @@ include $(DEVKITARM)/ds_rules
 #---------------------------------------------------------------------------------
 TARGET   := $(shell basename $(CURDIR))
 BUILD    := build
-SOURCES  := ${shell find ${source} -type d -print}
-INCLUDES := ${shell find ${include} -type d -print}
+SOURCES  := ${shell find ${source} -regex ".*source/.*" -type d -print}
+INCLUDES := include 
 DATA     := data
 GRAPHICS :=
 AUDIO    :=
@@ -159,6 +159,7 @@ endif
 
 #---------------------------------------------------------------------------------
 $(BUILD):
+	@echo $(INCLUDES)
 	@mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
