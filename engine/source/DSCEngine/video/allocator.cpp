@@ -1,4 +1,6 @@
 #include "DSCEngine/video/allocator.hpp"
+
+#include "allocs.h"
 #include "allocs_table.h"
 
 using namespace DSC;
@@ -57,7 +59,12 @@ DSC::Allocator::Allocator(int offset, int length)
 	: base_offset(offset), base_length(length)
 {
 	alloc_info::at(base_offset)->write(length, nullptr);
-	id = 0; // <---
+	int gen_id = create_alloc_id();
+	if(gen_id < 0)
+	{
+		// FATAL ERROR : Allocators full
+	}	
+	id = gen_id;
 }
 
 int address_stamp(int allocator_id, int base, int offset)
@@ -69,7 +76,7 @@ void* DSC::Allocator::reserve(int size, int desired_offset)
 {
 	if(size==0) return nullptr;
 	
-	size = (size+31)/32; // round size to its upper nearest multiple of 32
+	size = ((size+31)/32)*32; // round size to its upper nearest multiple of 32
 	
 	if(desired_offset>=0)
 	{				
@@ -112,6 +119,4 @@ void DSC::Allocator::release(void* address)
 {
 	if(address==nullptr) return;
 }
-
-
 
