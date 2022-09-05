@@ -167,6 +167,7 @@ function openNewResourceDialog(path) {
         height: 600,
         show: false,
         resizable: false,
+        alwaysOnTop: true,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
