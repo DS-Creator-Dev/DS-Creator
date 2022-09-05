@@ -33,8 +33,10 @@ $(document).ready(function(){
 				var new_btn = $(`<a class="create_new" href="#">(new)</a>`);
 				new_btn.attr("what",type["spec"]);
 				$("span.label",item).append(new_btn);
-				new_btn.click(function(){
-					alert(`To create: new ${$(this).attr("what")}`);
+				new_btn.click(function(){										
+					var item_type = $(this).attr("what");
+					api.openNewResourceDialog(`./workspace/new_dialogs/new_${item_type}.html`);
+					
 				});
 			}
 		}

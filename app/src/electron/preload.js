@@ -37,6 +37,7 @@ const ipc = {
             'getPath',
             'openEmu',
             "OpenDocs",			
+            "newResourceDialog",			
         ]
     }
 };
@@ -184,6 +185,13 @@ contextBridge.exposeInMainWorld("api", {
 		const data = fs2.readFileSync(filename, 'utf8');
 		return data;
 	},
+	
+	openNewResourceDialog: (path, title) => {		
+		ipcRenderer.invoke('newResourceDialog', {"path":path})
+			.then(() => {								
+				console.log(`Opened dialog: ${path}`);
+			});		
+	}
 });
 
 //Creates Blank Project Files

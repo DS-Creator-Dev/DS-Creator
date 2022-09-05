@@ -160,3 +160,27 @@ electronIpcMain.handle('openEmu', async () => {
 electronIpcMain.handle('OpenDocs', async () => {
     require('electron').shell.openExternal('https://bowersindustry.github.io/ds-creator-docs/');
 })
+
+function openNewResourceDialog(path) {
+	const dialog_window = new electronBrowserWindow({
+        width: 800, 
+        height: 600,
+        show: false,
+        resizable: false,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: nodePath.join(__dirname, 'preload.js')
+        }
+    });
+	
+	dialog_window.show();
+	
+    dialog_window.loadFile(nodePath.join(__dirname, "../client/", path))
+        .then(() => { dialog_window.show(); });
+    return dialog_window;
+}
+
+electronIpcMain.handle('newResourceDialog', async(event, args) => {
+	dialog_window = openNewResourceDialog(args.path);	
+});
