@@ -10,14 +10,19 @@ projtree ul {
 }
 
 projtree li::before  {	
+	display:inline-block;
+	opacity:0;
 	content:"";		
 	width:10px;
 	height:10px;
 	image-rendering:pixelated;
 	margin-right:7px;
+	background-image:url("../../resources/node-expand.png");
+	background-size:10px;
 }
 
 projtree li.expandable::before  {
+	opacity:1;
 	background-image:url("../../resources/node-expand.png");
 	display:inline-block;
 	content:"";
