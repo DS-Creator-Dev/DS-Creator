@@ -15,6 +15,7 @@ const { fstat } = require('fs');
 const store = new Store('project');
 
 let window;
+let mainWindow;
 
 const menuTemplate = [
     {
@@ -167,7 +168,8 @@ function openNewResourceDialog(path) {
         height: 600,
         show: false,
         resizable: false,
-        alwaysOnTop: true,
+		parent: mainWindow,
+        modal: true,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -177,8 +179,13 @@ function openNewResourceDialog(path) {
 	
 	dialog_window.show();
 	
-    dialog_window.loadFile(nodePath.join(__dirname, "../client/", path))
-        .then(() => { dialog_window.show(); });
+    dialog_window.loadFile(nodePath.join(__dirname, "../client/", path));        
+		
+	dialog_window.once("ready-to-show", ()=> {
+		dialog_window.webContents.once("did-finish-load", ()=> {
+			dialog_window.show();
+		});
+	});
     return dialog_window;
 }
 
