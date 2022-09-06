@@ -104,7 +104,8 @@ function openEmu() {
         width: 256 + 21, 
         height: 192 * 2 + 75,
         show: false,
-        resizable: false,
+        //resizable: false,
+        resizable: true,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,

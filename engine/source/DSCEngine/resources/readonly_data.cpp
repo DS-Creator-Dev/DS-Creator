@@ -1,5 +1,8 @@
 #include "DSCEngine/resources/readonly_data.hpp"
 
+#include <nds.h>
+
+
 DSC::ReadOnlyData::ReadOnlyData(int header_size) : header_size(header_size) { }
 
 void DSC::ReadOnlyData::extract(void* destination)
