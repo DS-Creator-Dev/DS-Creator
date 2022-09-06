@@ -11,10 +11,18 @@
 		<span>Height (px)</span><input type="text"></input><br/>
 		<hr/>
 		<h5>Or...</h5>		
-		<button>Load it from file... (*.png)</button>		
+		<button id="pngbtn">Load it from file... (*.png)</button>		
 		<br/><p>(WHEN DIALOG CLOSES [ok btn], CREATE A NEW ASSET TAB WITH THE USER'S CONFIGURATION)</p>		
 	</body>
 	
 	<script src="../../../../dependencies/src/jquery.min.js"></script>
 	<script src="../../../../dependencies/src/bootstrap.min.js"></script>
+	<script>
+		document.getElementById("pngbtn").addEventListener("click", function(){
+			window.ipcRender.invoke('loadPNG').then((img) => {
+				console.log(img);
+				document.getElementById("pngbtn").textContent = img;
+			})
+		})
+	</script>
 </html>

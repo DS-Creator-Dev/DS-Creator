@@ -193,3 +193,32 @@ function openNewResourceDialog(path) {
 electronIpcMain.handle('newResourceDialog', async(event, args) => {
 	dialog_window = openNewResourceDialog(args.path);	
 });
+
+electronIpcMain.handle('loadPNG', async () => {
+    // Dialog options.
+    const optionsPNG = {
+        properties: ["openFile"],
+        filters: [
+            {
+                name: ".png images",
+                extensions: ["png"],
+            }
+        ]
+    }
+
+    // When available, return the modified path back to the render thread via IPC
+    return await openDialog(mainWindow, optionsPNG)
+        .then((result) => {
+            // User cancelled the dialog
+            if (result.canceled === true) { return; }
+
+            let path = result.filePaths[0];
+
+            if(result.canceled === true){
+                return result.canceled;
+            }
+            else{
+                return path;
+            }
+        })
+})

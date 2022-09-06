@@ -37,7 +37,8 @@ const ipc = {
             'getPath',
             'openEmu',
             "OpenDocs",			
-            "newResourceDialog",			
+            "newResourceDialog",
+            'loadPNG',			
         ]
     }
 };
