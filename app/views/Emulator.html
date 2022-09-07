@@ -16,6 +16,7 @@
             user-select: none;
             -webkit-touch-callout: none;
             cursor: inherit;
+			position:relative;			
         }
 
         body {
@@ -35,10 +36,25 @@
         }        
     </style>       	
     <nds-player id="player"></nds-player>
+	
+	<textarea id="Logs" style="position:absolute; top:0; left:256px; width:256px; height:384px;">Log messages from DS ROM!
+</textarea>
+	<script src="../src/client/emulator/console_log.js"></script>
     <script src="../src/client/emulator/localforage.js"></script>
-    <script src="../src/client/emulator/nds.js"></script>
+    <script src="../src/client/emulator/nds.js"></script>	
 	
 	<script>
+		nds_log_feedback = function(msg) {			
+			// maybe pass `msg` via api
+			document.getElementById('Logs').innerHTML+=msg+"\n";
+			if(document.getElementById('Logs').innerHTML.split("\n").length>20) {
+				var lines = document.getElementById('Logs').innerHTML.split("\n");
+				
+				document.getElementById('Logs').innerHTML =  lines.slice(lines.length-20,lines.length).join('\n');
+			}
+		}
+		console.log(console.log);
+	
 		var player = document.querySelector("nds-player");
 		if(player) {			
 			player.innerHTML = '<div id="player"><canvas id="top" width="256" height="192"></canvas><canvas id="bottom" width="256" height="192"></canvas></div>';
