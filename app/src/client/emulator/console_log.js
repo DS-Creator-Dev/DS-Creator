@@ -4,6 +4,14 @@ var nds_log_feedback = function(msg) {
 	alert(msg);
 };
 
+var nds_wrn_feedback = function(msg) {
+	alert("WARNING:\n" + msg);
+};
+
+var nds_err_feedback = function(msg) {
+	alert("ERROR:\n" + msg);
+};
+
 console.log = (function() {
 	var original_log = console.log;	
 	
@@ -15,6 +23,12 @@ console.log = (function() {
 				// use it in the emu window, or send it to main window
 				nds_log_feedback(nds_log_message);
 				return;
+			}
+			else if(args[0].startsWith("[EMU|WRN] << ")) {
+				nds_wrn_feedback(args[0].substring(13));
+			}
+			else if(args[0].startsWith("[EMU|ERR] << ")) {
+				nds_err_feedback(args[0].substring(13));
 			}
 		}
 		original_log(...args);

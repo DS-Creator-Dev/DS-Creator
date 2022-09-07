@@ -17,7 +17,9 @@ public:
 		iprintf(" B     - Boop!\n");
 		iprintf(" X     - Ping!\n");
 		iprintf(" Y     - Pong!\n");
-		iprintf(" Touch - Get coords");
+		iprintf(" Touch - Get coords\n");
+		iprintf(" L     - Warning\n");
+		iprintf(" R     - Error\n");
 		
 		
 		key_down += key_down_hanlder;
@@ -42,6 +44,8 @@ void Scene1::key_down_hanlder(void* sender, void* _keys)
 			Debug::log("Touch at %i %i", touch.px, touch.py);
 			break;
 		}
+		case KEY_L: Debug::warn("This is a warning!"); break;
+		case KEY_R: Debug::error("This is an error!"); break;
 		default: break;
 	}
 }
