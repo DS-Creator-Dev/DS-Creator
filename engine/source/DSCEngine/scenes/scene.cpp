@@ -1,6 +1,7 @@
 #define DSC_INTERNAL
 
 #include "DSCEngine/scenes/scene.hpp"
+#include "DSCEngine/debug/log.hpp"
 #include "../entrypoint.hpp"
 
 #include <nds.h>
@@ -48,7 +49,7 @@ void DSC::SceneCom::next(Scene* new_scene)
 {	
 	__MAIN_SCENE__ = new_scene;		
 	__entrypoint_return();
-	//...
+	Debug::error("Scene transition missed");	
 }
 
 DSC::SceneCom* DSC::Scene::close()

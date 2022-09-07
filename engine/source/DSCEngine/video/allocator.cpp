@@ -1,4 +1,5 @@
 #include "DSCEngine/video/allocator.hpp"
+#include "DSCEngine/debug/log.hpp"
 
 #include "allocs.h"
 #include "allocs_table.h"
@@ -65,7 +66,7 @@ DSC::Allocator::Allocator(int offset, int length)
 	int gen_id = create_alloc_id();
 	if(gen_id == 0)
 	{
-		// FATAL ERROR : Allocators limit exceeded
+		Debug::error("Allocators limit exceeded");		
 	}	
 	id = gen_id;
 }

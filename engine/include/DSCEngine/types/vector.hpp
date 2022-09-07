@@ -7,9 +7,10 @@
 
 #pragma once
 
+#include "DSCEngine/debug/log.hpp"
+
 #define callstack_call ;
 #define callstack_ret return
-#define FATAL_ERROR(s) ;
 
 namespace DSC
 {
@@ -249,7 +250,7 @@ T& DSC::Vector<T>::operator[] (int index)
 	callstack_call
 	
 	if(index>=_size)
-		FATAL_ERROR("Index out of range");
+		Debug::error("Index out of range");
 	
 	callstack_ret container[index];
 }
@@ -260,7 +261,7 @@ const T& DSC::Vector<T>::operator[] (int index) const
 	callstack_call
 	
 	if(index>=_size)
-		FATAL_ERROR("Index out of range");
+		Debug::error("Index out of range");
 	
 	callstack_ret container[index];
 }
@@ -271,7 +272,7 @@ const T& DSC::Vector<T>::get_at(int index) const
 	callstack_call
 	
 	if(index>=_size)
-		FATAL_ERROR("Index out of range");
+		Debug::error("Index out of range");
 	
 	callstack_ret container[index];
 }
@@ -310,7 +311,7 @@ void DSC::Vector<T>::remove_at(int index)
 {
 	callstack_call
 	if(index >= _size)
-		FATAL_ERROR("Index out of range");
+		Debug::error("Index out of range");
 	
 	_size--;
 	for(int j=index;j<_size;j++)
