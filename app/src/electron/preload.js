@@ -72,8 +72,9 @@ contextBridge.exposeInMainWorld(
     }
 );
 
+
 //Create Api Functions
-contextBridge.exposeInMainWorld("api", {
+let api = {
     //Open The CMD/Terminal
     OpenCmd: (path, isPlay) => exec(`cd ${path} && make && exit`, (error, stdout, stderr) => {
         if (error) {
@@ -193,7 +194,7 @@ contextBridge.exposeInMainWorld("api", {
 				console.log(`Opened dialog: ${path}`);
 			});		
 	}
-});
+}
 
 //Creates Blank Project Files
 function CreateBlankProjFiles(CdPath, Name){
@@ -222,3 +223,9 @@ function CreateBlankProjFiles(CdPath, Name){
         }
     })
 }
+
+//api.emulator = ...
+api.project_manager = require("./preload_routines/project.js");
+api.discop = require("./preload_routines/discop.js");
+
+contextBridge.exposeInMainWorld("api", api);
