@@ -37,6 +37,17 @@ namespace
 			LOG_CODE(MOV_R5_R5, message); break;
 		}		
 	}
+	
+	char* copy_str(char* dest, const char* src)
+	{
+		for(;*src;) 
+			*(dest++) = *(src++);		
+		*dest = '\0';
+		return dest;
+	}
+	
+	static const char* hex_lower = "0123456789abcdef";
+	static const char* hex_upper = "0123456789ABCDEF";
 		
 	__attribute__((target("thumb"))) 
 	void _logv(int role, const char* message, va_list args)
@@ -49,7 +60,7 @@ namespace
 			if(*msg=='%')
 			{
 				++msg;
-				if(*msg==0) break;
+				if(*msg==0) break;															
 				
 				switch(*msg)
 				{
@@ -66,9 +77,14 @@ namespace
 						if(val<0)						
 							*(built++)='-', val = -val;						
 						
+						int nzeros = 0;
+						for(;val%10==0;val/=10) nzeros++;
+						
 						int temp = 0;
 						for(;val;val/=10) temp=temp*10 + val%10;						
 						for(;temp;temp/=10) *(built++)='0'+temp%10;
+						
+						for(;nzeros--;) *(built++)='0';
 						
 						++msg;
 						break;
@@ -83,9 +99,14 @@ namespace
 							break;
 						}
 						
+						int nzeros = 0;
+						for(;val%10==0;val/=10) nzeros++;
+												
 						int temp = 0;
 						for(;val;val/=10) temp=temp*10 + val%10;						
 						for(;temp;temp/=10) *(built++)='0'+temp%10;
+						
+						for(;nzeros--;) *(built++)='0';
 						
 						break;
 					}
@@ -97,6 +118,52 @@ namespace
 											
 						++msg;
 						break;
+					}
+					case 'b':
+					{
+						int val = va_arg(args, int);
+						if(val)
+							built = copy_str(built, "T");
+						else 
+							built = copy_str(built, "F");
+						break;
+					}
+					case 'B':
+					{
+						int val = va_arg(args, int);
+						if(val)
+							built = copy_str(built, "True");
+						else 
+							built = copy_str(built, "False");
+						break;
+					}
+					case 'x':					
+					{
+						unsigned val = va_arg(args, unsigned);
+						bool num_start = false;
+						for(int i=0;i<8;i++)
+						{
+							int digit = (val & 0xF0000000)>>28;
+							val<<=4;
+							if(!num_start && digit==0)
+								continue;											
+							num_start = true;
+							*(built++) = hex_lower[digit];
+						}						
+					}
+					case 'X':
+					{
+						unsigned val = va_arg(args, unsigned);
+						bool num_start = false;
+						for(int i=0;i<8;i++)
+						{
+							int digit = (val & 0xF0000000)>>28;
+							val<<=4;
+							if(!num_start && digit==0)
+								continue;											
+							num_start = true;
+							*(built++) = hex_upper[digit];
+						}								
 					}
 				}					
 			}
