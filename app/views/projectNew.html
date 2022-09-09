@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSC : Create New Project</title>
-    <link rel="stylesheet" href="../styles/new.css" />
-</head>
-<body>
-    <div>
-        <p>Project Name</p>
-        <input type="text" class="text-box" id="name-input"/>
-        <p>Project Path</p>
-        <input type="text" class="text-box" id="path-input"/>
-    </div>
-    <br>
-    
-    <input class="btn-menu" type="button" id="sample-proj-btn" value="Create Sample Project"/>
-    <input class="btn-menu" type="button" id="blank-proj-btn" value="Create Blank Project"/>
-    <input class="btn-menu" type="button" id="back-btn" value="Back"/>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>DSC : Create New Project</title>
+		
+		<link rel="stylesheet" href="../dependencies/style/bootstrap.min.css" />		
+		
+		<link rel="stylesheet" href="../styles/new_proj/style.css" />
+	</head>
+	<body>
+		<div class="container" style="padding:20px 0px;">						
+			<h3>Create new project...</h3>			
+			<div class="row">
+				<p>Project Name</p>
+			</div>
+			<div class="row">
+			<input type="text" class="text-box" id="name-input"/>
+			</div>
+			
+			<hr/>
+			
+			<div class="row">				
+			<p>Project Path</p>
+			</div>
+			<div class="row">
+				<input type="text" class="text-box" id="path-input"/>
+				<button class="btn btn-light" id="path-selector">...</button>				
+			</div>			
+				
+			<br>			
+			<button class="btn btn-primary" type="button" id="sample-proj-btn">Create Sample Project</button>
+			<button class="btn btn-primary" type="button" id="blank-proj-btn">Create Blank Project</button>
+			<button class="btn btn-primary" type="button" id="back-btn">Back</button>
+			
+		</div>
+		
+	</body>
+	<script src="../dependencies/src/jquery.min.js"></script>
+	<script src="../dependencies/src/bootstrap.min.js"></script>
 
     <script src="../src/client/project_handle/project_btn.js"></script>
-</body>
 </html>
