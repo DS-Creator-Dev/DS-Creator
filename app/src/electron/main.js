@@ -222,3 +222,15 @@ electronIpcMain.handle('loadPNG', async () => {
             }
         })
 })
+
+electronIpcMain.handle('openDirectorySelectorDialog', async () => {
+	return await electronDialog.showOpenDialog(mainWindow, {
+		properties: ['openDirectory']		
+	}).then((result) => {
+		if (result.canceled === true) { 
+			return null; 
+		}
+		let path = result.filePaths[0];
+		return path;
+	})	
+});

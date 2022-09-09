@@ -38,6 +38,7 @@ const ipc = {
             'openEmu',
             "OpenDocs",			
             "newResourceDialog",
+			"openDirectorySelectorDialog",
             'loadPNG',			
         ]
     }
@@ -227,5 +228,11 @@ function CreateBlankProjFiles(CdPath, Name){
 //api.emulator = ...
 api.project_manager = require("./preload_routines/project.js");
 api.discop = require("./preload_routines/discop.js");
+
+api.dialogs = {
+	pickDirectory : () => {
+		return ipcRenderer.invoke('openDirectorySelectorDialog')
+	}	
+};
 
 contextBridge.exposeInMainWorld("api", api);

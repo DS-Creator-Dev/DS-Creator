@@ -28,7 +28,7 @@
 			<div class="row">
 				<input type="text" class="text-box" id="path-input"/>
 				<button class="btn btn-light" id="path-selector">...</button>				
-			</div>			
+			</div>						
 				
 			<br>			
 			<button class="btn btn-primary" type="button" id="sample-proj-btn">Create Sample Project</button>
@@ -42,4 +42,17 @@
 	<script src="../dependencies/src/bootstrap.min.js"></script>
 
     <script src="../src/client/project_handle/project_btn.js"></script>
+	
+	<script>
+		$("#path-selector").click(async function(){			
+			var path = await api.dialogs.pickDirectory()
+			$('#path-input').val(path);
+		})
+		
+		$("#blank-proj-btn").click(function() {
+			var proj_path = api.discop.combinePaths($('#path-input').val(), $("#name-input").val())
+			alert(proj_path)
+		})
+		
+	</script>
 </html>
