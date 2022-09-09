@@ -5,32 +5,39 @@
 		
 		<link rel="stylesheet" href="../styles/workspace/tabs.css" />
 		<link rel="stylesheet" href="../styles/workspace/projtree.css" />
+		<link rel="stylesheet" href="../styles/workspace/toolbar.css" />
 		<link rel="stylesheet" href="../dependencies/style/bootstrap.min.css" />		
 	</head>
 	
-	<body>		
-			<div class="row body">
-				<div class="col-sm-3">					
-					<projtree id="ProjectTree" name="Root">						
-					</projtree>
+	<body>				
+		<div class="row" id="toolbar-menu">			
+			<div class="toolbar-item tb-save" title="Save"></div>
+			<div class="toolbar-item tb-save-as" title="Save As..."></div>
+			<div class="toolbar-item tb-build" title="Build ROM"></div>
+			<div class="toolbar-item tb-run" title="Play ROM"></div>
+			<div class="toolbar-item tb-settings" title="Project Settings"></div>
+		</div>
+		<div class="row body">
+			<div class="col-sm-3">					
+				<projtree id="ProjectTree" name="Root">						
+				</projtree>
+			</div>				
+			<div class="col-sm-6 tabs-container">					
+				<div class="tab-headers" id="TabHeaders">
+					<div class="tab-header" text="Getting Started" content="TabContent" template="getting_started">
+					</div><div class="tab-header" text="Scene Editor" content="TabContent" template="scene_editor">
+					</div><div class="tab-header" text="tab3" content="TabContent"></div>
 				</div>
-				
-				<div class="col-sm-6 tabs-container">					
-					<div class="tab-headers" id="TabHeaders">
-						<div class="tab-header" text="Getting Started" content="TabContent" template="getting_started">
-						</div><div class="tab-header" text="Scene Editor" content="TabContent" template="scene_editor">
-						</div><div class="tab-header" text="tab3" content="TabContent"></div>
-					</div>
-					<div class="tab-content" id="TabContent">
-						
-					</div>
+				<div class="tab-content" id="TabContent">
+					
 				</div>
-				
-				<div class="col-sm-3">
-					<h2>C</h2>
-				</div>
-				
-			</div>					
+			</div>
+			
+			<div class="col-sm-3">
+				<h2>C</h2>
+			</div>
+			
+		</div>					
 	</body>	
 	
 	<script src="../dependencies/src/jquery.min.js"></script>

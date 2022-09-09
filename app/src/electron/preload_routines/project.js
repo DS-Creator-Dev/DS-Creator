@@ -124,7 +124,7 @@ function Project (path, action) {
 			throw "Could not create project. Directory creation failed";
 		}		
 		
-		self.setName(arguments[2]);		
+		self.setName(arguments[2]);	
 		self.writeProjFile();
 	}
 	else if(action == "open") {

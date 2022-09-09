@@ -24,12 +24,11 @@ module.exports.executionPath = function() {
 	return result;
 }
 
-function combinePaths(...args) {	
-	return nodePath.join(...args);	
+function combinePaths(...args) {
+	return nodePath.join(...args);
 }
 
 module.exports.combinePaths = combinePaths;
-
 
 function fileName(path) {
 	return nodePath.basename(path)
