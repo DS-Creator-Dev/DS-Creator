@@ -39,6 +39,11 @@
 				overflow-x:auto;
 				overflow-y:auto;
 			}
+			
+			div.err {
+				font-size:10px;
+				color:red;
+			}
 						
 		</style>
 	</head>
@@ -52,17 +57,20 @@
 					<table id="asset_data">
 						<tr>
 							<td><span>Asset name</span></td>
-							<td><input type="text" id="input-name" placeholder="my_asset"></input></td>
+							<td><input type="text" id="input-name" placeholder="my_asset"></input>
+								<br/><div id="err-name" class="err"></td>
 						</tr>
 						
 						<tr>
 							<td><span>Width</span></td>
-							<td><input type="number" id="input-width" placeholder="256"></input>&nbsp;px</td>
+							<td><input type="number" id="input-width" placeholder="256"></input>&nbsp;px
+								<br/><div id="err-width" class="err"></td>
 						</tr>
 						
 						<tr>
 							<td><span>Height</span></td>
-							<td><input type="number" id="input-height" placeholder="256"></input>&nbsp;px</td>
+							<td><input type="number" id="input-height" placeholder="256"></input>&nbsp;px
+								<br/><div id="err-height" class="err"></td>
 						</tr>						
 					</table>		
 				</div>
@@ -89,19 +97,45 @@
 		document.getElementById("pngbtn").addEventListener("click", function(){
 			window.ipcRender.invoke('loadPNG').then((img) => {
 				
+				/// Warning: no corner cases are treated !!!
+				/// The code assumes the PNG exists in the correct format
+				
 				var preview = api.discop.readFileSync(img);
 				
 				api.discop.writeCache("./tmp.png", preview);
 								
 				$("#preview-img").attr("src", "../../../../cache/tmp.png");
 				
-				var name = api.discop.fileName(img).replace(/\.[^/.]+$/, "").replaceAll(" ","_");
+				preview = new Image();
 				
-				$("#input-name").val(name);
-				$("#input-width").val($("#preview-img")[0].naturalWidth);
-				$("#input-height").val($("#preview-img")[0].naturalHeight);
+				preview.onload = function() {			
+					$("#err-name").html("");
+					$("#err-width").html("");
+					$("#err-height").html("");
+					
+					var name = api.discop.fileName(img).replace(/\.[^/.]+$/, "").replaceAll(" ","_");
+					var width = $("#preview-img")[0].naturalWidth;
+					var height = $("#preview-img")[0].naturalHeight;
+					
+					$("#input-name").val(name);
+					$("#input-width").val(width);
+					$("#input-height").val(height);
+					
+					if(name.length==0) {
+						$("#err-name").html("Asset name cannot be empty");
+					}				
+					
+					if(width % 8!= 0) {
+						$("#err-width").html("Image width must be a multiple of 8");
+					}
+					
+					if(height % 8!= 0) {
+						$("#err-width").html("Image height must be a multiple of 8");
+					}
+				}
 				
-				console.log(img);				
+				preview.src = "../../../../cache/tmp.png";					
+				
 			})
 		})
 	</script>
