@@ -36,10 +36,19 @@ $(document).ready(function(){
 				var new_btn = $(`<a class="create_new" href="#">(new)</a>`);
 				new_btn.attr("what",type["spec"]);
 				$("span.label",item).append(new_btn);
-				new_btn.click(function(){										
+				new_btn.click(async function(){										
 					var item_type = $(this).attr("what");
-					api.openNewResourceDialog(`./workspace/new_dialogs/new_${item_type}.html`);
+					await api.windowData.set("inDialog", true);
+					api.openNewResourceDialog(`./workspace/new_dialogs/new_${item_type}.html`);									
+					// wait for dialog to close (better approach?)
 					
+					while(await api.windowData.get("inDialog")==true) {
+						await api.utils.sleep(10);
+					};																	
+					console.log("Dialog closed");					
+					
+					var result = await api.windowData.get("new_dialog_result")
+					console.log(result);
 				});
 			}
 		}

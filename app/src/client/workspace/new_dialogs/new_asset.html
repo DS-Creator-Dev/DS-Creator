@@ -86,7 +86,9 @@
 				<a id="pngbtn" href="#" style="width:auto; margin-left:-10px;">Load asset from file</a>
 			</div>
 			<div class="row">
-				<button class="btn btn-light" style="background-color:#eee; padding-left:15px; padding-right:15px; width:auto;">Ok</button>
+				<button id="okbtn" class="btn btn-light" style="background-color:#eee; padding-left:15px; padding-right:15px; width:auto;">
+					Ok
+				</button>
 			</div>
 		</div>
 	</body>
@@ -94,6 +96,8 @@
 	<script src="../../../../dependencies/src/jquery.min.js"></script>
 	<script src="../../../../dependencies/src/bootstrap.min.js"></script>
 	<script>
+		var confirmed = false;
+	
 		document.getElementById("pngbtn").addEventListener("click", function(){
 			window.ipcRender.invoke('loadPNG').then((img) => {
 				
@@ -132,11 +136,38 @@
 					if(height % 8!= 0) {
 						$("#err-width").html("Image height must be a multiple of 8");
 					}
+					
+					api.windowData.set("new_dialog_result", {
+						"width"  : width,
+						"height" : height,
+						"source" : img
+					});
 				}
 				
 				preview.src = "../../../../cache/tmp.png";					
 				
 			})
+		})
+		
+
+		$(document).ready(function(){
+			api.windowData.set("new_dialog_result", null);
+		
+			$(window).on("beforeunload", function(e) { 
+				if(!confirmed) { // X is pressed instead of Ok
+					api.windowData.set("new_dialog_result", null);
+				}
+				api.windowData.set("inDialog", false);				
+			})
+			
+			$("#okbtn").click(function(e){				
+				confirmed = true;
+				
+				// validate things
+				// ...
+				
+				window.close();
+			});
 		})
 	</script>
 </html>
