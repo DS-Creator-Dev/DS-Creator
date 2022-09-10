@@ -45,3 +45,35 @@ button#path-selector {
 div.row {
 	padding:0px 10px;
 }
+
+select {
+	background-color: whitesmoke;
+	height:40px;
+	border-radius:5px;
+	transition: 150ms;
+	width:100%;
+	border:1px solid gray;
+}
+
+select:hover {
+	background-color: lightgrey;
+}
+
+select option {
+	background:white;
+}
+
+div.buttons-panel {
+	display: flex; 
+	align-items: flex-end; 
+	justify-content: flex-end;
+}
+
+div.buttons-panel button {
+	width:auto;
+	margin:2px;
+}
+
+div.errbox {
+	color:red;
+}

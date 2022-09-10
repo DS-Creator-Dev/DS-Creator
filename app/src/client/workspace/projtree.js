@@ -1,4 +1,7 @@
-
+$.fn.setRootName = function(name) {
+	$(this).attr("name", name);
+	$("h6", $(this)).html(name);
+}
 
 $(document).ready(function(){
 	var ptree = $('#ProjectTree');

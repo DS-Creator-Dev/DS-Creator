@@ -40,6 +40,10 @@ const ipc = {
             "newResourceDialog",
 			"openDirectorySelectorDialog",
             'loadPNG',			
+			
+			"getWindowData",
+			"setWindowData",
+			"clearWindowData",
         ]
     }
 };
@@ -98,23 +102,7 @@ let api = {
                     console.log(localStorage.getItem('ROMPath'));
                 });
         }
-    }),
-    //Saves The Project
-    SaveProject: () => void(() => {
-        localStorage.setItem('Contents', "No");
-        console.log("\nFile Contents of file before append:",
-        fs.readFile(localStorage.getItem('ProjectFile'), "utf8"));
-  
-        fs.appendFile(localStorage.getItem('ProjectFile'), "World", (err) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            console.log("\nFile Contents of file after append:",
-            fs.readFile(localStorage.getItem('ProjectFile'), "utf8"));
-        }
-    });
-    })(),
+    }),      
     //Opnes The Settings
     Settings: () => void(() => {
         console.log('Settings');
@@ -146,35 +134,7 @@ let api = {
             PathApp = nodePath.parse(PathApp).dir;
         }
         localStorage.setItem("AppPath", `${PathApp}`)
-    })(),
-    //Makes A Blank Project
-    MakeBlankProject: (ProName, ProPath) => void(() => {
-        CreateBlankProjFiles(ProPath, ProName);
-    })(),	
-    LoadEvents: () => void(() => {
-        fs.readdir(`${nodePath.parse(localStorage.getItem("AppPath")).dir}\\Events`, (err, files) => {
-            //confirm(files);
-            localStorage.removeItem("Events");
-            localStorage.setItem("Events", JSON.stringify(files));
-            console.log(files);
-        })
-    })(),
-    LoadMusicAndSfx: () => void(() => {
-        var mods = fs2.readdirSync(`${localStorage.getItem('ProjectDir')}\\audio`).filter(f=> f.endsWith(".mod"));
-        var wavs = fs2.readdirSync(`${localStorage.getItem('ProjectDir')}\\audio`).filter(f=> f.endsWith(".wav"));
-        localStorage.setItem(".MODs",  JSON.stringify(mods));
-        localStorage.setItem(".WAVs",  JSON.stringify(wavs));
-
-        var backrounds = fs2.readdirSync(`${localStorage.getItem('ProjectDir')}\\backgrounds`).filter(f=> f.endsWith(".png"));
-        var sprites = fs2.readdirSync(`${localStorage.getItem('ProjectDir')}\\sprites`).filter(f=> f.endsWith(".png"));
-        localStorage.setItem("Backgrounds",  JSON.stringify(backrounds));
-        localStorage.setItem("Sprites",  JSON.stringify(sprites));
-
-        console.log(mods);
-        console.log(wavs);
-        console.log(backrounds);
-        console.log(sprites);
-    })(),
+    })(),      
     clickedDisBtn: () => void(() => {
         store.set("discordbtnclicked", "clicked")
     })(),
@@ -197,37 +157,22 @@ let api = {
 	}
 }
 
-//Creates Blank Project Files
-function CreateBlankProjFiles(CdPath, Name){
 
-    exec(`cd ${CdPath}\\ && mkdir ${Name} && cd ${Name} && mkdir sprites && mkdir backgrounds && mkdir source && mkdir include && mkdir audio && mkdir data && exit`, (error, stdout, stderr) => {
-        if (error) {
-            confirm(`Error: There was an error making your project. This is most likely due to a misspelling in the Project Path.\n Close DS Creator.`);
-            console.log(`error: ${error.message}`);
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-        }
-        console.log(`Output: ${stdout}`);
-        if(!error){
-            CdPath = CdPath + "\\" + Name;
-
-            fs.copyFile(`${localStorage.getItem("AppPath")}\\Makefile.bin`, `${CdPath}\\Makefile`);
-            fs.writeFile(`${CdPath}\\${Name}.DSCProj`, "");
-            fs.copyFile(`${localStorage.getItem("AppPath")}\\events.dll`, `${CdPath}\\include\\events.c`);
-            fs.copyFile(`${localStorage.getItem("AppPath")}\\main.dll`, `${CdPath}\\source\\main.c`);
-                
-            localStorage.setItem('ProjectFile', `${CdPath}\\${Name}.DSCProj`);
-            localStorage.setItem('ProjectDir', `${CdPath}`);
-            localStorage.setItem('ProjectFileName', `${Name}`);
-            location.href = './Engine.html';
-        }
-    })
-}
 
 //api.emulator = ...
 api.project_manager = require("./preload_routines/project.js");
 api.discop = require("./preload_routines/discop.js");
+
+
+api.windowData = {
+	get : async (field) => { 		
+		let result = await ipcRenderer.invoke("getWindowData", field);
+		result = JSON.parse(result);
+		return result;		
+	},
+	set : async (field, value) => { ipcRenderer.invoke("setWindowData", field, JSON.stringify(value)); },
+	clear : async () => { ipcRenderer.invoke("clearWindowData"); }
+};
 
 api.dialogs = {
 	pickDirectory : () => {
