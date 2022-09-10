@@ -137,17 +137,7 @@ let api = {
     })(),      
     clickedDisBtn: () => void(() => {
         store.set("discordbtnclicked", "clicked")
-    })(),
-	
-	
-	readFile: (filename) => {
-		const data = fs2.readFileSync(filename);
-		return data;
-	},	
-	readTextFile: (filename) => {
-		const data = fs2.readFileSync(filename, 'utf8');
-		return data;
-	},
+    })(),	
 	
 	openNewResourceDialog: (path, title) => {		
 		ipcRenderer.invoke('newResourceDialog', {"path":path})
@@ -164,9 +154,18 @@ api.project_manager = require("./preload_routines/project.js");
 api.discop = require("./preload_routines/discop.js");
 
 
+// between pages communications
+//
+// a.html : api.windowData.set("message", "some message")
+//          window.location.href = "b.html"
+//
+// b.html : api.windowData.get("message") // === "some message"
+//          api.windowData.clear()        // removes all entries
+//          api.windowData.get("message") // === undefined
 api.windowData = {
 	get : async (field) => { 		
 		let result = await ipcRenderer.invoke("getWindowData", field);
+		if(result===undefined) return result;
 		result = JSON.parse(result);
 		return result;		
 	},

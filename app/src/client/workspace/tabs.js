@@ -46,7 +46,7 @@ $(document).ready(function(){
 				api.GetAppPath()
 				var path = localStorage.getItem("AppPath");			
 				path += `/../src/client/workspace/templates/${template_name}.html`;
-				template = api.readTextFile(path);
+				template = api.discop.readTextFileSync(path);
 				
 				var tab_page = template;
 				

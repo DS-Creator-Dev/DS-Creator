@@ -237,9 +237,7 @@ electronIpcMain.handle('openDirectorySelectorDialog', async () => {
 
 let windowData = {}; // object to allow communication between mainWindow pages
 
-electronIpcMain.handle('getWindowData', async (e, field) => {
-	console.log(field);
-	console.log(windowData);
+electronIpcMain.handle('getWindowData', async (e, field) => {	
 	return windowData[field];
 });
 
