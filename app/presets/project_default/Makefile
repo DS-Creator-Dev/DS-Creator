@@ -13,7 +13,7 @@ endif
 
 include $(DEVKITARM)/ds_rules
 
-LIBDSC  := D:\Users\NotImpLife\Projects\DS-Creator\engine
+LIBDSC  := @{LIBDSC}
 
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output

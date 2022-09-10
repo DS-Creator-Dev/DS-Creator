@@ -48,56 +48,21 @@ function Sound(name) {
 
 
 function Project (path, action) {
-	let self=this;
+	let self=this;	
 	self.path = path;
+	
+	/// This is the object's part we can see from renderer:
 	self.name = "UntitledProject";
+	
 	self.assets = [];
 	self.actors = [];
 	self.scenes = [];
-	self.sounds = [];		
+	self.sounds = [];			
 	
-	console.log(arguments);
+	self.startupScene = -1; // an index pointing to self.scenes[..]
 	
-	self.getRelPath = function(...rel_path) {
-		return discop.combinePaths(self.path, ...rel_path);
-	}
-	
-	
-	self.setName = function(new_name) {
-		self.name = new_name;
-	}		
-	
-	// create .DSCProj file 
-	self.writeProjFile = function() {				
-		discop.writeTextFileSync(self.getRelPath(`.DSCProj`), 
-			JSON.stringify(self,
-				function(key, val) { 
-					if (key !== "path") return val; // exclude internal property .path
-				},
-				2) // spacing level
-		);
-	};
-	
-	self.loadProjFile = function() {
-		var data = JSON.parse(discop.readTextFileSync(self.getRelPath(`.DSCProj`)));
-		// copy file contents to this
-		for(var key in data) {
-			self[key] = data[key];
-		}		
-	}
-	
-	self.addAsset = function(path) {
-		var fname = discop.fileName(path);
-		if(discop.existsFile(self.getRelPath("assets/",fname))) {
-			if(confirm("An asset with the same name already exists. Overwrite?")) {
-				
-				assets.add(new Asset(fname));
-			}
-			else {
-				return;
-			}
-		}
-	}
+		
+	///--------------------------
 	
 	/////////////////////////////////////////////////////////////////////////////////
 	
@@ -149,6 +114,98 @@ function Project (path, action) {
 	return this;
 };
 
+Project.prototype.getRelPath = function(...rel_path) {
+	return discop.combinePaths(this.path, ...rel_path);
+}
+
+
+Project.prototype.setName = function(new_name) {
+	this.name = new_name;
+}		
+
+// create .DSCProj file 
+Project.prototype.writeProjFile = function() {		
+	var self = this;
+	discop.writeTextFileSync(self.getRelPath(`.DSCProj`), 
+		JSON.stringify(self,
+			function(key, val) { 
+				if (key !== "path") return val; // exclude internal property .path
+			},
+			2) // spacing level
+	);
+};
+
+Project.prototype.loadProjFile = function() {
+	var self = this;
+	var data = JSON.parse(discop.readTextFileSync(self.getRelPath(`.DSCProj`)));
+	// copy file contents to this
+	for(var key in data) {
+		self[key] = data[key];
+	}		
+}
+
+Project.prototype.addAsset = function(path) {
+	var self = this;
+	var fname = discop.fileName(path);
+	if(discop.existsFile(self.getRelPath("assets/",fname))) {
+		if(confirm("An asset with the same name already exists. Overwrite?")) {
+			
+			assets.add(new Asset(fname));
+		}
+		else {
+			return;
+		}
+	}
+}
+
+let cpaths = discop.combinePaths;
+
+Project.prototype.generateBuildFiles = function() {
+	// this is called before each compilation
+	
+	var self = this;
+	var build_path = self.getRelPath(".build");
+	
+	var include_path = cpaths(build_path,"include");
+	var source_path = cpaths(build_path,"source");
+	var data_path = cpaths(build_path,"data");
+	
+	
+	discop.removeDirRec(build_path);
+	discop.createDir(build_path);
+	discop.createDir(include_path);
+	discop.createDir(source_path);
+	discop.createDir(data_path);	
+	
+	// generate Makefile
+	discop.copyTextFileSync(
+		discop.appRelPath("presets/project_default/Makefile"),
+		cpaths(build_path, "Makefile"),
+		{
+			"@{LIBDSC}" : discop.engineLibPath()
+		}
+	)
+	
+	
+	// generate Launcher file
+	// this sets the first scene to play (could be as well a DSC slash screen?)
+	// scene transitions are performed in c++ via engine's Scene::close()->next(new Scene) api
+	discop.copyTextFileSync(
+		discop.appRelPath("presets/project_default/source/launcher.cpp"),
+		cpaths(build_path, "source/launcher.cpp"),
+		{
+			"@{STARTUP_SCENE}" : (self.startupScene == -1 ? "DummyScene" : "<Not Implemented>"),
+		}
+	)		
+
+	// at this point, <PROJECT_FILE>/.build/ contains a compileable libnds project	
+	
+}
+
+
+
+
+
 
 module.exports.create_project = function(path, name) {
 	try {
@@ -174,12 +231,17 @@ module.exports.load_project = function(path) {
 };
 
 module.exports.get_file = function(project, rel_path) {
-	return discop.readFileSync(project.getRelPath(rel_path));
+	Object.setPrototypeOf(project, Project.prototype)	
+	return discop.readFileSync(project.getRelPath(rel_path));	
 }
 
 module.exports.set_file = function(project, rel_path, data) {
+	Object.setPrototypeOf(project, Project.prototype)
 	discop.writeFileSync(project.getRelPath(rel_path), data);
 }
 
-
+module.exports.build = function(project) {
+	Object.setPrototypeOf(project, Project.prototype)
+	project.generateBuildFiles();
+}
 

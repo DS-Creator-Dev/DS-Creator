@@ -18,14 +18,26 @@ const parentPath = function(path, nodes_to_pass) {
 module.exports.parentPath = parentPath;
 
 // returns "{dirs...}/DS-Creator/app"
-module.exports.executionPath = function() {
+function executionPath() {
 	var result = __dirname;
 	result = parentPath(result, 3);
 	return result;
 }
+module.exports.executionPath = executionPath;
 
 function combinePaths(...args) {
 	return nodePath.join(...args);
+}
+
+// path to the static library files.
+// idea : DSCEngine path should reside in %%PATH%% just 
+// like $(DESVKITARM) does 
+module.exports.engineLibPath = function() {
+	return combinePaths(executionPath(), "../engine");
+}
+
+module.exports.appRelPath = function(...args) {
+	return combinePaths(executionPath(), ...args);
 }
 
 module.exports.combinePaths = combinePaths;
@@ -129,4 +141,12 @@ module.exports.writeFileSync = function (filename, data) {
 
 module.exports.writeTextFileSync = function (filename, data) {
 	fs.writeFileSync(filename, data, "utf8");
+}
+
+module.exports.copyTextFileSync = function(source, dest, dictionary) {
+	var text = fs.readFileSync(source, 'utf8');
+	for(var key in dictionary) {
+		text = text.replaceAll(key, dictionary[key]);
+	}
+	fs.writeFileSync(dest, text, 'utf8');
 }
