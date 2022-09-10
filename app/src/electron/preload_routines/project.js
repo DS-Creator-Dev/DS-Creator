@@ -1,5 +1,5 @@
 const discop = require("./discop.js")
-
+const cmd = require("./cmd.js")
 
 function Asset(name) {
 	var self = this;
@@ -182,7 +182,8 @@ Project.prototype.generateBuildFiles = function() {
 		discop.appRelPath("presets/project_default/Makefile"),
 		cpaths(build_path, "Makefile"),
 		{
-			"@{LIBDSC}" : discop.engineLibPath()
+			"@{LIBDSC}" : discop.engineLibPath(),
+			"@{PROJ_NAME}" : self.name
 		}
 	)
 	
@@ -243,5 +244,11 @@ module.exports.set_file = function(project, rel_path, data) {
 module.exports.build = function(project) {
 	Object.setPrototypeOf(project, Project.prototype)
 	project.generateBuildFiles();
+	
+}
+
+module.exports.make = async function(project) {
+	Object.setPrototypeOf(project, Project.prototype)
+	return await cmd.make(project.getRelPath(".build"));
 }
 

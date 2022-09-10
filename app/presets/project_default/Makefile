@@ -26,7 +26,7 @@ LIBDSC  := @{LIBDSC}
 # ICON is the image used to create the game icon, leave blank to use default rule
 # NITRO is a directory that will be accessible via NitroFS
 #---------------------------------------------------------------------------------
-TARGET   := $(shell basename $(CURDIR))
+TARGET   := @{PROJ_NAME}
 BUILD    := build
 SOURCES  := source
 INCLUDES := include
