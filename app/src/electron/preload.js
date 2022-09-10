@@ -152,6 +152,7 @@ let api = {
 //api.emulator = ...
 api.project_manager = require("./preload_routines/project.js");
 api.discop = require("./preload_routines/discop.js");
+api.utils = require("./preload_routines/utils.js");
 
 
 // between pages communications

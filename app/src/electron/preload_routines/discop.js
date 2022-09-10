@@ -143,6 +143,15 @@ module.exports.writeTextFileSync = function (filename, data) {
 	fs.writeFileSync(filename, data, "utf8");
 }
 
+module.exports.writeCache = function(filename, data) {
+	console.log(combinePaths(executionPath(),"cache",filename))
+	fs.writeFileSync(combinePaths(executionPath(),"cache",filename), data);
+}
+
+module.exports.readCache = function(filename) {
+	return fs.readFileSync(combinePaths(executionPath(),"cache",filename));
+}
+
 module.exports.copyTextFileSync = function(source, dest, dictionary) {
 	var text = fs.readFileSync(source, 'utf8');
 	for(var key in dictionary) {
