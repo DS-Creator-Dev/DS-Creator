@@ -49,6 +49,14 @@ $(document).ready(function(){
 					
 					var result = await api.windowData.get("new_dialog_result")
 					console.log(result);
+					
+					if(item_type=="asset") {
+						// TO DO list:
+						// copy resource to project directory;
+						// generate the appropiate resource Object;
+						// insert it in the project tree;
+						createNode(assets, result.name);
+					}
 				});
 			}
 		}
