@@ -97,14 +97,24 @@ function render_tab(elem) {
 	});
 }
 
+api.tabs.on("tab_added", (data)=>{
+	console.log(data.tab.title);
+})
+
+api.tabs.on("tab_added", (data)=>{
+	var tab = data.tab;
+	var tab_header = $('<div class="tab-header" content="TabContent"></div>');
+	tab_header.attr("text", tab.title);
+	tab_header.attr("template", tab.template);
+	$("#TabHeaders").append(tab_header);
+	render_tab(tab_header);
+	activate_tab(tab_header);
+})
+
+
 
 function add_tab(title, template) {
-	var tab = $('<div class="tab-header" content="TabContent"></div>');
-	tab.attr("text", title);
-	tab.attr("template", template);	
-	$("#TabHeaders").append(tab);
-	render_tab(tab);
-	activate_tab(tab);
+	api.tabs.add(title, template);	
 }
 
 

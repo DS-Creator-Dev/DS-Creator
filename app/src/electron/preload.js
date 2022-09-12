@@ -155,7 +155,7 @@ let api = {
 api.project_manager = require("./preload_routines/project.js");
 api.discop = require("./preload_routines/discop.js");
 api.utils = require("./preload_routines/utils.js");
-
+api.tabs = require("./preload_routines/tabs.js");
 
 // between pages communications
 //
