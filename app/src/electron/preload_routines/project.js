@@ -1,51 +1,51 @@
 const discop = require("./discop.js")
 const cmd = require("./cmd.js")
 
-function Asset(name) {
-	var self = this;
+function Asset(name, width, height) {
+	var self = this;	
 	self.name = name;
-		
-	self.precompile = function() {
-		
-	}
+	self.width = width;
+	self.height = height;	
 	
 	return this;
+}
+
+Asset.prototype.precompile = function() {
+	
 }
 
 function Actor(name) {
 	var self = this;
-	self.name = name;
-	
-	self.precompile = function() {
-		
-	}
-		
+	self.name = name;			
 	
 	return this;
+}
+
+Actor.prototype.precompile = function() {
+	
 }
 
 function Scene(name) {
 	var self = this;
-	self.name = name;		
-	
-	self.precompile = function() {
-		
-	}
+	self.name = name;			
 	
 	return this;
+}
+
+Scene.prototype.precompile = function() {
+	
 }
 
 function Sound(name) {
 	var self = this;
-	self.name = name;		
-	
-	self.precompile = function() {
-		
-	}
+	self.name = name;			
 	
 	return this;
 }
 
+Sound.prototype.precompile = function() {
+	
+}
 
 function Project (path, action) {
 	let self=this;	
@@ -144,18 +144,34 @@ Project.prototype.loadProjFile = function() {
 	}		
 }
 
-Project.prototype.addAsset = function(path) {
+Project.prototype.removeAsset = function(name) {
+	var target = this.assets.filter(x=>x.name==name);
+	
+	if(target.length==0) return;
+	if(target.length>1) {
+		confirm("Asset duplicate. Something's really messed up");
+		return;
+	}
+	target = target[0];
+	discop.removeFile(this.getRelPath("assets",`${name}.png`));
+	this.assets = this.assets.filter(x=>x.name!=name);
+}
+
+Project.prototype.addAsset = function(path, name, width, height) {
 	var self = this;
 	var fname = discop.fileName(path);
-	if(discop.existsFile(self.getRelPath("assets/",fname))) {
-		if(confirm("An asset with the same name already exists. Overwrite?")) {
-			
-			assets.add(new Asset(fname));
+	if(discop.existsFile(self.getRelPath("assets/", name+".png"))) {
+		if(confirm("An asset with the same name already exists. Overwrite?")) {									
+			self.removeAsset(name);
 		}
 		else {
-			return;
+			return false;
 		}
 	}
+	
+	discop.copyFileSync(path, this.getRelPath("assets", name+".png"));
+	this.assets.push(new Asset(name, width, height));
+	return true;
 }
 
 let cpaths = discop.combinePaths;
@@ -203,11 +219,6 @@ Project.prototype.generateBuildFiles = function() {
 	
 }
 
-
-
-
-
-
 module.exports.create_project = function(path, name) {
 	try {
 		var project = new Project(path, "create", name);
@@ -231,6 +242,11 @@ module.exports.load_project = function(path) {
 	}
 };
 
+module.exports.rel_path = function(project, ...args) {
+	Object.setPrototypeOf(project, Project.prototype)	
+	return project.getRelPath(...args);
+}
+
 module.exports.get_file = function(project, rel_path) {
 	Object.setPrototypeOf(project, Project.prototype)	
 	return discop.readFileSync(project.getRelPath(rel_path));	
@@ -252,3 +268,27 @@ module.exports.make = async function(project) {
 	return await cmd.make(project.getRelPath(".build"));
 }
 
+module.exports.add_asset = function(project, path, name, width, height) {
+	Object.setPrototypeOf(project, Project.prototype);
+	var succeeded = project.addAsset(path, name, width, height);
+	console.log(project);
+	return {"succeeded":succeeded, "project":project};
+}
+
+module.exports.save = function(project) {
+	Object.setPrototypeOf(project, Project.prototype);
+	project.writeProjFile();
+}
+
+module.exports.get_resource_path = function(project, res_type, res_name) {
+	var res_dir = "";
+	var res_ext = "";
+	switch(res_type) {
+		case "asset" : res_dir = "assets", res_ext="png"; break;
+		case "actor" : res_dir = "actors", res_ext="???"; break;
+		case "scene" : res_dir = "scenes", res_ext="???"; break;
+		case "sound" : res_dir = "sound", res_ext="???"; break;		
+	}
+	Object.setPrototypeOf(project, Project.prototype);
+	return project.getRelPath(res_dir, `${res_name}.${res_ext}`);
+}

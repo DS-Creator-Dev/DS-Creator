@@ -50,19 +50,40 @@ $(document).ready(function(){
 					var result = await api.windowData.get("new_dialog_result")
 					console.log(result);
 					
-					if(item_type=="asset") {
-						// TO DO list:
-						// copy resource to project directory;
-						// generate the appropiate resource Object;
-						// insert it in the project tree;
-						createNode(assets, result.name);
+					if(item_type == "asset") {
+						var add_result = api.project_manager.add_asset(PROJECT, result.source, result.name, result.width, result.height);
+						if(add_result.succeeded == true) {
+							PROJECT = add_result.project;
+							createNode(assets, result.name, {"node":"file", "spec" : "asset", "name":result.name});
+							api.project_manager.save(PROJECT);
+							api.windowData.set("project", PROJECT); // so that you don't lose data when Ctrl+R
+						}
 					}
 				});
 			}
-		}
+			else if(type["node"] == "file") {
+				item.attr("spec",type.spec);
+				item.attr("name",type.name);
+				item.attr("node","file");
+			}
+		}		
 		
-		item.click(function(e){
-			if(!$(this).hasClass("expandable")) {				
+		item.click(async function(e){
+			if($(this).attr("node")=="file") {	// tree leaf/resource file
+				var spec = $(this).attr("spec");
+				var name = $(this).attr("name");
+				
+				var res_path = api.project_manager.get_resource_path(PROJECT, spec, name);
+				
+				console.log(res_path);
+				
+				await api.windowData.push(res_path);
+				console.log(name);
+
+				add_tab(name+".png", "asset_editor");
+				await load_asset();
+				
+								
 				console.log($("span.label",this).html())
 				e.stopPropagation();
 			}

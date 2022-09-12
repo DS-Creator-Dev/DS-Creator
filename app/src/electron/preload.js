@@ -44,6 +44,8 @@ const ipc = {
 			"getWindowData",
 			"setWindowData",
 			"clearWindowData",
+			"pushWindowData",
+			"popWindowData",
         ]
     }
 };
@@ -170,8 +172,15 @@ api.windowData = {
 		result = JSON.parse(result);
 		return result;		
 	},
-	set : async (field, value) => { ipcRenderer.invoke("setWindowData", field, JSON.stringify(value)); },
-	clear : async () => { ipcRenderer.invoke("clearWindowData"); }
+	set : async (field, value) => { await ipcRenderer.invoke("setWindowData", field, JSON.stringify(value)); },
+	clear : async () => { await ipcRenderer.invoke("clearWindowData"); },
+	push : async(value) => { await ipcRenderer.invoke("pushWindowData", JSON.stringify(value));},
+	pop : async() => {
+		let result = await ipcRenderer.invoke("popWindowData");
+		if(result===undefined) return result;
+		result = JSON.parse(result);
+		return result;		
+	},
 };
 
 api.dialogs = {

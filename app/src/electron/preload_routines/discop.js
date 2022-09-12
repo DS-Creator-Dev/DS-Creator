@@ -119,11 +119,33 @@ module.exports.removeDirRec = function(dirname) {
 		result.content = error;
 	}
 	return result;	
-	
-	
-	
 }
 
+module.exports.removeFile = function(fname) {
+	var result = {error:false, content:null};
+	if(!existsFile(fname)) 
+		return result;
+	
+	try {
+		execSync(`rm -f "${fname}"`, (error, stdout, stderr) => {
+			if (error) {	
+				result.error = true;
+				result.content = error;
+			}
+			if (stderr) {
+				result.error = true;
+				result.content = stderr;
+			}
+			
+			result.content = stdout;     		
+		})
+	}
+	catch(error) {
+		result.error = true;
+		result.content = error;
+	}
+	return result;	
+}
 
 module.exports.readFileSync = function (filename) {
 	const data = fs.readFileSync(filename);
@@ -158,4 +180,9 @@ module.exports.copyTextFileSync = function(source, dest, dictionary) {
 		text = text.replaceAll(key, dictionary[key]);
 	}
 	fs.writeFileSync(dest, text, 'utf8');
+}
+
+module.exports.copyFileSync = function(source, dest) {
+	var data = fs.readFileSync(source);	
+	fs.writeFileSync(dest, data);
 }

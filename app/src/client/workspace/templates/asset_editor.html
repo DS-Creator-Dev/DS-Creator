@@ -1,0 +1,11 @@
+<img id="AssetImg"></img>
+
+<script>
+	load_asset = async function() {
+		var res_path = await api.windowData.pop();
+		
+		var preview = api.discop.readFileSync(res_path);
+		api.discop.writeCache("./asset_view.png", preview);
+		$("#AssetImg").attr("src", "../cache/asset_view.png");
+	}
+</script>

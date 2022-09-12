@@ -236,6 +236,7 @@ electronIpcMain.handle('openDirectorySelectorDialog', async () => {
 });
 
 let windowData = {}; // object to allow communication between mainWindow pages
+let windowDataStack = [];
 
 electronIpcMain.handle('getWindowData', async (e, field) => {	
 	return windowData[field];
@@ -247,4 +248,12 @@ electronIpcMain.handle('setWindowData', async (e, field, value) => {
 
 electronIpcMain.handle('clearWindowData', async (e) => {
 	windowData = {};
+});
+
+electronIpcMain.handle('pushWindowData', async (e, value) => {
+	windowDataStack.push(value);
+});
+
+electronIpcMain.handle('popWindowData', async (e) => {
+	return windowDataStack.pop();
 });
