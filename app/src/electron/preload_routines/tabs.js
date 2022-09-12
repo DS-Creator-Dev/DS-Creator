@@ -17,4 +17,28 @@ module.exports = {
 		TabsList.on(name, func);
 	},
 	
+	data : function(title) {
+		var tab = TabsList.find(title);
+		if(tab == null) {
+			alert(`Accessing data on non-existent tab : ${JSON.stringify(title)}`);
+			return null;
+		}
+			
+		if(arguments.length==1) {						
+			return tab.data;
+		}
+		
+		tab.data = arguments[1];
+		return tab.data;
+	},
+	
+	template : function(title) {
+		var tab = TabsList.find(title);
+		if(tab == null) {
+			alert(`Accessing template on non-existent tab : ${JSON.stringify(title)}`);
+			return null;
+		}
+		return tab.template;
+	}
+	
 };

@@ -80,10 +80,14 @@ $(document).ready(function(){
 				await api.windowData.push(res_path);
 				console.log(name);
 
-				add_tab(name+".png", "asset_editor");
-				await load_asset();
+				var preview = api.discop.readFileSync(res_path);
+				api.discop.writeCache(`./asset_${name}.png`, preview);
+				//$("#AssetImg").attr("src", "../cache/asset_view.png");
+		
+				add_tab(name+".png", "asset_editor", {
+					"source" : `asset_${name}.png`
+				});
 				
-								
 				console.log($("span.label",this).html())
 				e.stopPropagation();
 			}

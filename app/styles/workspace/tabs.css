@@ -76,6 +76,12 @@ div.tabs-container {
 	border-bottom:0px;	
 }
 
+#TabBody {
+	width: calc(100% - 10px);
+	height: calc(100% - 10px);
+	margin:5px;
+}
+
 #TabContent > div {
 	margin:5px;
 }

@@ -42,6 +42,10 @@ const TabsList = require("./src/electron/preload_routines/tabsystem.js").TabsLis
 	assert(TabsList.find("tab1") != tab1_clone);
 	tab1_clone = null;
 	
+	TabsList.find("tab1").data="some_data";
+	assert(tab1.data=="some_data");
+	
+	
 	TabsList.add(tab2);
 	assert(TabsList.count==2);
 	
@@ -73,7 +77,6 @@ const TabsList = require("./src/electron/preload_routines/tabsystem.js").TabsLis
 	TabsList.remove(tab3);
 	assert(TabsList.count==0);
 	assert(TabsList.find("tab3") == null);
-	
 	
 	
 })();

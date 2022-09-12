@@ -16,6 +16,7 @@ var TabsList = (function() {
 	}
 	
 	function trigger_event(name, ...args) {
+		console.log(ev);
 		if(name in ev) {
 			ev[name].fire(...args);
 		}
