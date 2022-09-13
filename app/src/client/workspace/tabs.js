@@ -20,6 +20,26 @@ function get_tab_header(title) {
 	return $(`div.tab-header[text='${title}']`);
 }
 
+function get_near_tab(title) {
+	var elem = $(`div.tab-header[text='${title}']`);
+	var next = elem.next();
+	var prev = elem.prev();	
+	if(prev[0]==undefined) {
+		if(next[0]==undefined) {
+			console.log("prev=null, next=null");
+			return null;			
+		}
+		else {
+			console.log("choose next");
+			return next;
+		}					
+	}
+	else {
+		console.log("choose prev");
+		return prev;
+	}
+}
+
 function activate_tab(title) {
 	if(tab_selected!==null) {
 		tab_selected.removeClass("focus");				
@@ -36,31 +56,18 @@ function activate_tab(title) {
 	
 }
 
-function close_tab(elem) {				
-	alert("Closing tabs is currently not working");
-	return;
-	if(elem[0]===tab_selected[0]) {			
-		var content_elem = $(`#${elem.attr("content")}`);
-		var prev = elem.prev();
-		var next = elem.next();
-		if(prev[0]==undefined) {
-			if(next[0]==undefined) {
-				console.log("prev=null, next=null");
-				set_content(content_elem, "<h1 align='center'>All tabs closed</h1>");
-			}
-			else {
-				console.log("choose next");
-				activate_tab(next);
-			}					
-		}
-		else {
-			console.log("choose prev");
-			activate_tab(prev);
-		}
+function close_tab(title) {
+	var header  = get_tab_header(title);
+	
+	var near = get_near_tab(title);
+	header.remove();
+	if(near==null) {
+		$("#TabBody")[0].contentWindow.document.write("<h1 align='center'>All tabs closed</h1>");					
+		return;
 	}	
-	// TO DO: ask for save progress here
-	elem.data("tab_view").remove();
-	elem.remove();
+	console.log(near);
+	
+	activate_tab(near.attr("text"));
 }
 
 // Creates tab header
@@ -72,7 +79,7 @@ function render_tab(elem) {
 	var close_btn = $('<button class="tab-close-btn"/>');
 	elem.append(close_btn);
 	close_btn.click(function(e){			
-		close_tab(elem);
+		close_tab(elem.attr("text"));
 		e.stopPropagation();
 	});	
 	
@@ -127,8 +134,7 @@ $(document).ready(function(){
 		var title = $(this).attr("text")
 		var template = $(this).attr("template");
 		$(this).remove();
-		add_tab(title, template, null);
-		//render_tab($(this));
+		add_tab(title, template, null);		
 	})
 	
 	activate_tab($("div","#TabHeaders").first().attr("text"))	
