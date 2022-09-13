@@ -1,13 +1,19 @@
 projtree {
 	margin-left:15px;
-	display:block;	
+	display:block;		
 }
 
 projtree ul {
 	list-style: none;
 	padding-top:0;
-	padding-bottom:0;
+	padding-bottom:0;	
 }
+
+projecttree li {
+	margin:0;
+}
+
+
 
 projtree li::before  {	
 	display:inline-block;

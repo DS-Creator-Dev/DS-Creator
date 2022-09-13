@@ -1,14 +1,23 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="../../../../dependencies/style/bootstrap.min.css" />		
+		
+		<style>
+			#preview {
+				border:1px solid black;
+			}
+		</style>
 	</head>
-	<body>
-
-		<img id="AssetImg"></img>
+	<body>		
+		<div class="container">		
+			<div class="row" id="preview">				
+				<img id="AssetImg"></img>
+			</div>
+		</div>
 	</body>
 	<script src="../../../../dependencies/src/jquery.min.js"></script>
 	<script src="../../../../dependencies/src/bootstrap.min.js"></script>
-	<script>			
+	<script>					
 		function loader(data) {		
 			console.log(data);
 			$("#AssetImg").attr("src", "../../../../cache/"+data.source);

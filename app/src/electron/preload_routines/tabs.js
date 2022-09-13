@@ -6,7 +6,7 @@ module.exports = {
 	add : function(title, template, data) {
 		var tab = new Tab(title, template);
 		tab.setData(data);
-		TabsList.add(tab);
+		return TabsList.add(tab);
 	},	
 	
 	remove : function(title) {

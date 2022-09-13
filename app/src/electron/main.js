@@ -40,6 +40,8 @@ function createMainWindow() {
         minHeight: 700,
         show: false,
         webPreferences: {
+			nodeIntegrationInSubFrames: true,
+			webviewTag: true,
             nodeIntegration: false,
             contextIsolation: true,			
             preload: nodePath.join(__dirname, 'preload.js')

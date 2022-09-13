@@ -49,9 +49,11 @@ function activate_tab(title) {
 	header.addClass("focus");
 	tab_selected = header;
 	
+	iframe_data = api.tabs.data(title);
+	console.log("Data:", iframe_data);
 	var template = api.tabs.template(title)
 	$("#TabBody").attr("src",`../src/client/workspace/templates/${template}.html`);	
-		
+	
 	show_tab(title);
 	
 }
@@ -125,7 +127,10 @@ api.tabs.on("tab_added", (data)=>{
 })
 
 function add_tab(title, template, data) {	
-	api.tabs.add(title, template, data);	
+	if(!api.tabs.add(title, template, data)) {
+		// tab already exists, show it		
+		activate_tab(title);
+	}
 }
 
 
@@ -145,6 +150,7 @@ $(document).ready(function(){
 			return; // prevent event firing multiple times [js is wierd :( ]
 		}*/		
 		if($(this)[0].contentWindow.loader !== undefined) {			
+			$(this)[0].contentWindow.document.title = tab_selected.attr("text");
 			$(this)[0].contentWindow.loader(iframe_data);
 			console.log("Template : Loader called");			
 		}
