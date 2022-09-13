@@ -205,7 +205,7 @@ The equivalent of `malloc(size)`.
 
 An address in the allocator's effective range. If the allocation does not succeed, `nullptr` is returned instead.
 
-### ````void release(void* address)```
+### ````void release(void* address)````
 
 `free(address)`. That's all. And don't be afraid to `release()` previosuly unallocated addresses. Nothing happens.
 
