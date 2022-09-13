@@ -139,7 +139,7 @@ void MyScene::doOnGameOver()
     Don't do:
 
     ```C++
-    class MyScene : public DSC:Scene
+    class MyScene : public DSC::Scene
     {
     public:
         int my_property = 123;
@@ -156,7 +156,7 @@ void MyScene::doOnGameOver()
     Do it this way:
 
 ```C++
-    class MyScene : public DSC:Scene
+    class MyScene : public DSC::Scene
     {
     public:
         int my_property = 123;
