@@ -260,7 +260,6 @@ module.exports.set_file = function(project, rel_path, data) {
 module.exports.build = function(project) {
 	Object.setPrototypeOf(project, Project.prototype)
 	project.generateBuildFiles();
-	
 }
 
 module.exports.make = async function(project) {

@@ -15,21 +15,20 @@ projecttree li {
 
 
 
-projtree li::before  {	
-	display:inline-block;
+projtree li::before  {
 	opacity:0;
 	content:"";		
 	width:10px;
 	height:10px;
 	image-rendering:pixelated;
 	margin-right:7px;
-	background-image:url("../../resources/node-expand.png");
+	background-image:url("../../images/resources/node-expand.png");
 	background-size:10px;
 }
 
 projtree li.expandable::before  {
 	opacity:1;
-	background-image:url("../../resources/node-expand.png");
+	background-image:url("../../images/resources/node-expand.png");
 	display:inline-block;
 	content:"";
 	background-size:10px;
@@ -40,7 +39,7 @@ projtree li.expandable::before  {
 }
 
 projtree li.expandable.expanded::before  {
-	background-image:url("../../resources/node-collapse.png");
+	background-image:url("../../images/resources/node-collapse.png");
 	display:inline-block;
 	content:"";
 	background-size:10px;

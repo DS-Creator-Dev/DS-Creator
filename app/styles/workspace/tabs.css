@@ -54,7 +54,7 @@ div.tabs-container div.tab-headers > div.tab-header button.tab-close-btn {
 	margin:0;
 	outline:0;
 	background:transparent;
-	background-image:url("../../resources/close-btn.png");
+	background-image:url("../../images/resources/close-btn.png");
 	background-size: contain;
 	background-repeat: no-repeat;	
 	image-rendering: crisp-edges;

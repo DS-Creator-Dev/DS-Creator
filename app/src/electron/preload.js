@@ -82,32 +82,9 @@ contextBridge.exposeInMainWorld(
 
 //Create Api Functions
 let api = {
-    //Open The CMD/Terminal
-    OpenCmd: (path, isPlay) => exec(`cd ${path} && make && exit`, (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            document.getElementById('Console-Text').textContent = error.message;
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-        }
-        console.log(`Output: ${stdout}`);
-        if(!error){
-            document.getElementById('Console-Text').textContent = stdout;
-        }
-        if(isPlay){
-            console.log("isPlay")
-            ipcRenderer.invoke('openEmu')
-                .then(() => {
-                    localStorage.setItem('ROMPath', localStorage.getItem('ProjectDir') + "\\" + localStorage.getItem('ProjectFileName') + '.nds');
-                    console.log(localStorage.getItem('ROMPath'));
-                });
-        }
-    }),      
-    //Opnes The Settings
-    Settings: () => void(() => {
-        console.log('Settings');
+    //Open the emulator.     
+    EmulatorOpen: () => void(() => {
+        ipcRenderer.invoke("openEmu");
     })(),
     //Sets LocalStorage Stuff
     GetPaths: (filePath) => void(() => {

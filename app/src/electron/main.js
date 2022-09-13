@@ -99,27 +99,6 @@ app.on('activate', () => {
     }
 });
 
-//Opens the Emulator
-function openEmu() {   
-
-    const emulatorWindow = new electronBrowserWindow({
-        width: 256 + 21, 
-        height: 192 * 2 + 75,
-        show: false,
-        //resizable: false,
-        resizable: true,
-        webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true,
-            preload: nodePath.join(__dirname, 'preload.js')
-        }
-    });
-
-    emulatorWindow.loadFile('./views/Emulator.html')
-        .then(() => { emulatorWindow.show(); });
-    return emulatorWindow;
-}
-
 // Let's listen for a call on the 'getPath' channel
 electronIpcMain.handle('getPath', async () => {
     // Dialog options.
@@ -158,7 +137,21 @@ function openDialog(parentWindow, options) {
 }
 
 electronIpcMain.handle('openEmu', async () => {
-    emulatorWindow = openEmu();
+    var emulatorWindow = new electronBrowserWindow({
+        width: 256 + 21, 
+        height: 192 * 2 + 75,
+        show: false,
+        //resizable: false,
+        resizable: true,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: nodePath.join(__dirname, 'preload.js')
+        }
+    });
+
+    emulatorWindow.loadFile('./views/Emulator.html')
+        .then(() => { emulatorWindow.show(); });
 })
 
 electronIpcMain.handle('OpenDocs', async () => {

@@ -223,10 +223,10 @@
         }
 		
 		window.onload = function() {				
-			console.log(localStorage.getItem('ProjectDir'));
-            setTimeout(function() {				
-                document.querySelector("#player").loadURL(localStorage.getItem("ROMPath"));
-                console.log(localStorage.getItem('ROMPath'));
+            setTimeout(async function() {
+				let PROJECT = await api.windowData.get("project");
+				document.title = "DSC : Emulator : " + PROJECT.name;
+                document.querySelector("#player").loadURL(`${PROJECT.path}/.build/${PROJECT.name}.nds`);
             }, 1000)
         }
 
