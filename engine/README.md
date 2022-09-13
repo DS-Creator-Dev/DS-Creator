@@ -1,4 +1,4 @@
-# DSC Engine Documentation
+# DSC Engine Lib Documentation
 
 ## ```DSC::Debug```
 
