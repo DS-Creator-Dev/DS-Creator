@@ -49,13 +49,13 @@ var TabsList = (function() {
 			add_event(name, action);
 		},
 		
-		"remove" : function(tab) {
-			var target = this.find(tab.title);
+		"remove" : function(title) {
+			var target = this.find(title);
 			if(target==null) {
 				return;
 			}
 			trigger_event("tab_removed", {"tab":target});
-			__list = __list.filter(t=> t.title != tab.title);			
+			__list = __list.filter(t=> t.title != title);			
 		},
 		
 		get count() { return __list.length; },

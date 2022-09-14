@@ -63,6 +63,9 @@ function close_tab(title) {
 	
 	var near = get_near_tab(title);
 	header.remove();
+	
+	api.tabs.remove(title)
+	
 	if(near==null) {
 		$("#TabBody")[0].contentWindow.document.write("<h1 align='center'>All tabs closed</h1>");					
 		return;
@@ -122,11 +125,13 @@ function createTab(title, template) {
 
 api.tabs.on("tab_added", (data)=>{	
 	var tab = data.tab;
+	console.log("TAB ADDED");
 	console.log(tab)
 	createTab(tab.title, tab.template);
 })
 
 function add_tab(title, template, data) {	
+	console.log("ADDING TAB");	
 	if(!api.tabs.add(title, template, data)) {
 		// tab already exists, show it		
 		activate_tab(title);
