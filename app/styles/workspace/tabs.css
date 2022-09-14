@@ -77,13 +77,9 @@ div.tabs-container {
 }
 
 #TabBody {
-	width: calc(100% - 10px);
-	height: calc(100% - 10px);
-	margin:5px;
-}
-
-#TabContent > div {
-	margin:5px;
+	width: 100%;
+	height: calc(100% - 23px);
+	padding:5px;
 }
 
 div.hidden {
