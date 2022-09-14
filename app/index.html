@@ -39,7 +39,7 @@
             window.location = './views/projectNew.html';
          });
 
-        document.getElementById('btn-open-project').addEventListener('click', () => {
+        document.getElementById('btn-open-project').addEventListener('click', () => {			
             openProject();
          });
 
@@ -57,13 +57,12 @@
                     console.log(Path);
                     if(Path === undefined){
                     }
-                    else{
-                        api.GetPaths(Path);
-
-                        console.log("Project File: " + localStorage.getItem('ProjectFile'));
-                        console.log("Project Dir: " + localStorage.getItem('ProjectDir'));
-                        console.log("Project File Name: " + localStorage.getItem('ProjectFileName'));
-                        location.href="./views/Engine.html";
+                    else{					
+						Path = api.discop.parentPath(Path); // remove /.DSCProj
+						console.log(Path);
+						var project = api.project_manager.load_project(Path);
+						api.windowData.set("project", project);
+						window.location.href="./views/workspace.html";                        
                     }
                     
                 });

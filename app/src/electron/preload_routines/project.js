@@ -92,7 +92,7 @@ function Project (path, action) {
 		self.setName(arguments[2]);	
 		self.writeProjFile();
 	}
-	else if(action == "open") {
+	else if(action == "load") {
 		if(!discop.existsFile(self.getRelPath(`.DSCProj`))) {
 			if(confirm("Project config file is missing. Create a new one anyway?")) {
 				// this is a sign of file corruption or user simply trying to open
@@ -271,6 +271,9 @@ module.exports.add_asset = function(project, path, name, width, height) {
 	Object.setPrototypeOf(project, Project.prototype);
 	var succeeded = project.addAsset(path, name, width, height);
 	console.log(project);
+	if(succeeded == true) {
+		project.writeProjFile();
+	}
 	return {"succeeded":succeeded, "project":project};
 }
 
