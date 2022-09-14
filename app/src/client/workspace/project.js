@@ -28,11 +28,20 @@ saveAsBtn.addEventListener('click', async function(){
 })
 compileBtn.addEventListener('click', async function(){
 	await api.project_manager.build(PROJECT);
-	await api.project_manager.make(PROJECT);
+	var make_result = await api.project_manager.make(PROJECT);	
+	if(make_result.error != null) {		
+		console.log(`Make failed\n\n${make_result.error}\n\n${make_result.stderr}`);
+		return;
+	}
+	
 })
 runBtn.addEventListener('click', async function(){
 	//await api.project_manager.build(PROJECT);
-	await api.project_manager.make(PROJECT);
+	var make_result = await api.project_manager.make(PROJECT);
+	if(make_result.error != null) {		
+		console.log(`Make failed\n\n${make_result.error}\n\n${make_result.stderr}`);
+		return;
+	}
 	await api.EmulatorOpen()
 })
 settingsBtn.addEventListener('click', async function(){
