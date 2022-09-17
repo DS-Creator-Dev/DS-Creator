@@ -52,12 +52,19 @@
     <Compile Include="Controls\Pages\TitlePage.Designer.cs">
       <DependentUpon>TitlePage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Pages\WorkspacePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pages\WorkspacePage.Designer.cs">
+      <DependentUpon>WorkspacePage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Primitives\Page.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\Primitives\Page.Designer.cs">
       <DependentUpon>Page.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Primitives\PageHost.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +75,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\Pages\TitlePage.resx">
       <DependentUpon>TitlePage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pages\WorkspacePage.resx">
+      <DependentUpon>WorkspacePage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Primitives\Page.resx">
       <DependentUpon>Page.cs</DependentUpon>

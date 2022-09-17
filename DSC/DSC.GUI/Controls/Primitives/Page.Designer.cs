@@ -36,6 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.Name = "Page";
+            this.Size = new System.Drawing.Size(558, 295);
             this.ResumeLayout(false);
 
         }

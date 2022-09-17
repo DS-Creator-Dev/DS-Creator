@@ -11,10 +11,15 @@ using System.Windows.Forms;
 namespace DSC.GUI.Controls.Primitives
 {
     public partial class Page : UserControl
-    {
+    {         
         public Page()
         {
-            InitializeComponent();
+            InitializeComponent();            
+        }        
+
+        public void NavigateTo(Page otherPage)
+        {
+            (ParentForm as PageHost).DisplayPage(otherPage);
         }
-    }
+    }   
 }

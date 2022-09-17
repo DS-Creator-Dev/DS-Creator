@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace DSC.GUI
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, PageHost
     {
         public MainForm()
         {
@@ -12,11 +12,11 @@ namespace DSC.GUI
             DisplayPage(new TitlePage());
         }
 
-        void DisplayPage(Page page)
+        public void DisplayPage(Page page)
         {
             page.Dock = DockStyle.Fill;
             MainBody.Controls.Clear();
-            MainBody.Controls.Add(page);
+            MainBody.Controls.Add(page);            
         }
     }
 }

@@ -30,11 +30,11 @@
         {
             this.LogoContainer = new System.Windows.Forms.Panel();
             this.Logo = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.NewProjButton = new System.Windows.Forms.Button();
+            this.LoadProjButton = new System.Windows.Forms.Button();
+            this.DocsButton = new System.Windows.Forms.Button();
             this.ButtonsPanel = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
+            this.DiscordButton = new System.Windows.Forms.Button();
             this.LogoContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             this.ButtonsPanel.SuspendLayout();
@@ -60,61 +60,65 @@
             this.Logo.TabIndex = 0;
             this.Logo.TabStop = false;
             // 
-            // button1
+            // NewProjButton
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.NewProjButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(4, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(136, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "New Project";
-            this.button1.UseVisualStyleBackColor = true;
+            this.NewProjButton.Location = new System.Drawing.Point(4, 3);
+            this.NewProjButton.Name = "NewProjButton";
+            this.NewProjButton.Size = new System.Drawing.Size(136, 23);
+            this.NewProjButton.TabIndex = 1;
+            this.NewProjButton.Text = "New Project";
+            this.NewProjButton.UseVisualStyleBackColor = true;
+            this.NewProjButton.Click += new System.EventHandler(this.NewProjButton_Click);
             // 
-            // button2
+            // LoadProjButton
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.LoadProjButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(4, 32);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(136, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Load Project";
-            this.button2.UseVisualStyleBackColor = true;
+            this.LoadProjButton.Location = new System.Drawing.Point(4, 32);
+            this.LoadProjButton.Name = "LoadProjButton";
+            this.LoadProjButton.Size = new System.Drawing.Size(136, 23);
+            this.LoadProjButton.TabIndex = 2;
+            this.LoadProjButton.Text = "Load Project";
+            this.LoadProjButton.UseVisualStyleBackColor = true;
+            this.LoadProjButton.Click += new System.EventHandler(this.LoadProjButton_Click);
             // 
-            // button3
+            // DocsButton
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.DocsButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(4, 61);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(136, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Documentation";
-            this.button3.UseVisualStyleBackColor = true;
+            this.DocsButton.Location = new System.Drawing.Point(4, 61);
+            this.DocsButton.Name = "DocsButton";
+            this.DocsButton.Size = new System.Drawing.Size(136, 23);
+            this.DocsButton.TabIndex = 3;
+            this.DocsButton.Text = "Documentation";
+            this.DocsButton.UseVisualStyleBackColor = true;
+            this.DocsButton.Click += new System.EventHandler(this.DocsButton_Click);
             // 
             // ButtonsPanel
             // 
             this.ButtonsPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ButtonsPanel.Controls.Add(this.button4);
-            this.ButtonsPanel.Controls.Add(this.button1);
-            this.ButtonsPanel.Controls.Add(this.button3);
-            this.ButtonsPanel.Controls.Add(this.button2);
+            this.ButtonsPanel.Controls.Add(this.DiscordButton);
+            this.ButtonsPanel.Controls.Add(this.NewProjButton);
+            this.ButtonsPanel.Controls.Add(this.DocsButton);
+            this.ButtonsPanel.Controls.Add(this.LoadProjButton);
             this.ButtonsPanel.Location = new System.Drawing.Point(220, 230);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Size = new System.Drawing.Size(143, 118);
             this.ButtonsPanel.TabIndex = 4;
             // 
-            // button4
+            // DiscordButton
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.DiscordButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(4, 90);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(136, 23);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "Discord";
-            this.button4.UseVisualStyleBackColor = true;
+            this.DiscordButton.Location = new System.Drawing.Point(4, 90);
+            this.DiscordButton.Name = "DiscordButton";
+            this.DiscordButton.Size = new System.Drawing.Size(136, 23);
+            this.DiscordButton.TabIndex = 4;
+            this.DiscordButton.Text = "Discord";
+            this.DiscordButton.UseVisualStyleBackColor = true;
+            this.DiscordButton.Click += new System.EventHandler(this.DiscordButton_Click);
             // 
             // TitlePage
             // 
@@ -135,10 +139,10 @@
 
         private System.Windows.Forms.Panel LogoContainer;
         private System.Windows.Forms.PictureBox Logo;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button NewProjButton;
+        private System.Windows.Forms.Button LoadProjButton;
+        private System.Windows.Forms.Button DocsButton;
         private System.Windows.Forms.Panel ButtonsPanel;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button DiscordButton;
     }
 }
