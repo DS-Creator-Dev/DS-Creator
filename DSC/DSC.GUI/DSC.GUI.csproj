@@ -65,6 +65,9 @@
       <DependentUpon>Page.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Primitives\PageHost.cs" />
+    <Compile Include="Controls\Primitives\TabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\DSC Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TabCloseButton.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TabCloseButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
