@@ -7,15 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace DSC.Projects
 {
+    [XmlRoot("Tree")]
     public class ProjectTree
     {
         /// <summary>
         /// Project Tree Root
-        /// </summary>
-        public ProjectTreeNode Root { get; } = new ProjectTreeNode("Root", ProjectTreeNodeType.Folder);
+        /// </summary>                
+        public ProjectTreeNode Root { get; set; } = new ProjectTreeNode("Root", ProjectTreeNodeType.Folder);
 
         /// <summary>
         /// Creates folder at path
@@ -63,6 +65,7 @@ namespace DSC.Projects
             treeView.Nodes.Add(treeRoot);
         }
 
+        [XmlIgnore]
         public ContextMenuStrip FolderContextMenu { get; set; } = null;
     }
 
@@ -77,8 +80,10 @@ namespace DSC.Projects
         Categorized
     }
 
+    [XmlRoot("Node")]
     public class ProjectTreeNode
     {
+        public ProjectTreeNode() { }
         public ProjectTreeNode(string name, ProjectTreeNodeType nodeType)
         {
             Name = name;
@@ -89,11 +94,17 @@ namespace DSC.Projects
             }            
         }
 
+        [XmlIgnore]
         public ProjectTreeNode Parent { get; private set; } = null;
-        public string Name { get; set; }
-        public ProjectTreeNodeType NodeType { get; }
-        public List<ProjectTreeNode> Children { get; } = null;
+        
+        public string Name { get; set; } = "";
 
+        [XmlAttribute("type")]
+        public ProjectTreeNodeType NodeType { get; set; }
+
+        [XmlArray("Children")]
+        public List<ProjectTreeNode> Children { get; } = null;
+        
         ProjectItem Item { get; set; } = null;
 
         public void Add(ProjectTreeNode node)
@@ -144,6 +155,16 @@ namespace DSC.Projects
                     node.PopulateTreeNode(tNode, NodeCreatedCallback);
                     treeNode.Nodes.Add(tNode);
                 }
+            }
+        }
+
+        internal void DeserializeCheck()
+        {
+            // infere data that was lost during serialization
+            foreach(var child in Children)
+            {
+                child.Parent = this;
+                child.DeserializeCheck();
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using DSC.GUI.Controls.Primitives;
+using DSC.Projects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,7 @@ namespace DSC.GUI.Controls.Pages
 
         private void ProjectPathSeletor_PathChanged(object sender, EventArgs args)
         {
-            MessageBox.Show(ProjectPathSeletor.Path);
+            
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -42,8 +43,23 @@ namespace DSC.GUI.Controls.Pages
         }
 
         private void OkButton_Click(object sender, EventArgs e)
-        {
-            NavigateTo(new WorkspacePage());
+        {            
+            var name = ProjectNameBox.Text;
+            var path = ProjectPathSeletor.Path;
+
+            // TO DO: Validate name & path...
+
+            try
+            {
+                Session.Project = new Project(name, path);
+                Session.Project.Save();
+                NavigateTo(new WorkspacePage());
+            }
+            catch(Exception ex)
+            {
+                throw ex; // Debug
+                MessageBox.Show(ex.Message);
+            }            
         }
     }
 }

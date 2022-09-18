@@ -5,6 +5,7 @@ using DSC.Projects.Components;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace DSC.GUI.Controls.Pages
 {
@@ -19,28 +20,10 @@ namespace DSC.GUI.Controls.Pages
             ProjectsTreeViewImageList.Images.Add(Resources.FolderIcon);
             ProjectTreeView.ImageList = ProjectsTreeViewImageList;
 
-            //Project p = new Project();
-            ProjectTree pt = new ProjectTree();
+            Project project = Session.Project;
 
-            pt.FolderContextMenu = ProjectTreeViewFolderContextMenu;
-
-            ProjectTreeNode node1 = new ProjectTreeNode("node1", ProjectTreeNodeType.Folder);
-            ProjectTreeNode node2 = new ProjectTreeNode("node2", ProjectTreeNodeType.Folder);
-
-            node1.Add(new ProjectItem { Name="a"});
-            node1.Add(new ProjectItem { Name="b"});
-
-            node2.Add(new ProjectItem { Name="c"});
-            node2.Add(new ProjectItem { Name="d"});
-
-            pt.Root.Add(node1);
-            pt.Root.Add(node2);
-            pt.Root.Name = "Project";
-
-            var x =pt.Add("assets/node1");
-            x.Add(new ProjectItem { Name = "f" });
-
-            pt.PopulateTreeView(ProjectTreeView, ProjectTreeViewDisplayOption.FolderHierarchy);
+            project.Tree.FolderContextMenu = ProjectTreeViewFolderContextMenu;
+            project.Tree.PopulateTreeView(ProjectTreeView, ProjectTreeViewDisplayOption.FolderHierarchy);                     
         }
 
         public Panel LeftPanel { get => Container.Panel1; }
@@ -77,11 +60,7 @@ namespace DSC.GUI.Controls.Pages
             var menu = GetMenu(sender);
             var tree = menu.SourceControl as TreeView;
             var node = tree.SelectedNode.Tag as ProjectTreeNode;
-
-            // var path = Path.Combine(ProjectPath, node.RelativePath)
-            MessageBox.Show(node.RelativePath);
-
-
+            Process.Start(System.IO.Path.Combine(Session.Project.ProjectPath, node.RelativePath));                        
         }       
 
         private void newActorToolStripMenuItem1_Click(object sender, EventArgs e)
