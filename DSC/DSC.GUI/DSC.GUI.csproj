@@ -115,10 +115,16 @@
     <None Include="Resources\DSC Logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TabCloseButton.jpg" />
+    <None Include="Resources\TabCloseButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TabCloseButton.png" />
+    <ProjectReference Include="..\DSC.Projects\DSC.Projects.csproj">
+      <Project>{b024cc2c-dec1-4696-9b5d-5132df8a37c9}</Project>
+      <Name>DSC.Projects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
