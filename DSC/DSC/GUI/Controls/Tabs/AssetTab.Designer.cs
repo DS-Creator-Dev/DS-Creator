@@ -54,6 +54,7 @@
             // ImagePanel
             // 
             this.ImagePanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ImagePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ImagePanel.Controls.Add(this.GridPanel);
             this.ImagePanel.Location = new System.Drawing.Point(0, 0);
             this.ImagePanel.Name = "ImagePanel";

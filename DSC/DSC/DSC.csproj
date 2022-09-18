@@ -99,6 +99,9 @@
     <Compile Include="GUI\Controls\Tabs\AssetTab.Designer.cs">
       <DependentUpon>AssetTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Controls\Tabs\TabInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="GUI\Forms\AssetDialog.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -121,9 +121,10 @@
             this.TabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl.Location = new System.Drawing.Point(0, 0);
             this.TabControl.Name = "TabControl";
+            this.TabControl.Padding = new System.Drawing.Point(15, 3);
             this.TabControl.SelectedIndex = 0;
             this.TabControl.Size = new System.Drawing.Size(496, 306);
-            this.TabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.TabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.TabControl.TabIndex = 0;
             // 
             // tabPage1
@@ -134,12 +135,16 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(488, 280);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "t1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // assetTab1
             // 
+            this.assetTab1.Asset = null;
+            this.assetTab1.AssetHeight = 128;
+            this.assetTab1.AssetWidth = 128;
             this.assetTab1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.assetTab1.HeaderName = null;
             this.assetTab1.Location = new System.Drawing.Point(3, 3);
             this.assetTab1.Name = "assetTab1";
             this.assetTab1.Size = new System.Drawing.Size(482, 274);
@@ -153,7 +158,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(488, 280);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "tabPage2 Long long long long";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // label3
@@ -223,14 +228,14 @@
             this.toolStripMenuItem3,
             this.showInExplorerToolStripMenuItem2});
             this.ProjectTreeViewRootContextMenu.Name = "ProjectTreeViewRootContextMenu";
-            this.ProjectTreeViewRootContextMenu.Size = new System.Drawing.Size(181, 70);
+            this.ProjectTreeViewRootContextMenu.Size = new System.Drawing.Size(157, 48);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.assetToolStripMenuItem});
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(156, 22);
             this.toolStripMenuItem3.Text = "Add";
             // 
             // assetToolStripMenuItem
@@ -239,27 +244,27 @@
             this.newToolStripMenuItem1,
             this.fromFileToolStripMenuItem});
             this.assetToolStripMenuItem.Name = "assetToolStripMenuItem";
-            this.assetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.assetToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.assetToolStripMenuItem.Text = "Asset";
             // 
             // newToolStripMenuItem1
             // 
             this.newToolStripMenuItem1.Name = "newToolStripMenuItem1";
-            this.newToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
             this.newToolStripMenuItem1.Text = "New...";
             this.newToolStripMenuItem1.Click += new System.EventHandler(this.newToolStripMenuItem1_Click);
             // 
             // fromFileToolStripMenuItem
             // 
             this.fromFileToolStripMenuItem.Name = "fromFileToolStripMenuItem";
-            this.fromFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fromFileToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.fromFileToolStripMenuItem.Text = "From File...";
             this.fromFileToolStripMenuItem.Click += new System.EventHandler(this.newAssetFromFileToolStripMenuItem_Click);
             // 
             // showInExplorerToolStripMenuItem2
             // 
             this.showInExplorerToolStripMenuItem2.Name = "showInExplorerToolStripMenuItem2";
-            this.showInExplorerToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.showInExplorerToolStripMenuItem2.Size = new System.Drawing.Size(156, 22);
             this.showInExplorerToolStripMenuItem2.Text = "ShowInExplorer";
             this.showInExplorerToolStripMenuItem2.Click += new System.EventHandler(this.showInExplorerToolStripMenuItem1_Click);
             // 

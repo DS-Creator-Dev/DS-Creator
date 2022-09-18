@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace DSC.Projects.Components
-{    
+{
+    [XmlInclude(typeof(Asset))]
+    [XmlRoot("Item", IsNullable =true)]
     public abstract class ProjectItem
     {
         [XmlIgnore]
         public ProjectTreeNode ParentNode { get; set; } = null;
+
+        [XmlAttribute("name")]
         public string Name { get; set; } = "";
 
+        [XmlAttribute("basefilename")]
         public string BaseFileName { get; set; } = "";
 
         public ProjectItem() { }

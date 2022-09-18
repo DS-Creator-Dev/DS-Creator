@@ -1,24 +1,57 @@
-﻿using System;
+﻿using DSC.Projects.Components;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSC.GUI.Controls.Tabs
 {
-    public partial class AssetTab : UserControl
+    public partial class AssetTab : TabInfo
     {
         public AssetTab()
         {
             InitializeComponent();            
+
+            typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
+            | BindingFlags.Instance | BindingFlags.NonPublic, null,
+            ImagePanel, new object[] { true });
+
+            /*GridPanel.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            GridPanel.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            UpdateStyles();*/
         }
 
-        int AssetWidth = 128;
-        int AssetHeight = 128;
+        public int AssetWidth { get; set; } = 128;
+        public int AssetHeight { get; set; } = 128;
+
+        private Asset _Asset;
+        public Asset Asset
+        {
+            get => _Asset;
+            set
+            {
+                _Asset = value;
+                if (Asset != null)
+                {
+                    HeaderName = Asset.BaseFileName;
+                    SetImage(Asset.Image);
+                    Zoom = Zoom; // force redraw
+                }
+            }
+        }
+
+        public void SetImage(Bitmap bmp)
+        {
+            AssetWidth = bmp.Width;
+            AssetHeight = bmp.Height;
+            ImagePanel.BackgroundImage = bmp;
+        }
 
         private int _Zoom = 1;
         private int Zoom

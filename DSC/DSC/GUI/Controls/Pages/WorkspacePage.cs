@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 using DSC.GUI.Forms;
+using DSC.GUI.Controls.Tabs;
 
 namespace DSC.GUI.Controls.Pages
 {
@@ -62,8 +63,20 @@ namespace DSC.GUI.Controls.Pages
             var menu = GetMenu(sender);
             var tree = menu.SourceControl as TreeView;
             var node = tree.SelectedNode.Tag as ProjectTreeNode;
-            Process.Start(System.IO.Path.Combine(Session.Project.ProjectPath, node.RelativePath));                        
+            try
+            {
+                Process.Start(System.IO.Path.Combine(Session.Project.ProjectPath, node.RelativePath));
+            }
+            catch { }
         }              
+
+        private void AddTab(TabInfo tab)
+        {
+            var tabPage = new TabPage(tab.HeaderName + "      ");
+            tab.Dock = DockStyle.Fill;
+            tabPage.Controls.Add(tab);
+            TabControl.TabPages.Add(tabPage);
+        }
 
         private void newAssetFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -71,8 +84,27 @@ namespace DSC.GUI.Controls.Pages
             ofd.Filter = "PNG Files (*.png)|*.png";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                //var filename = 
-                MessageBox.Show(ofd.FileName);
+                var filename = ofd.FileName;
+                //try
+                {
+                    var bmp = new Bitmap(filename);
+                    var dialog = new AssetDialog(bmp);
+                    dialog.AssetName = System.IO.Path.GetFileNameWithoutExtension(filename);
+                    if(dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        Asset result = dialog.Result;
+                        var tab = new AssetTab();
+                        tab.Asset = result;
+                        Session.Project.Add(result, "Assets");
+                        Session.Project.Save();
+                        AddTab(tab);                        
+                    }
+                }
+                /*catch(Exception ex)
+                {
+                    throw ex;
+                    MessageBox.Show(ex.Message);
+                }*/
             }
         }
 

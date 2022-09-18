@@ -31,7 +31,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.NameBox = new System.Windows.Forms.TextBox();
             this.PreviewPanel = new System.Windows.Forms.Panel();
-            this.Preview = new System.Windows.Forms.Panel();
             this.OkButton = new System.Windows.Forms.Button();
             this.SizePanelContainer = new System.Windows.Forms.Panel();
             this.SizePanel = new System.Windows.Forms.Panel();
@@ -42,6 +41,8 @@
             this.VerticalSep = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.ErrorsLabel = new System.Windows.Forms.Label();
+            this.Preview = new System.Windows.Forms.PictureBox();
             this.RowsCountBox = new DSC.GUI.Controls.Primitives.MeasureUpDown();
             this.ColsCountBox = new DSC.GUI.Controls.Primitives.MeasureUpDown();
             this.HeightBox = new DSC.GUI.Controls.Primitives.MeasureUpDown();
@@ -49,6 +50,7 @@
             this.PreviewPanel.SuspendLayout();
             this.SizePanelContainer.SuspendLayout();
             this.SizePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RowsCountBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ColsCountBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HeightBox)).BeginInit();
@@ -72,6 +74,7 @@
             this.NameBox.Name = "NameBox";
             this.NameBox.Size = new System.Drawing.Size(742, 20);
             this.NameBox.TabIndex = 1;
+            this.NameBox.TextChanged += new System.EventHandler(this.NameBox_TextChanged);
             // 
             // PreviewPanel
             // 
@@ -87,14 +90,6 @@
             this.PreviewPanel.Size = new System.Drawing.Size(436, 377);
             this.PreviewPanel.TabIndex = 2;
             // 
-            // Preview
-            // 
-            this.Preview.BackColor = System.Drawing.Color.White;
-            this.Preview.Location = new System.Drawing.Point(0, 0);
-            this.Preview.Name = "Preview";
-            this.Preview.Size = new System.Drawing.Size(16, 16);
-            this.Preview.TabIndex = 0;
-            // 
             // OkButton
             // 
             this.OkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -104,6 +99,7 @@
             this.OkButton.TabIndex = 3;
             this.OkButton.Text = "Ok";
             this.OkButton.UseVisualStyleBackColor = true;
+            this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
             // SizePanelContainer
             // 
@@ -117,6 +113,7 @@
             // SizePanel
             // 
             this.SizePanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SizePanel.Controls.Add(this.ErrorsLabel);
             this.SizePanel.Controls.Add(this.TileSizeBox);
             this.SizePanel.Controls.Add(this.label5);
             this.SizePanel.Controls.Add(this.RowsCountBox);
@@ -130,7 +127,7 @@
             this.SizePanel.Controls.Add(this.label3);
             this.SizePanel.Location = new System.Drawing.Point(3, 45);
             this.SizePanel.Name = "SizePanel";
-            this.SizePanel.Size = new System.Drawing.Size(366, 121);
+            this.SizePanel.Size = new System.Drawing.Size(366, 144);
             this.SizePanel.TabIndex = 4;
             // 
             // TileSizeBox
@@ -188,7 +185,7 @@
             this.VerticalSep.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.VerticalSep.Location = new System.Drawing.Point(162, 10);
             this.VerticalSep.Name = "VerticalSep";
-            this.VerticalSep.Size = new System.Drawing.Size(2, 100);
+            this.VerticalSep.Size = new System.Drawing.Size(2, 80);
             this.VerticalSep.TabIndex = 4;
             // 
             // label2
@@ -208,6 +205,25 @@
             this.label3.Size = new System.Drawing.Size(67, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Asset Height";
+            // 
+            // ErrorsLabel
+            // 
+            this.ErrorsLabel.AutoSize = true;
+            this.ErrorsLabel.ForeColor = System.Drawing.Color.Red;
+            this.ErrorsLabel.Location = new System.Drawing.Point(6, 96);
+            this.ErrorsLabel.Name = "ErrorsLabel";
+            this.ErrorsLabel.Size = new System.Drawing.Size(60, 13);
+            this.ErrorsLabel.TabIndex = 12;
+            this.ErrorsLabel.Text = "Errors Here";
+            // 
+            // Preview
+            // 
+            this.Preview.BackColor = System.Drawing.Color.White;
+            this.Preview.Location = new System.Drawing.Point(0, 0);
+            this.Preview.Name = "Preview";
+            this.Preview.Size = new System.Drawing.Size(32, 32);
+            this.Preview.TabIndex = 0;
+            this.Preview.TabStop = false;
             // 
             // RowsCountBox
             // 
@@ -285,6 +301,7 @@
             this.SizePanelContainer.ResumeLayout(false);
             this.SizePanel.ResumeLayout(false);
             this.SizePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Preview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RowsCountBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ColsCountBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.HeightBox)).EndInit();
@@ -313,6 +330,7 @@
         private Controls.Primitives.MeasureUpDown ColsCountBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox TileSizeBox;
-        private System.Windows.Forms.Panel Preview;
+        private System.Windows.Forms.Label ErrorsLabel;
+        private System.Windows.Forms.PictureBox Preview;
     }
 }

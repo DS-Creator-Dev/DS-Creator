@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace DSC.Projects
@@ -34,10 +35,10 @@ namespace DSC.Projects
             TouchPath("Sound");
         }
 
-        public void TouchPath(string relPath)
+        public ProjectTreeNode TouchPath(string relPath)
         {
             Directory.CreateDirectory(System.IO.Path.Combine(ProjectPath, relPath));
-            Tree.Add(relPath);
+            return Tree.Add(relPath);
         }
 
         [XmlIgnore]
@@ -84,9 +85,13 @@ namespace DSC.Projects
 
         }
 
-        void Add(Asset asset, string path)
-        {            
-
+        public void Add(Asset asset, string path)
+        {
+            var node = TouchPath(path);
+            node = node.Add(asset);            
+            path = System.IO.Path.Combine(ProjectPath, node.RelativePath);
+            MessageBox.Show(path);
+            asset.Save(path);
         }
     }
 

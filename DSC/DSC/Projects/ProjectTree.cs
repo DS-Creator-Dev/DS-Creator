@@ -103,23 +103,26 @@ namespace DSC.Projects
 
         [XmlArray("Children"), XmlArrayItem("Node")]
         public List<ProjectTreeNode> Children { get; set; } = new List<ProjectTreeNode>();
-        
+
+        [XmlElement("Item", typeof(ProjectItem), IsNullable = true)]
         ProjectItem Item { get; set; } = null;
 
-        public void Add(ProjectTreeNode node)
+        public ProjectTreeNode Add(ProjectTreeNode node)
         {
             if (NodeType == ProjectTreeNodeType.File) 
                 throw new ProjectTreeAddToLeafException();
             Children.Add(node);
             node.Parent = this;
+            return node;
         }
 
-        public void Add(ProjectItem item)
+        public ProjectTreeNode Add(ProjectItem item)
         {
             if (NodeType == ProjectTreeNodeType.File)
                 throw new ProjectTreeAddToLeafException();
-            var node = new ProjectTreeNode(item.Name, ProjectTreeNodeType.File);            
-            Add(node);
+            var node = new ProjectTreeNode(item.Name, ProjectTreeNodeType.File);
+            node.Item = item;
+            return Add(node);
         }
 
         public string RelativePath
@@ -128,6 +131,11 @@ namespace DSC.Projects
             {
                 string result = "";
                 var node = this;
+                if(node.Item!=null)
+                {
+                    result = node.Item.BaseFileName;
+                    node = node.Parent;
+                }
                 while (node.Parent != null) 
                 {
                     if (result == "")
