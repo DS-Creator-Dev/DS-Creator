@@ -87,6 +87,15 @@
     <Compile Include="GUI\Controls\Primitives\TabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Controls\Primitives\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\Tabs\AssetTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\Tabs\AssetTab.Designer.cs">
+      <DependentUpon>AssetTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Controls\Primitives\PathSelector.resx">
       <DependentUpon>PathSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Controls\Tabs\AssetTab.resx">
+      <DependentUpon>AssetTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

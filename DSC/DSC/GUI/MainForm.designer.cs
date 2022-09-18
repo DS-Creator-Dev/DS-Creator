@@ -150,6 +150,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.MainBody);
             this.Controls.Add(this.AppMenu);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.AppMenu;
             this.Name = "MainForm";
