@@ -1,4 +1,4 @@
-﻿using DSC.GUI.Properties;
+﻿using DSC.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

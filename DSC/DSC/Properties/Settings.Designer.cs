@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DSC.GUI.Properties
+namespace DSC.Properties
 {
 
 

@@ -1,16 +1,9 @@
 ﻿using DSC.GUI.Controls.Primitives;
-using DSC.GUI.Properties;
+using DSC.Properties;
 using DSC.Projects;
 using DSC.Projects.Components;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSC.GUI.Controls.Pages
@@ -23,7 +16,7 @@ namespace DSC.GUI.Controls.Pages
 
             var ProjectsTreeViewImageList = new ImageList();
             ProjectsTreeViewImageList.Images.Add(new Bitmap(32, 32));
-            ProjectsTreeViewImageList.Images.Add(Resources.FolerIcon);
+            ProjectsTreeViewImageList.Images.Add(Resources.FolderIcon);
             ProjectTreeView.ImageList = ProjectsTreeViewImageList;
 
             //Project p = new Project();
@@ -85,6 +78,7 @@ namespace DSC.GUI.Controls.Pages
             var tree = menu.SourceControl as TreeView;
             var node = tree.SelectedNode.Tag as ProjectTreeNode;
 
+            // var path = Path.Combine(ProjectPath, node.RelativePath)
             MessageBox.Show(node.RelativePath);
 
 
@@ -93,6 +87,9 @@ namespace DSC.GUI.Controls.Pages
         private void newActorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var menu = GetMenu(sender);
+            var tree = menu.SourceControl as TreeView;
+            var node = tree.SelectedNode.Tag as ProjectTreeNode;
+
         }
     }
 }

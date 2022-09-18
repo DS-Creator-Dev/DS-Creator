@@ -14,6 +14,12 @@ namespace DSC.GUI
         [STAThread]
         static void Main()
         {
+            // To see the Console logs, Set Project->Properties->Output type to
+            // Console Application.
+            Console.WriteLine(Session.ExecutablePath);
+            Console.WriteLine(Session.AppDataPath);
+            Console.WriteLine(Session.DefaultProjectPath);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

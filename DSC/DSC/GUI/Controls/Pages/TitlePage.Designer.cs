@@ -52,7 +52,7 @@
             // Logo
             // 
             this.Logo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Logo.Image = global::DSC.GUI.Properties.Resources.DSC_Logo;
+            this.Logo.Image = global::DSC.Properties.Resources.DSC_Logo;
             this.Logo.Location = new System.Drawing.Point(0, 0);
             this.Logo.Name = "Logo";
             this.Logo.Size = new System.Drawing.Size(589, 185);
