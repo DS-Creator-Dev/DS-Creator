@@ -34,6 +34,7 @@
             this.InnerContainer = new System.Windows.Forms.SplitContainer();
             this.TabControl = new DSC.GUI.Controls.Primitives.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.assetTab1 = new DSC.GUI.Controls.Tabs.AssetTab();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label3 = new System.Windows.Forms.Label();
             this.ToolbarsPanel = new System.Windows.Forms.Panel();
@@ -43,12 +44,13 @@
             this.newAssetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProjectTreeViewFolderContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.newActorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.newAssetToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.newSceneToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showInExplorerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.assetTab1 = new DSC.GUI.Controls.Tabs.AssetTab();
+            this.ProjectTreeViewRootContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.assetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showInExplorerToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.Container)).BeginInit();
             this.Container.Panel1.SuspendLayout();
             this.Container.Panel2.SuspendLayout();
@@ -61,6 +63,7 @@
             this.tabPage2.SuspendLayout();
             this.ToolbarsPanel.SuspendLayout();
             this.ProjectTreeViewFolderContextMenu.SuspendLayout();
+            this.ProjectTreeViewRootContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // Container
@@ -77,8 +80,8 @@
             // Container.Panel2
             // 
             this.Container.Panel2.Controls.Add(this.InnerContainer);
-            this.Container.Size = new System.Drawing.Size(609, 306);
-            this.Container.SplitterDistance = 137;
+            this.Container.Size = new System.Drawing.Size(808, 306);
+            this.Container.SplitterDistance = 181;
             this.Container.TabIndex = 0;
             // 
             // ProjectTreeView
@@ -88,7 +91,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ProjectTreeView.Location = new System.Drawing.Point(3, 3);
             this.ProjectTreeView.Name = "ProjectTreeView";
-            this.ProjectTreeView.Size = new System.Drawing.Size(131, 206);
+            this.ProjectTreeView.Size = new System.Drawing.Size(175, 206);
             this.ProjectTreeView.TabIndex = 0;
             // 
             // InnerContainer
@@ -106,8 +109,8 @@
             // InnerContainer.Panel2
             // 
             this.InnerContainer.Panel2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.InnerContainer.Size = new System.Drawing.Size(468, 306);
-            this.InnerContainer.SplitterDistance = 341;
+            this.InnerContainer.Size = new System.Drawing.Size(623, 306);
+            this.InnerContainer.SplitterDistance = 496;
             this.InnerContainer.TabIndex = 0;
             // 
             // TabControl
@@ -119,7 +122,7 @@
             this.TabControl.Location = new System.Drawing.Point(0, 0);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(341, 306);
+            this.TabControl.Size = new System.Drawing.Size(496, 306);
             this.TabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl.TabIndex = 0;
             // 
@@ -129,10 +132,18 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(333, 280);
+            this.tabPage1.Size = new System.Drawing.Size(488, 280);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // assetTab1
+            // 
+            this.assetTab1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.assetTab1.Location = new System.Drawing.Point(3, 3);
+            this.assetTab1.Name = "assetTab1";
+            this.assetTab1.Size = new System.Drawing.Size(482, 274);
+            this.assetTab1.TabIndex = 0;
             // 
             // tabPage2
             // 
@@ -140,7 +151,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(333, 280);
+            this.tabPage2.Size = new System.Drawing.Size(488, 280);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -160,7 +171,7 @@
             this.ToolbarsPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ToolbarsPanel.Location = new System.Drawing.Point(0, 0);
             this.ToolbarsPanel.Name = "ToolbarsPanel";
-            this.ToolbarsPanel.Size = new System.Drawing.Size(609, 34);
+            this.ToolbarsPanel.Size = new System.Drawing.Size(808, 34);
             this.ToolbarsPanel.TabIndex = 1;
             // 
             // label1
@@ -195,39 +206,9 @@
             // ProjectTreeViewFolderContextMenu
             // 
             this.ProjectTreeViewFolderContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
             this.showInExplorerToolStripMenuItem1});
             this.ProjectTreeViewFolderContextMenu.Name = "ProjectTreeViewFolderContextMenu";
-            this.ProjectTreeViewFolderContextMenu.Size = new System.Drawing.Size(163, 48);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newActorToolStripMenuItem1,
-            this.newAssetToolStripMenuItem1,
-            this.newSceneToolStripMenuItem1});
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(162, 22);
-            this.toolStripMenuItem2.Text = "Add";
-            // 
-            // newActorToolStripMenuItem1
-            // 
-            this.newActorToolStripMenuItem1.Name = "newActorToolStripMenuItem1";
-            this.newActorToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
-            this.newActorToolStripMenuItem1.Text = "New Actor";
-            this.newActorToolStripMenuItem1.Click += new System.EventHandler(this.newActorToolStripMenuItem1_Click);
-            // 
-            // newAssetToolStripMenuItem1
-            // 
-            this.newAssetToolStripMenuItem1.Name = "newAssetToolStripMenuItem1";
-            this.newAssetToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
-            this.newAssetToolStripMenuItem1.Text = "New Asset";
-            // 
-            // newSceneToolStripMenuItem1
-            // 
-            this.newSceneToolStripMenuItem1.Name = "newSceneToolStripMenuItem1";
-            this.newSceneToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
-            this.newSceneToolStripMenuItem1.Text = "New Scene";
+            this.ProjectTreeViewFolderContextMenu.Size = new System.Drawing.Size(163, 26);
             // 
             // showInExplorerToolStripMenuItem1
             // 
@@ -236,13 +217,51 @@
             this.showInExplorerToolStripMenuItem1.Text = "Show In Explorer";
             this.showInExplorerToolStripMenuItem1.Click += new System.EventHandler(this.showInExplorerToolStripMenuItem1_Click);
             // 
-            // assetTab1
+            // ProjectTreeViewRootContextMenu
             // 
-            this.assetTab1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.assetTab1.Location = new System.Drawing.Point(3, 3);
-            this.assetTab1.Name = "assetTab1";
-            this.assetTab1.Size = new System.Drawing.Size(327, 274);
-            this.assetTab1.TabIndex = 0;
+            this.ProjectTreeViewRootContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem3,
+            this.showInExplorerToolStripMenuItem2});
+            this.ProjectTreeViewRootContextMenu.Name = "ProjectTreeViewRootContextMenu";
+            this.ProjectTreeViewRootContextMenu.Size = new System.Drawing.Size(181, 70);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.assetToolStripMenuItem});
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Text = "Add";
+            // 
+            // assetToolStripMenuItem
+            // 
+            this.assetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem1,
+            this.fromFileToolStripMenuItem});
+            this.assetToolStripMenuItem.Name = "assetToolStripMenuItem";
+            this.assetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.assetToolStripMenuItem.Text = "Asset";
+            // 
+            // newToolStripMenuItem1
+            // 
+            this.newToolStripMenuItem1.Name = "newToolStripMenuItem1";
+            this.newToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem1.Text = "New...";
+            this.newToolStripMenuItem1.Click += new System.EventHandler(this.newToolStripMenuItem1_Click);
+            // 
+            // fromFileToolStripMenuItem
+            // 
+            this.fromFileToolStripMenuItem.Name = "fromFileToolStripMenuItem";
+            this.fromFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fromFileToolStripMenuItem.Text = "From File...";
+            this.fromFileToolStripMenuItem.Click += new System.EventHandler(this.newAssetFromFileToolStripMenuItem_Click);
+            // 
+            // showInExplorerToolStripMenuItem2
+            // 
+            this.showInExplorerToolStripMenuItem2.Name = "showInExplorerToolStripMenuItem2";
+            this.showInExplorerToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.showInExplorerToolStripMenuItem2.Text = "ShowInExplorer";
+            this.showInExplorerToolStripMenuItem2.Click += new System.EventHandler(this.showInExplorerToolStripMenuItem1_Click);
             // 
             // WorkspacePage
             // 
@@ -251,7 +270,7 @@
             this.Controls.Add(this.Container);
             this.Controls.Add(this.ToolbarsPanel);
             this.Name = "WorkspacePage";
-            this.Size = new System.Drawing.Size(609, 340);
+            this.Size = new System.Drawing.Size(808, 340);
             this.Container.Panel1.ResumeLayout(false);
             this.Container.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Container)).EndInit();
@@ -266,6 +285,7 @@
             this.ToolbarsPanel.ResumeLayout(false);
             this.ToolbarsPanel.PerformLayout();
             this.ProjectTreeViewFolderContextMenu.ResumeLayout(false);
+            this.ProjectTreeViewRootContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -287,11 +307,13 @@
         private System.Windows.Forms.ToolStripMenuItem newAssetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newSceneToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip ProjectTreeViewFolderContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem newActorToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem newAssetToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem newSceneToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem showInExplorerToolStripMenuItem1;
         private Tabs.AssetTab assetTab1;
+        private System.Windows.Forms.ContextMenuStrip ProjectTreeViewRootContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem showInExplorerToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem assetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem fromFileToolStripMenuItem;
     }
 }

@@ -79,6 +79,11 @@ namespace DSC.Projects
 
         }
 
+        void LoadItem()
+        {
+
+        }
+
         void Add(Asset asset, string path)
         {            
 

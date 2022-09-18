@@ -6,6 +6,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
+using DSC.GUI.Forms;
 
 namespace DSC.GUI.Controls.Pages
 {
@@ -23,6 +24,7 @@ namespace DSC.GUI.Controls.Pages
             Project project = Session.Project;            
 
             project.Tree.FolderContextMenu = ProjectTreeViewFolderContextMenu;
+            project.Tree.RootContextMenu = ProjectTreeViewRootContextMenu;
             project.Tree.PopulateTreeView(ProjectTreeView, ProjectTreeViewDisplayOption.FolderHierarchy);                     
         }
 
@@ -61,14 +63,24 @@ namespace DSC.GUI.Controls.Pages
             var tree = menu.SourceControl as TreeView;
             var node = tree.SelectedNode.Tag as ProjectTreeNode;
             Process.Start(System.IO.Path.Combine(Session.Project.ProjectPath, node.RelativePath));                        
-        }       
+        }              
 
-        private void newActorToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void newAssetFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var menu = GetMenu(sender);
-            var tree = menu.SourceControl as TreeView;
-            var node = tree.SelectedNode.Tag as ProjectTreeNode;
+            var ofd = new OpenFileDialog();
+            ofd.Filter = "PNG Files (*.png)|*.png";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                //var filename = 
+                MessageBox.Show(ofd.FileName);
+            }
+        }
 
+        private void newToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var dialog = new AssetDialog();
+
+            dialog.ShowDialog();
         }
     }
 }

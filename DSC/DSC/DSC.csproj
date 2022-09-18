@@ -71,6 +71,9 @@
       <DependentUpon>WorkspacePage.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Controls\Primitives\FolderPicker.cs" />
+    <Compile Include="GUI\Controls\Primitives\MeasureUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\Controls\Primitives\Page.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -95,6 +98,12 @@
     </Compile>
     <Compile Include="GUI\Controls\Tabs\AssetTab.Designer.cs">
       <DependentUpon>AssetTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Forms\AssetDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\AssetDialog.Designer.cs">
+      <DependentUpon>AssetDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\MainForm.cs">
       <SubType>Form</SubType>
@@ -128,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Controls\Tabs\AssetTab.resx">
       <DependentUpon>AssetTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\AssetDialog.resx">
+      <DependentUpon>AssetDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -46,7 +46,7 @@ namespace DSC.Projects
             treeView.Nodes.Clear();
             var treeRoot = new TreeNode(Root.Name);
             treeRoot.Tag = Root;
-            treeRoot.ContextMenuStrip = FolderContextMenu;
+            treeRoot.ContextMenuStrip = RootContextMenu;
 
             if (option == ProjectTreeViewDisplayOption.FolderHierarchy)
             {
@@ -67,6 +67,9 @@ namespace DSC.Projects
 
         [XmlIgnore]
         public ContextMenuStrip FolderContextMenu { get; set; } = null;
+
+        [XmlIgnore]
+        public ContextMenuStrip RootContextMenu { get; set; } = null;
     }
 
     public enum ProjectTreeNodeType
