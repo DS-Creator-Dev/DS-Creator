@@ -1,10 +1,12 @@
 ﻿using DSC.GUI.Controls.Primitives;
+using DSC.Projects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +27,28 @@ namespace DSC.GUI.Controls.Pages
         }
 
         private void LoadProjButton_Click(object sender, EventArgs e)
-        {
-
+        {                        
+            var dialog = new FolderPicker();
+            dialog.InputPath = Session.DefaultProjectPath;
+            if(dialog.ShowDialog()==true)
+            {               
+                var path = dialog.ResultPath;
+                
+                try
+                {
+                    Session.Project = Project.Load(path);
+                    NavigateTo(new WorkspacePage());
+                }
+                catch(ProjectFileNotFoundException)
+                {
+                    MessageBox.Show("The chosen path is not a DSC project directory.");
+                }
+                catch (Exception ex)
+                {
+                    throw ex; // Debug
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void DocsButton_Click(object sender, EventArgs e)

@@ -99,6 +99,7 @@
     <Compile Include="Projects\Project.cs" />
     <Compile Include="Projects\ProjectTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Session\Init.cs" />
     <Compile Include="Session\Paths.cs" />
     <Compile Include="Session\Project.cs" />
     <EmbeddedResource Include="GUI\Controls\Pages\NewProjectPage.resx">

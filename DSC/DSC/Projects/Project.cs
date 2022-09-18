@@ -56,19 +56,25 @@ namespace DSC.Projects
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Project));
             TextWriter writer = new StreamWriter(InfoPath);
-
             serializer.Serialize(writer, this);
             writer.Close();
-
         }
 
         public static Project Load(string path)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Project));
-            TextReader reader = new StreamReader(System.IO.Path.Combine(path, ".DSC"));
-            Project project = serializer.Deserialize(reader) as Project;
+            Project project;
+            var prjfile = System.IO.Path.Combine(path, ".DSC");
+            if (!File.Exists(prjfile))
+            {
+                throw new ProjectFileNotFoundException();
+            }
+            using (TextReader reader = new StreamReader(prjfile))
+            {
+                 project = serializer.Deserialize(reader) as Project;
+            }            
             project.Path = System.IO.Path.Combine(path, "..");
-            project.Tree.Root.DeserializeCheck();
+            project.Tree.Root.DeserializeCheck();            
             return project;
 
         }
@@ -78,4 +84,6 @@ namespace DSC.Projects
 
         }
     }
+
+    class ProjectFileNotFoundException : FileNotFoundException { }
 }

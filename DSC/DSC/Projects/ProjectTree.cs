@@ -87,11 +87,7 @@ namespace DSC.Projects
         public ProjectTreeNode(string name, ProjectTreeNodeType nodeType)
         {
             Name = name;
-            NodeType = nodeType;            
-            if (nodeType == ProjectTreeNodeType.Folder)
-            {
-                Children = new List<ProjectTreeNode>();
-            }            
+            NodeType = nodeType;                             
         }
 
         [XmlIgnore]
@@ -102,14 +98,14 @@ namespace DSC.Projects
         [XmlAttribute("type")]
         public ProjectTreeNodeType NodeType { get; set; }
 
-        [XmlArray("Children")]
-        public List<ProjectTreeNode> Children { get; } = null;
+        [XmlArray("Children"), XmlArrayItem("Node")]
+        public List<ProjectTreeNode> Children { get; set; } = new List<ProjectTreeNode>();
         
         ProjectItem Item { get; set; } = null;
 
         public void Add(ProjectTreeNode node)
         {
-            if (Children == null)
+            if (NodeType == ProjectTreeNodeType.File) 
                 throw new ProjectTreeAddToLeafException();
             Children.Add(node);
             node.Parent = this;
@@ -117,7 +113,7 @@ namespace DSC.Projects
 
         public void Add(ProjectItem item)
         {
-            if (Children == null)
+            if (NodeType == ProjectTreeNodeType.File)
                 throw new ProjectTreeAddToLeafException();
             var node = new ProjectTreeNode(item.Name, ProjectTreeNodeType.File);            
             Add(node);
@@ -143,7 +139,7 @@ namespace DSC.Projects
 
         internal void PopulateTreeNode(TreeNode treeNode, Action<ProjectTreeNode, TreeNode> NodeCreatedCallback = null)
         {
-            if (Children != null)
+            if (NodeType == ProjectTreeNodeType.Folder) 
             {                
                 treeNode.ImageIndex = 1;
                 treeNode.SelectedImageIndex = 1;
@@ -158,13 +154,25 @@ namespace DSC.Projects
             }
         }
 
+        private void SanityCheck()
+        {
+            if (Children.Count > 0 && NodeType != ProjectTreeNodeType.Folder) 
+            {
+                throw new Exception("Non-folder item has children");
+            }
+        }
+
         internal void DeserializeCheck()
         {
+            SanityCheck();            
             // infere data that was lost during serialization
-            foreach(var child in Children)
+            if (NodeType == ProjectTreeNodeType.Folder)
             {
-                child.Parent = this;
-                child.DeserializeCheck();
+                foreach (var child in Children)
+                {
+                    child.Parent = this;
+                    child.DeserializeCheck();
+                }
             }
         }
 

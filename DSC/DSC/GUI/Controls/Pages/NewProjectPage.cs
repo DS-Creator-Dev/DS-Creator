@@ -18,6 +18,7 @@ namespace DSC.GUI.Controls.Pages
         public NewProjectPage()
         {
             InitializeComponent();
+            ProjectPathSeletor.Path = Session.DefaultProjectPath;
         }
 
         private void ProjectPathSeletor_PathChanged(object sender, EventArgs args)

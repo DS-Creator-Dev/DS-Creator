@@ -20,7 +20,7 @@ namespace DSC.GUI.Controls.Pages
             ProjectsTreeViewImageList.Images.Add(Resources.FolderIcon);
             ProjectTreeView.ImageList = ProjectsTreeViewImageList;
 
-            Project project = Session.Project;
+            Project project = Session.Project;            
 
             project.Tree.FolderContextMenu = ProjectTreeViewFolderContextMenu;
             project.Tree.PopulateTreeView(ProjectTreeView, ProjectTreeViewDisplayOption.FolderHierarchy);                     
@@ -56,7 +56,7 @@ namespace DSC.GUI.Controls.Pages
         }
 
         private void showInExplorerToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
+        {                        
             var menu = GetMenu(sender);
             var tree = menu.SourceControl as TreeView;
             var node = tree.SelectedNode.Tag as ProjectTreeNode;
