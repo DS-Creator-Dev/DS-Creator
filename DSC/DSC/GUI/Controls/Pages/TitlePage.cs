@@ -21,7 +21,7 @@ namespace DSC.GUI.Controls.Pages
 
         private void NewProjButton_Click(object sender, EventArgs e)
         {
-            NavigateTo(new WorkspacePage());
+            NavigateTo(new NewProjectPage());            
         }
 
         private void LoadProjButton_Click(object sender, EventArgs e)

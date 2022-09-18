@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\Controls\Pages\NewProjectPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\Pages\NewProjectPage.Designer.cs">
+      <DependentUpon>NewProjectPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Controls\Pages\TitlePage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -61,6 +67,7 @@
     <Compile Include="GUI\Controls\Pages\WorkspacePage.Designer.cs">
       <DependentUpon>WorkspacePage.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Controls\Primitives\FolderPicker.cs" />
     <Compile Include="GUI\Controls\Primitives\Page.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -68,6 +75,12 @@
       <DependentUpon>Page.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Controls\Primitives\PageHost.cs" />
+    <Compile Include="GUI\Controls\Primitives\PathSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\Primitives\PathSelector.Designer.cs">
+      <DependentUpon>PathSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Controls\Primitives\TabControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -85,6 +98,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\Paths.cs" />
     <Compile Include="Session\Project.cs" />
+    <EmbeddedResource Include="GUI\Controls\Pages\NewProjectPage.resx">
+      <DependentUpon>NewProjectPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Controls\Pages\TitlePage.resx">
       <DependentUpon>TitlePage.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Controls\Primitives\Page.resx">
       <DependentUpon>Page.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Controls\Primitives\PathSelector.resx">
+      <DependentUpon>PathSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
