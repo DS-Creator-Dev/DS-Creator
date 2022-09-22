@@ -102,7 +102,7 @@ namespace DSC.Projects
             var node = TouchPath(path);
             node = node.Add(asset);            
             path = System.IO.Path.Combine(ProjectPath, node.RelativePath);
-            MessageBox.Show(path);
+            asset.WorkPath = path;
             asset.Save(path);
         }
     }

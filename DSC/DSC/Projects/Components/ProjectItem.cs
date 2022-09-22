@@ -20,6 +20,9 @@ namespace DSC.Projects.Components
         [XmlAttribute("basefilename")]
         public string BaseFileName { get; set; } = "";
 
+        [XmlIgnore]
+        public string WorkPath { get; set; } = "";
+
         public ProjectItem() { }
         public ProjectItem(string name, string baseFileName)
         {

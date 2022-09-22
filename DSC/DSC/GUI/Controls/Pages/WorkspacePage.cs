@@ -9,6 +9,7 @@ using System.Diagnostics;
 using DSC.GUI.Forms;
 using DSC.GUI.Controls.Tabs;
 using System.CodeDom;
+using System.Collections.Generic;
 
 namespace DSC.GUI.Controls.Pages
 {
@@ -74,9 +75,68 @@ namespace DSC.GUI.Controls.Pages
         private void AddTab(TabInfo tab)
         {
             var tabPage = new TabPage(tab.HeaderName + "      ");
+            tabPage.Tag = tab.Tag;
+            tab.Tag = null;
             tab.Dock = DockStyle.Fill;
             tabPage.Controls.Add(tab);
             TabControl.TabPages.Add(tabPage);
+            TabControl.SelectedTab = tabPage;
+        }
+
+        private bool IsTabOpen(Func<object, bool> pred, out TabPage tab)
+        {
+            foreach (TabPage ctab in TabControl.Controls)
+            {
+                if(pred(ctab.Tag))
+                {
+                    tab = ctab;
+                    return true;
+                }
+            }
+            tab = null;
+            return false;
+        }
+
+        private bool IsTabOpen(ProjectItem item, out TabPage tab)
+        {
+            return IsTabOpen((object o) =>
+            {
+                if (o == null || !(o is ProjectItem))
+                    return false;
+                return (o as ProjectItem).WorkPath == item.WorkPath;
+            }, out tab);
+        }
+
+        private bool IsTabOpen(string name, out TabPage tab)
+        {
+            return IsTabOpen((object o) =>
+            {
+                if (o == null || !(o is string))
+                    return false;
+                return (o as string) == name;
+            }, out tab);
+        }
+
+        private void AddTab(ProjectItem item)
+        {      
+            if(IsTabOpen(item, out TabPage ctab))
+            {
+                TabControl.SelectedTab = ctab;
+                return;
+            }           
+            TabInfo tab = null;
+            if (item is Asset)
+            {
+                var asset = item as Asset;
+                tab = new AssetTab();
+                (tab as AssetTab).Asset = asset;
+            }
+            if (tab != null)
+            {
+                tab.Tag = item;                
+                AddTab(tab);
+            }
+            else MessageBox.Show("Error - added tab is null.");
         }
 
         private void newAssetFromFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -94,11 +154,9 @@ namespace DSC.GUI.Controls.Pages
                     if(dialog.ShowDialog() == DialogResult.OK)
                     {
                         Asset result = dialog.Result;
-                        var tab = new AssetTab();
-                        tab.Asset = result;
                         Session.Project.Add(result, "Assets");
                         Session.Project.Save();
-                        AddTab(tab);                        
+                        AddTab(result);                                
                     }
                 }
                 /*catch(Exception ex)
@@ -131,10 +189,8 @@ namespace DSC.GUI.Controls.Pages
             switch (item.GetType().Name)            
             {
                 case "Asset":
-                    {                        
-                        var tab = new AssetTab();
-                        tab.Asset = item as Asset;                        
-                        AddTab(tab);
+                    {                                                
+                        AddTab(item);
                         break;
                     }
                 default:
@@ -146,10 +202,16 @@ namespace DSC.GUI.Controls.Pages
         }
 
         public void OpenProjectPropertiesTab()
-        {
+        {            
+            if(IsTabOpen("Properties", out TabPage ctab))
+            {
+                TabControl.SelectedTab = ctab;
+                return;
+            }
             var tab = new ProjectPropertiesTab();
             tab.HeaderName = "Properties";
-            AddTab(tab);
-        }
+            tab.Tag = "Properties";
+            AddTab(tab);            
+        }        
     }
 }
