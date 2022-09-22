@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace DSC.Projects.Components
-{
+{    
+    [XmlRoot("Item")]
     [XmlInclude(typeof(Asset))]
-    [XmlRoot("Item", IsNullable =true)]
     public abstract class ProjectItem
     {
         [XmlIgnore]

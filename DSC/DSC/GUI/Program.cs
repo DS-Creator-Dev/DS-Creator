@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,7 +23,22 @@ namespace DSC.GUI
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            try
+            {
+                if (File.Exists("startup_proj"))
+                {
+                    // fast load [Debug]
+                    string path = File.ReadAllText("startup_proj");
+                    Application.Run(new MainForm(path));
+                    return;
+                }
+                Application.Run(new MainForm());
+            }
+            catch 
+            {
+                Application.Run(new MainForm());
+            }
         }
     }
 }

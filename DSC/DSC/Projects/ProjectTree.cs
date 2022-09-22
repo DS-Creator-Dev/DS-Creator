@@ -104,8 +104,8 @@ namespace DSC.Projects
         [XmlArray("Children"), XmlArrayItem("Node")]
         public List<ProjectTreeNode> Children { get; set; } = new List<ProjectTreeNode>();
 
-        [XmlElement("Item", typeof(ProjectItem), IsNullable = true)]
-        ProjectItem Item { get; set; } = null;
+        [XmlElement("Item")]
+        public ProjectItem Item { get; set; } = null;
 
         public ProjectTreeNode Add(ProjectTreeNode node)
         {
@@ -158,6 +158,8 @@ namespace DSC.Projects
                 {
                     var tNode = new TreeNode(node.Name);
                     tNode.Tag = node;
+                                        
+
                     NodeCreatedCallback?.Invoke(node, tNode);
                     node.PopulateTreeNode(tNode, NodeCreatedCallback);
                     treeNode.Nodes.Add(tNode);

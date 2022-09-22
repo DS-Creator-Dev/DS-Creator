@@ -14,6 +14,10 @@ namespace DSC.Projects.Components
         [XmlIgnore]
         public Bitmap Image { get; set; }
 
+        [XmlAttribute("role")]
+        public string Role { get; set; } = "Asset";
+
+        public Asset() { }
         public Asset(string name, string baseFileName) : base(name, baseFileName)
         { }
 
@@ -29,7 +33,7 @@ namespace DSC.Projects.Components
         }
         public override void Load(string file)
         {
-            Image = new Bitmap(file);
+            Image = new Bitmap(file);            
         }        
     }
 }

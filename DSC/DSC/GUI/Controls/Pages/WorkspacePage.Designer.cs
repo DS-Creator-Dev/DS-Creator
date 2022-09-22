@@ -93,6 +93,7 @@
             this.ProjectTreeView.Name = "ProjectTreeView";
             this.ProjectTreeView.Size = new System.Drawing.Size(175, 206);
             this.ProjectTreeView.TabIndex = 0;
+            this.ProjectTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ProjectTreeView_NodeMouseDoubleClick);
             // 
             // InnerContainer
             // 

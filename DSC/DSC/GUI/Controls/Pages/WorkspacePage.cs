@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using DSC.GUI.Forms;
 using DSC.GUI.Controls.Tabs;
+using System.CodeDom;
 
 namespace DSC.GUI.Controls.Pages
 {
@@ -113,6 +114,35 @@ namespace DSC.GUI.Controls.Pages
             var dialog = new AssetDialog();
 
             dialog.ShowDialog();
+        }
+
+        private void ProjectTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            var visual_node = e.Node;
+            ProjectTreeNode node = visual_node.Tag as ProjectTreeNode;
+
+            if (node.NodeType == ProjectTreeNodeType.Folder)
+                return;
+
+            ProjectItem item = node.Item;
+
+            item.Load(System.IO.Path.Combine(Session.Project.ProjectPath, node.RelativePath));
+
+            switch (item.GetType().Name)            
+            {
+                case "Asset":
+                    {                        
+                        var tab = new AssetTab();
+                        tab.Asset = item as Asset;                        
+                        AddTab(tab);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+
         }
     }
 }

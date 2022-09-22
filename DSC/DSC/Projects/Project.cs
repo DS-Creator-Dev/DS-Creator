@@ -16,9 +16,15 @@ namespace DSC.Projects
     {
         public string Name { get; set; }
 
+        /// <summary>
+        /// Path containing project's directory
+        /// </summary>
         [XmlIgnore]
         public String Path { get; private set; }
                 
+        /// <summary>
+        /// Project Files Tree
+        /// </summary>
         public ProjectTree Tree { get; set; } = new ProjectTree();
 
         public Project() { }
@@ -41,12 +47,18 @@ namespace DSC.Projects
             return Tree.Add(relPath);
         }
 
+        /// <summary>
+        /// Path containing project's data
+        /// </summary>
         [XmlIgnore]
         public string ProjectPath
         {
             get => System.IO.Path.Combine(Path, Name);
         }
 
+        /// <summary>
+        /// Path to project configuration file
+        /// </summary>
         [XmlIgnore]
         public string InfoPath
         {
