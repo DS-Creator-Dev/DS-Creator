@@ -67,6 +67,7 @@ namespace DSC.GUI.Controls.Tabs
 
         private void GridPanel_Paint(object sender, PaintEventArgs e)
         {            
+            // to be changed (aesthetically)
             for(int y=0;y< GridPanel.Height;y+=8*Zoom)
             {
                 e.Graphics.DrawLine(Pens.LightGray, 0, y, GridPanel.Width, y);
@@ -91,9 +92,17 @@ namespace DSC.GUI.Controls.Tabs
         }
 
         private void ImagePanel_Paint(object sender, PaintEventArgs e)
+        {            
+        }
+
+        private void TransparentColorButton_Click(object sender, EventArgs e)
         {
-            e.Graphics.DrawLine(Pens.Red, 0, 0, ImagePanel.Width, ImagePanel.Height);
-            e.Graphics.DrawLine(Pens.Red, 0, ImagePanel.Height, ImagePanel.Width, 0);
+            if (ColorPicker.ShowDialog() == DialogResult.OK)
+            {
+                TransparentColorButton.BackColor = ColorPicker.Color;
+                Asset.TransparentColor = ColorPicker.Color;
+                Session.Project.Save(); // TO OPTIMIZE
+            }
         }
     }
 }

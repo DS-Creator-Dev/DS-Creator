@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,24 @@ namespace DSC.Projects.Components
     {
         [XmlIgnore]
         public Bitmap Image { get; set; }
+
+        [XmlElement("TransparentColor")]
+        public string _XML_TransparentColor
+        {
+            get
+            {
+                return TransparentColor.ToArgb().ToString("X08");
+            }
+            set
+            {
+                TransparentColor = Color.FromArgb(
+                    int.TryParse(value, NumberStyles.HexNumber, null, out int res) ? res : 0
+                );
+            }
+        }
+
+        [XmlIgnore]
+        public Color TransparentColor { get; set; } = Color.Transparent;
 
         [XmlAttribute("role")]
         public string Role { get; set; } = "Asset";
