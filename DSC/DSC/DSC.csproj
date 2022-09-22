@@ -150,6 +150,9 @@
     <EmbeddedResource Include="GUI\Controls\Tabs\ProjectPropertiesTab.resx">
       <DependentUpon>ProjectPropertiesTab.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Controls\Tabs\TabInfo.resx">
+      <DependentUpon>TabInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Forms\AssetDialog.resx">
       <DependentUpon>AssetDialog.cs</DependentUpon>
     </EmbeddedResource>

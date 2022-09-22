@@ -10,6 +10,7 @@ using DSC.GUI.Forms;
 using DSC.GUI.Controls.Tabs;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace DSC.GUI.Controls.Pages
 {
@@ -74,9 +75,9 @@ namespace DSC.GUI.Controls.Pages
 
         private void AddTab(TabInfo tab)
         {
+            tab.SaveRequiredFlagChanged += TabInfo_SaveRequiredFlagChanged;
             var tabPage = new TabPage(tab.HeaderName + "      ");
-            tabPage.Tag = tab.Tag;
-            tab.Tag = null;
+            tabPage.Tag = tab.Tag;            
             tab.Dock = DockStyle.Fill;
             tabPage.Controls.Add(tab);
             TabControl.TabPages.Add(tabPage);
@@ -211,7 +212,18 @@ namespace DSC.GUI.Controls.Pages
             var tab = new ProjectPropertiesTab();
             tab.HeaderName = "Properties";
             tab.Tag = "Properties";
+            tab.ChangesSaved += PropertiesTab_ChangesSave;            
             AddTab(tab);            
         }        
+
+        private void PropertiesTab_ChangesSave(object sender, EventArgs e)
+        {            
+            Session.Project.Tree.PopulateTreeView(ProjectTreeView, ProjectTreeViewDisplayOption.FolderHierarchy);            
+        }
+
+       private void TabInfo_SaveRequiredFlagChanged(object sender, EventArgs e)
+       {
+            TabControl.Invalidate();
+       }
     }
 }

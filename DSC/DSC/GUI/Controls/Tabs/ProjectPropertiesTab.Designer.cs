@@ -79,6 +79,7 @@
             this.ProjNameBox.Name = "ProjNameBox";
             this.ProjNameBox.Size = new System.Drawing.Size(404, 20);
             this.ProjNameBox.TabIndex = 3;
+            this.ProjNameBox.TextChanged += new System.EventHandler(this.ProjNameBox_TextChanged);
             // 
             // comboBox1
             // 

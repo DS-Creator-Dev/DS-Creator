@@ -11,10 +11,19 @@ using System.Xml.Serialization;
 
 namespace DSC.Projects
 {
-    [XmlRootAttribute("Project", IsNullable = false)]
+    [XmlRoot("Project", IsNullable = false)]
     public class Project
     {
-        public string Name { get; set; }
+        private string _Name;
+        public string Name 
+        {
+            get => _Name; 
+            set
+            {
+                _Name = value;
+                Tree.Root.Name = value;
+            }
+        }
 
         /// <summary>
         /// Path containing project's directory
@@ -33,7 +42,8 @@ namespace DSC.Projects
         {
             Name = name;
             Path = path;
-            Tree.Root.Name = Name;            
+            Tree.Root.Name = Name;
+            ProjectPath = System.IO.Path.Combine(Path, Name);
             Directory.CreateDirectory(ProjectPath);
             TouchPath("Actors");
             TouchPath("Assets");
@@ -51,10 +61,7 @@ namespace DSC.Projects
         /// Path containing project's data
         /// </summary>
         [XmlIgnore]
-        public string ProjectPath
-        {
-            get => System.IO.Path.Combine(Path, Name);
-        }
+        public string ProjectPath;       
 
         /// <summary>
         /// Path to project configuration file
@@ -77,7 +84,7 @@ namespace DSC.Projects
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Project));
             Project project;
-            var prjfile = System.IO.Path.Combine(path, ".DSC");
+            var prjfile = System.IO.Path.Combine(path, ".DSC");            
             if (!File.Exists(prjfile))
             {
                 throw new ProjectFileNotFoundException();
@@ -85,8 +92,9 @@ namespace DSC.Projects
             using (TextReader reader = new StreamReader(prjfile))
             {
                  project = serializer.Deserialize(reader) as Project;
-            }            
-            project.Path = System.IO.Path.Combine(path, "..");
+            }
+            project.Path = System.IO.Path.GetDirectoryName(path);
+            project.ProjectPath = path;
             project.Tree.Root.DeserializeCheck();            
             return project;
 

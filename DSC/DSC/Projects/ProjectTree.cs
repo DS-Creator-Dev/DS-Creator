@@ -95,7 +95,7 @@ namespace DSC.Projects
 
         [XmlIgnore]
         public ProjectTreeNode Parent { get; private set; } = null;
-        
+
         public string Name { get; set; } = "";
 
         [XmlAttribute("type")]
@@ -143,7 +143,7 @@ namespace DSC.Projects
                     else
                         result = node.Name + "/" + result;
                     node = node.Parent;
-                }
+                }                
                 return result;
             }
         }

@@ -18,7 +18,11 @@ namespace DSC.GUI.Controls.Tabs
             InitializeComponent();
 
             ProjNameBox.Text = Session.Project.Name;
+
+            IsLoaded = true;
         }
+
+        bool IsLoaded = false;
 
         private void TabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -32,5 +36,20 @@ namespace DSC.GUI.Controls.Tabs
             g.DrawString(text, this.TabControl.Font, Brushes.Black, x, y);
 
         }
+
+        private void ProjNameBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!IsLoaded)
+                return;
+            Session.Project.Name = ProjNameBox.Text;
+            RequiresSave = true;
+        }
+
+        public override bool SaveDataProc()         
+        {
+            Session.Project.Save();
+            return true; 
+        }
+
     }
 }
