@@ -144,5 +144,12 @@ namespace DSC.GUI.Controls.Pages
             }
 
         }
+
+        public void OpenProjectPropertiesTab()
+        {
+            var tab = new ProjectPropertiesTab();
+            tab.HeaderName = "Properties";
+            AddTab(tab);
+        }
     }
 }

@@ -40,6 +40,9 @@ namespace DSC.GUI.Controls.Tabs
                 if (Asset != null)
                 {
                     HeaderName = Asset.BaseFileName;
+
+                    TransparentColorButton.BackColor = ColorPicker.Color = Asset.TransparentColor;
+
                     SetImage(Asset.Image);
                     Zoom = Zoom; // force redraw
                 }

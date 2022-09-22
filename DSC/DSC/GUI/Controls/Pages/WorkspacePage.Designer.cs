@@ -33,10 +33,6 @@
             this.ProjectTreeView = new System.Windows.Forms.TreeView();
             this.InnerContainer = new System.Windows.Forms.SplitContainer();
             this.TabControl = new DSC.GUI.Controls.Primitives.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.assetTab1 = new DSC.GUI.Controls.Tabs.AssetTab();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
             this.ToolbarsPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.showInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,9 +54,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.InnerContainer)).BeginInit();
             this.InnerContainer.Panel1.SuspendLayout();
             this.InnerContainer.SuspendLayout();
-            this.TabControl.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.ToolbarsPanel.SuspendLayout();
             this.ProjectTreeViewFolderContextMenu.SuspendLayout();
             this.ProjectTreeViewRootContextMenu.SuspendLayout();
@@ -116,8 +109,6 @@
             // 
             // TabControl
             // 
-            this.TabControl.Controls.Add(this.tabPage1);
-            this.TabControl.Controls.Add(this.tabPage2);
             this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl.Location = new System.Drawing.Point(0, 0);
@@ -127,49 +118,6 @@
             this.TabControl.Size = new System.Drawing.Size(496, 306);
             this.TabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.TabControl.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.assetTab1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(488, 280);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "t1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // assetTab1
-            // 
-            this.assetTab1.Asset = null;
-            this.assetTab1.AssetHeight = 128;
-            this.assetTab1.AssetWidth = 128;
-            this.assetTab1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.assetTab1.HeaderName = null;
-            this.assetTab1.Location = new System.Drawing.Point(3, 3);
-            this.assetTab1.Name = "assetTab1";
-            this.assetTab1.Size = new System.Drawing.Size(482, 274);
-            this.assetTab1.TabIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(488, 280);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2 Long long long long";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(149, 134);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "label3";
             // 
             // ToolbarsPanel
             // 
@@ -284,10 +232,6 @@
             this.InnerContainer.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.InnerContainer)).EndInit();
             this.InnerContainer.ResumeLayout(false);
-            this.TabControl.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.ToolbarsPanel.ResumeLayout(false);
             this.ToolbarsPanel.PerformLayout();
             this.ProjectTreeViewFolderContextMenu.ResumeLayout(false);
@@ -304,9 +248,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TreeView ProjectTreeView;
         private Primitives.TabControl TabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label label3;        
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showInExplorerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newActorToolStripMenuItem;
@@ -314,7 +255,6 @@
         private System.Windows.Forms.ToolStripMenuItem newSceneToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip ProjectTreeViewFolderContextMenu;
         private System.Windows.Forms.ToolStripMenuItem showInExplorerToolStripMenuItem1;
-        private Tabs.AssetTab assetTab1;
         private System.Windows.Forms.ContextMenuStrip ProjectTreeViewRootContextMenu;
         private System.Windows.Forms.ToolStripMenuItem showInExplorerToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;

@@ -99,6 +99,12 @@
     <Compile Include="GUI\Controls\Tabs\AssetTab.Designer.cs">
       <DependentUpon>AssetTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Controls\Tabs\ProjectPropertiesTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\Tabs\ProjectPropertiesTab.Designer.cs">
+      <DependentUpon>ProjectPropertiesTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Controls\Tabs\TabInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -140,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Controls\Tabs\AssetTab.resx">
       <DependentUpon>AssetTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Controls\Tabs\ProjectPropertiesTab.resx">
+      <DependentUpon>ProjectPropertiesTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Forms\AssetDialog.resx">
       <DependentUpon>AssetDialog.cs</DependentUpon>

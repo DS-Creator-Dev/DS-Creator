@@ -41,5 +41,18 @@ namespace DSC.GUI
         {
             DisplayPage(new TitlePage());
         }
+
+        private void propertiesToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            if(MainBody.Controls.Count>0)
+            {
+                var page = MainBody.Controls[0];
+                if(page.GetType()==typeof(WorkspacePage))
+                {
+                    (page as WorkspacePage).OpenProjectPropertiesTab();
+                }
+            }
+
+        }
     }
 }
