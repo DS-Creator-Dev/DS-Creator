@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace DSC.Projects
@@ -95,21 +96,33 @@ namespace DSC.Projects
             }
             project.Path = System.IO.Path.GetDirectoryName(path);
             project.ProjectPath = path;
-            project.Tree.Root.DeserializeCheck();            
+            project.Tree.Root.DeserializeCheck();
+
+            foreach (var node in project.Tree.Root.GetLeaves())
+            {
+                var item = node.Item;
+                item.WorkPath = System.IO.Path.Combine(project.ProjectPath, node.RelativePath);
+            }           
+
             return project;
-
         }
 
-        void LoadItem()
+
+
+        public IEnumerable<Asset> GetAssets()
         {
-
-        }
+            foreach (var asset in Tree.Root.GetItems(p => p.GetType() == typeof(Asset)))
+            {
+                yield return (Asset)asset;
+            }
+            yield break;
+        }        
 
         public void Add(Asset asset, string path)
         {
             var node = TouchPath(path);
             node = node.Add(asset);            
-            path = System.IO.Path.Combine(ProjectPath, node.RelativePath);
+            path = System.IO.Path.Combine(ProjectPath, node.RelativePath);            
             asset.WorkPath = path;
             asset.Save(path);
         }

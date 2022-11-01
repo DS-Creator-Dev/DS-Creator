@@ -69,16 +69,24 @@ namespace DSC.GUI.Controls.Tabs
         }
 
         private void GridPanel_Paint(object sender, PaintEventArgs e)
-        {            
+        {
+            // prevent anti alias while zooming in
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+
             // to be changed (aesthetically)
+
+            var pen = new Pen(new SolidBrush(Color.FromArgb(128, Color.LightGray)));
+
             for(int y=0;y< GridPanel.Height;y+=8*Zoom)
             {
-                e.Graphics.DrawLine(Pens.LightGray, 0, y, GridPanel.Width, y);
+                e.Graphics.DrawLine(pen, 0, y, GridPanel.Width, y);
             }
 
             for (int x = 0; x < GridPanel.Width; x += 8 * Zoom)
             {
-                e.Graphics.DrawLine(Pens.LightGray, x, 0, x, GridPanel.Height);
+                e.Graphics.DrawLine(pen, x, 0, x, GridPanel.Height);
             }
         }        
 

@@ -104,6 +104,7 @@ namespace DSC.GUI.Controls.Pages
             {
                 if (o == null || !(o is ProjectItem))
                     return false;
+                MessageBox.Show((o as ProjectItem).WorkPath+"\n"+ item.WorkPath);
                 return (o as ProjectItem).WorkPath == item.WorkPath;
             }, out tab);
         }
@@ -122,6 +123,7 @@ namespace DSC.GUI.Controls.Pages
         {      
             if(IsTabOpen(item, out TabPage ctab))
             {
+                MessageBox.Show("Tab already open");
                 TabControl.SelectedTab = ctab;
                 return;
             }           
@@ -131,6 +133,7 @@ namespace DSC.GUI.Controls.Pages
                 var asset = item as Asset;
                 tab = new AssetTab();
                 (tab as AssetTab).Asset = asset;
+                MessageBox.Show("Tab created");
             }
             if (tab != null)
             {
@@ -157,7 +160,8 @@ namespace DSC.GUI.Controls.Pages
                         Asset result = dialog.Result;
                         Session.Project.Add(result, "Assets");
                         Session.Project.Save();
-                        AddTab(result);                                
+                        AddTab(result);
+                        Session.Project.Tree.PopulateTreeView(ProjectTreeView, ProjectTreeViewDisplayOption.FolderHierarchy);
                     }
                 }
                 /*catch(Exception ex)
@@ -186,6 +190,7 @@ namespace DSC.GUI.Controls.Pages
             ProjectItem item = node.Item;
 
             item.Load(System.IO.Path.Combine(Session.Project.ProjectPath, node.RelativePath));
+            MessageBox.Show(item.GetType().Name);
 
             switch (item.GetType().Name)            
             {

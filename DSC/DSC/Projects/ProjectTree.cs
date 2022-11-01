@@ -3,7 +3,9 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -120,9 +122,41 @@ namespace DSC.Projects
         {
             if (NodeType == ProjectTreeNodeType.File)
                 throw new ProjectTreeAddToLeafException();
-            var node = new ProjectTreeNode(item.Name, ProjectTreeNodeType.File);
+            var node = new ProjectTreeNode(item.Name, ProjectTreeNodeType.File);            
             node.Item = item;
             return Add(node);
+        }
+
+        public IEnumerable<ProjectItem> GetItems(Func<ProjectItem, bool> pred)
+        {
+            foreach(ProjectTreeNode child in Children)
+            {
+                if (child.Item != null && pred(child.Item)) 
+                {
+                    yield return child.Item;
+                }
+                foreach (var item in child.GetItems(pred)) 
+                {
+                    yield return item;
+                }
+            }
+            yield break;
+        }
+
+        public IEnumerable<ProjectTreeNode> GetLeaves()
+        {
+            foreach (ProjectTreeNode child in Children)
+            {
+                if (child.Item != null)
+                {
+                    yield return child;
+                }
+                foreach (var item in child.GetLeaves())
+                {
+                    yield return item;
+                }
+            }
+            yield break;
         }
 
         public string RelativePath
