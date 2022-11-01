@@ -24,6 +24,8 @@ namespace DSC.GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            Session.Config["test"] = "xaxa";
+
             try
             {
                 if (File.Exists("startup_proj"))
