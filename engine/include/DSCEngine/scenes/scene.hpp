@@ -8,7 +8,7 @@
 #include "DSCEngine/events/event.hpp"
 
 namespace DSC
-{
+{	
 	struct SceneCom;
 	
 	/*! \brief An active game execution part	

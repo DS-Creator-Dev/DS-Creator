@@ -24,11 +24,7 @@ namespace DSC
         }
 
         public static  void StartupChecks()
-        {
-            if (Config["DEVKITPRO"] == "")
-            {
-                MessageBox.Show("DevkitPro path not set.");
-            }
+        {            
         }
     }    
 }

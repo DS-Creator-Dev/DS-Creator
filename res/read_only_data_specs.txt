@@ -1,0 +1,88 @@
+ReadOnlyData Specifications
+
+	Relates to engine/include/DSCEngine/resource/readonly_data.hpp
+
+	This file details the file structure of resources.
+
+	A ReadOnlyData mimics a hybrid file-like structure that can also reside in memory.
+
+	It works by encapsulating the effective data into multiple layers of headers, each one describing
+	certain details of the related data.
+	
+	Each resource should be completely identifiable by its header. The header can reside separately from its content,
+	but the header there should be a link to the actual data.
+
+	Everytihng below may be subject to change due to optimization reasons.
+
+	Generic ReadOnlyData Header
+		This is common to all ReadOnlyData instances.
+		
+		Structure:
+		  - HEADER SIZE         4 bytes | the whole header size (this + the following headers added by other layers)
+		  - DATA LENGTH         4 bytes | the size of effective data
+		  - IS FILE?            1 byte  | 1 if the effective data resides in a file (either fat:// or nitro://)
+		  - DATA SOURCE         4 bytes | if the field above is non-zero, then DATA SOURCE points to a string providing
+			                              the path to the file that holds the data
+		  - COMPRESSED?         1 byte  | 1 if the data is LZ compressed
+		  
+		  
+	Asset Header
+		
+		Structure
+		  - HEADER SIZE        4 bytes |\
+		  - DATA LENGTH        4 bytes | \
+		  - IS FILE?           1 byte  |--- Same as above
+		  - DATA SOURCE        4 bytes | /			                             
+		  - COMPRESSED?        1 byte  |/
+		  
+		  - WIDTH            2/4 bytes | Asset width, in px (or tiles? assuming 1 tile = 8x8px)
+		  - HEIGHT           2/4 bytes | Asset height, in px/tiles
+		  - IS BITMAP?         1 byte  | 1 if bitmap, 0 if tileset
+		  - COLOR DEPTH        1 byte  | 4,8,16
+		  
+		The header gives an idea about how to interpret the effective data
+		- if IS BITMAP = 1, then pixels are stored in rows following one after another
+		  if IS BITMAP = 0, then pixels are stored in rows of tiles
+		  
+		- if COLOR DEPTH != 16, then we expect to find some palette info at the end of the effective data
+		  We can compute the length of the tileset based on provided info:
+			TILESET_LEN = WIDTH*HEIGHT (*64?) * bpp_factor (bytes),
+			where bpp_factor = 1/2, 1, 2 depending on the COLOR DEPTH
+		  Palette structure:
+		    - PALETTE SIZE     1 byte               | How many colors are used in the tileset
+			- PALETTE DATA     2*PALETTE SIZE bytes | yep, the colors
+			
+	Font Header
+		This holds font data used to render text.
+	
+		Structure
+		 
+		  - HEADER SIZE        4 bytes |\
+		  - DATA LENGTH        4 bytes | \
+		  - IS FILE?           1 byte  |--- Same as above
+		  - DATA SOURCE        4 bytes | /			                             
+		  - COMPRESSED?        1 byte  |/
+		  
+		  - CHAR SIZE          1 bytes | 0=8x8, 1=8x16, 2=16x16 etc
+		  - CHARTS             ? bytes | Encoding specifications. It's almost impossible to embed
+		                               | the entire UTF-8 into a DS homebrew, so we should find another idea.
+									   | For ASCII, we can use CHARTS to specify the ISO 8859-X encodings for
+									   | characters 128-255
+									   
+		Effective data consists of a list of glyphs tables. A glyph is basically a meta-tile of a CHAR SIZE which
+		contains a drawing of the specified symbol. Glyphs are grouped in tables. At least one table should exist,
+		which is the common 0-127 ASCII characters. For characters 128-255, multiple tables can be defined to encode
+		different symbols, and a font user would switch between encodings in order to display more than 256 characters.
+		
+	Audio Data
+		[Work in progress]
+		  
+		  
+	Known liimts:
+	  The WRAM's 4MB limit and the incapability to have ROM symbols is the greatest threat. 
+	  - It forbids the excessive usage of DATA SOURCE strings (imagine having 1000 file paths all starting with "fat://",
+		at least 7KB are burned for nothing) and the number of headers we can keep in memory (though a good header shouldn't use
+		more than 16-32 bytes).		
+	  - For compressed ones (but not only), the effective data should be loaded in a whole - meaning no reading fractions of data are allowed. 
+		If the data is in a file, constantly read/seek-ing it for a single byte or something is just a time waste.
+		Possible solution: a resource cache zone of limited size? --

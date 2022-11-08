@@ -13,13 +13,13 @@ namespace DSC
 	/// formats.
 	///
 	/// This class is NOT the binary data itself, but only an expression of it.
-	/// It is more like a header that resides only in WRAM, whilst the data is
+	/// It is more like a header that resides only in WRAM, whilst the data it
 	/// points to can be anywhere.
 	///
 	/// Instances of this class should be constants, not allow moving/making copies of them.
 	/// In fact, only DSC specialized tools have to create reliable ReadOnlyData instances.
 	///
-	/// Referencing instances of this class should be done only through pointers
+	/// Referencing instances of this class should only be done through pointers
 	/// (attention to down/upcasts, no polymorphism is being used)
 	///
 	///

@@ -18,7 +18,7 @@ namespace DSC.GUI.Controls.Pages
     {
         public TitlePage()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private void NewProjButton_Click(object sender, EventArgs e)
