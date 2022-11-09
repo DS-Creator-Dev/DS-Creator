@@ -11,38 +11,21 @@ namespace DSC
 	private:
 		static int hashColor(const short& color);
 	
-		void* pal_offset;
-		int pal_size;
-		int* free_space;
+		void* pal_offset;		
+		int free_space[8];
 		
 		short records4bpp[16];
 		
-		HashMap<short, short, hashColor, 128> colors_map;						
+		HashMap<short, int, hashColor, 128> colors_map;						
 	public:
 		/*! \brief creates a new PaletteManager instance
-			\param palettes_offset  the address of the palettes data managed by the instance
-			\param palettes_count   the number of palettes managed by the instance (useful for
-									handling extended palettes). This attribute is 1 by default.
-									Minimum 1 and maximum 8 palettes are allowed.
+			\param palettes_offset  the address of the palette data managed by the instance			
 		 */
-		PaletteManager(void* palettes_offset, int palettes_count = 1);
+		PaletteManager(void* palettes_offset);
 		
 		/*! \brief choose an index for the specified color
 			\param color a BGR15 color value
-			\return a value V that tells the palette and index it has been placed to.
-
-			\details The value V is computed based on two values: 
-			- P_Id  = the id of the palette relative to the palettes managed by this instance
-					  (P_Id = 0  refers to the palette at PaletteManager::pal_offset)
-			- Index = the index the color occupied in the palette P_Id (0..255).
-			
-			Therefore, V = P_Id*256 + Index.
-			The palette id and palette index can be obtained with simple manipulations on V:
-			
-			\code{.cpp}
-				P_Id  = V / 256 = V >> 8;
-				Index = V % 256 = V & 0xFF;
-			\endcode
+			\return a value V that tells the palette index it has been placed at.
 			
 			If the color already exists in the palette, it is not added once again and the position of
 			the already existing color is returned.
@@ -54,9 +37,7 @@ namespace DSC
 			\return the id of the palette slot assigned to the given 4-bit palette has been, a number from 0 (0x0) to 15 (0xF)
 			
 			\details This function does not have the expected effect unless the target palette is a standard palette.
-			Do not load 4-bit palettes in extended slots. They may be loaded, but can't be used in the intended ways.
-			The function will naively check if the instnaces manages a single palette, because more palettes is 
-			a clear sign of extended slots being used.
+			Do not load 4-bit palettes in extended slots. They may be loaded, but can't be used in the intended ways.			
 		 */
 		int reserve16(const void* palette4);
 		
