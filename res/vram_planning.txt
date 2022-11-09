@@ -82,13 +82,24 @@ to place the data at an accessible offset, load the palette and do the necessary
 		There are two cases:
 		- 4-bit palette, there are 16 slots of  15 entries (excluding transparent color indices), all in BG_PALETTE
 		- 8-bit palette, there are 16 slots of 256 entries (including extended palettes) - for OBJ
-						 there is   1 slot  of 256 entries                               - for BG*  !!!
+						 there is  16 slots  of 256 entries                              - for BG* 
 		
-		* Extended Palettes work ONLY on BG0, BG1. Each background can choose exactly one extra palette slot from BGX_CNT.
-			BG0 - slots 0,2
-			BG1 - slots 1,3		
+		* Extended Palette slots are mapped BG0->slot0...BG3->slot3. Optionally, we can change BG0 to use slot2 and
+		  BG3 to use slot3.
 		  This proposed model uses extended palette slots 2,3 because they don't overlap with the extended OBJ palettes.
 		  That means for BG0_CNT, BG1_CNT, bit13 is set to 1.
+		  Also, it means BG0,BG2 and BG1, BG2 share a single palette slot. For simplicity, we can consider the following 
+		  distribution:	
+		
+									BG0 - first 8 palettes from slot2 (2048 colors)
+									BG1 - first 8 palettes from slot3 (2048 colors)
+									BG2 - last  8 palettes from slot2 (2048 colors)
+									BG3 - last  8 palettes from slot3 (2048 colors)			
+									
+		!!! Backgrounds cannot use the standard palette AND extended palettes at the same time.
+		!!! Bitmaps cannot use extended palettes.			
+		!!! For future plans, maybe consider palette management being handled by ARM7. It would free at least 32KB from
+			ARM9's EWRAM. (??)
 		
 		Possible algorithm:
 		  - to load a 4bit palette, just reserve a palette bank 0..15 for it. 
@@ -98,6 +109,8 @@ to place the data at an accessible offset, load the palette and do the necessary
 			- copy it
 			? to avoid duplicate colors, for each entry remember how many assets use it. If it is no longer used, it can
 			  be safely deallocated. Analogy with "shared pointer".
+			  * Fixed palette entry = a color that can change its value during execution (e.g. to animate water without
+				rewriting tiles). Such a color cannot be shared with another resources, therefore it is only used once. 
 		
 		After palette allocation, a dictionary i_res->i_mem can be returned, meaning that: "The color with index i_res in the
 		loaded binary data has the dynamically assigned index i_mem". Note that i_mem can encode information about the

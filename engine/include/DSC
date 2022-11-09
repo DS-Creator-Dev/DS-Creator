@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DSCEngine/debug/assert.hpp"
+#include "DSCEngine/debug/error.hpp"
 #include "DSCEngine/debug/log.hpp"
 
 #include "DSCEngine/events/event.hpp"

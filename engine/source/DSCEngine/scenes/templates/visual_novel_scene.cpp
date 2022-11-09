@@ -1,20 +1,22 @@
 #include "DSCEngine/scenes/templates/visual_novel_scene.hpp"
 
-VisualNovelScene::VisualNovelScene()
+using namespace DSC;
+
+DSC::SceneTemplates::VisualNovelScene::VisualNovelScene()
 {
 	
 }
 
-void VisualNovelScene::init()
+void DSC::SceneTemplates::VisualNovelScene::init()
 {
 	
 }
 
-void VisualNovelScene::frame()
+void DSC::SceneTemplates::VisualNovelScene::frame()
 {
 	
 }
 
-VisualNovelScene::~VisualNovelScene()
+DSC::SceneTemplates::VisualNovelScene::~VisualNovelScene()
 {
 }

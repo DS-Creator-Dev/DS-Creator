@@ -26,7 +26,7 @@ namespace DSC::Debug
 	 *  DSC::Debug::log("My int = %i", x)
 	 * \endcode
 	*/
-	void log(const char* message, ...);	
+	void log(const char* message, ...);
 
 	/*!
 	 * \brief Sends a \b warning message to the emulator
@@ -35,7 +35,7 @@ namespace DSC::Debug
 	 * 
 	 * See DSC::Debug::log() for more details
 	*/
-	void warn(const char* message, ...);	
+	void warn(const char* message, ...);
 	
 	
 	/*!
@@ -45,5 +45,5 @@ namespace DSC::Debug
 	 * 
 	 * See DSC::Debug::log() for more details
 	*/
-	void error(const char* message, ...);	
+	void error(const char* message, ...);
 }
