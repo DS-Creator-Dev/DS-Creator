@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['scene_2ehpp_0',['scene.hpp',['../scene_8hpp.html',1,'']]]
+  ['palette_5fmanager_2ehpp_0',['palette_manager.hpp',['../palette__manager_8hpp.html',1,'']]]
 ];

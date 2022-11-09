@@ -5,14 +5,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>DSC Engine: DSC::ReadOnlyData Class Reference</title>
+<title>DSCEngine: DSC::ReadOnlyData Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
-<link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="resize.js"></script>
-<script type="text/javascript" src="navtreedata.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -24,8 +20,9 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="DSC Logo.png"/></td>
   <td id="projectalign">
-   <div id="projectname">DSC Engine<span id="projectnumber">&#160;1.0</span>
+   <div id="projectname">DSCEngine
    </div>
   </td>
  </tr>
@@ -50,23 +47,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('class_d_s_c_1_1_read_only_data.html',''); initResizable(); });
-/* @license-end */
-</script>
-<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -88,6 +68,11 @@ $(document).ready(function(){initNavTree('class_d_s_c_1_1_read_only_data.html','
 </div>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>DSC</b></li><li class="navelem"><a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -155,9 +140,9 @@ char *&#160;</td><td class="memItemRight" valign="bottom"><b>data_source</b></td
 <div class="textblock"><p ><a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a> denotes a type of static resource that lies either in RAM, FAT or NITRO.</p>
 <p >This class represents an abstract interface for resource management and should be able to retrieve any bytes buffer regardless of its localization.</p>
 <p >This class can also be derived to describe more specialized resource formats.</p>
-<p >This class is NOT the binary data itself, but only an expression of it. It is more like a header that resides only in WRAM, whilst the data is points to can be anywhere.</p>
+<p >This class is NOT the binary data itself, but only an expression of it. It is more like a header that resides only in WRAM, whilst the data it points to can be anywhere.</p>
 <p >Instances of this class should be constants, not allow moving/making copies of them. In fact, only DSC specialized tools have to create reliable <a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a> instances.</p>
-<p >Referencing instances of this class should be done only through pointers (attention to down/upcasts, no polymorphism is being used)</p>
+<p >Referencing instances of this class should only be done through pointers (attention to down/upcasts, no polymorphism is being used)</p>
 <p >[ !!! POSSIBLE BUG SOURCE !!! ] There is no "Read-Only Memory" thing on DS homebrew. All the constants are being placed in EWRAM (4MB). The compiler tries its best to prevent programmers from altering constant values, but one can simply break the rule by overwriting a constant only using its dereferenced pointer. Assuming the programmer doesn't try anything strange, there is still a chance that an undefined behavior/RAM corruption/ some accidental buffer overflow (eg. for i=0;i&lt;10;i&ndash;) may overwrite in-memory "read-only" data. We should keep a careful eye on that and consider it as a potential explanation for any visual glitches or misterious data corruption. Therefore, when constant data changes its bytes, then something's really messed up. </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a942bcfeb7babe0c12a5e0f85b703c5bd" name="a942bcfeb7babe0c12a5e0f85b703c5bd"></a>
@@ -176,16 +161,12 @@ char *&#160;</td><td class="memItemRight" valign="bottom"><b>data_source</b></td
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/DSCEngine/resources/<a class="el" href="readonly__data_8hpp_source.html">readonly_data.hpp</a></li>
+<li>DSCEngine/resources/<a class="el" href="readonly__data_8hpp_source.html">readonly_data.hpp</a></li>
 </ul>
 </div><!-- contents -->
-</div><!-- doc-content -->
 <!-- start footer part -->
-<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
-  <ul>
-    <li class="navelem"><b>DSC</b></li><li class="navelem"><a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a></li>
-    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5 </li>
-  </ul>
-</div>
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
 </body>
 </html>
