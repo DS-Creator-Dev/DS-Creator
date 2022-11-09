@@ -1,18 +1,23 @@
 #pragma once
 
+#include "DSCEngine/types/hash_map.hpp"
+
 namespace DSC
-{
+{	
 	/*! \brief Automatic palette manager
 	 */
 	class PaletteManager
 	{
 	private:
+		static int hashColor(const short& color);
+	
 		void* pal_offset;
 		int pal_size;
 		int* free_space;
 		
-		unsigned short records4bpp[16];
+		short records4bpp[16];
 		
+		HashMap<short, short, hashColor, 128> colors_map;						
 	public:
 		/*! \brief creates a new PaletteManager instance
 			\param palettes_offset  the address of the palettes data managed by the instance
