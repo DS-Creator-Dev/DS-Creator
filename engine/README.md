@@ -1,5 +1,7 @@
 # DSC Engine Lib Documentation
 
+For updated docs, see `docs/html/annotations.html`.
+
 ## ```DSC::Debug```
 
 ### ```void DSC::Debug::log(const char* message, ...)```
