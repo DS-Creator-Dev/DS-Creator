@@ -65,6 +65,11 @@ namespace DSC
 		 */
 		void unload16(const void* palette4);
 		
+		
+		//void load_from_asset(const AssetData* asset);
+		
+		//void unload_from_asset(const AssetData* asset);
+		
 		~PaletteManager();
 	};
 }

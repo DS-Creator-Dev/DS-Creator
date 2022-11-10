@@ -35,37 +35,34 @@ namespace DSC
 	class ReadOnlyData
 	{		
 	public:                      /// Some technical observations to account for during implementation:
-	
 		int header_size;         /// equilavent of sizeof(*this), but foresees class inheritance
-		int data_length;         /// size in bytes of the actual data
-		bool is_file;            /// tell if the data is in RAM or on a filesystem
+		int data_length;         /// size in bytes of the actual data		
 		char* data_source;       /// if is_file==true, data_source is the file path (fat://..., nitro://...)
 		                         /// if is_file==false, data_source is a pointer to WRAM
 						         /// if data_source==NULL, then the actual data resides right after *this
-		bool compression_type;   /// 0 = no compression, 1=LZ7 or sth, ...
-		
-		ReadOnlyData(int header_size = sizeof(ReadOnlyData));		
+								 
+		unsigned short flags;    /// bits 0-7  : see ROD_*	
+								 /// bits 8-15 : defined by derived formats specifications
+								 
+		ReadOnlyData(int header_size = sizeof(ReadOnlyData));
 		
 		// writes binary data to the given address (most popular expected use: VRAM)		
-		void extract(void* destination); 
+		void extract(void* destination) const; 
+		
+		void extract(void* destination, int offset, int length) const;
 		
 		// prevent altering this object
 		ReadOnlyData(const ReadOnlyData&) = delete;
 		ReadOnlyData(ReadOnlyData&&) = delete;
 		ReadOnlyData operator = (const ReadOnlyData&) = delete;
 		ReadOnlyData operator = (ReadOnlyData&&) = delete;		
-	};
-	
-	class AssetData : public ReadOnlyData // only as an example
-	{
-	public:
-		int width;        // new properties
-		int height;       // packed in a single place 
-		bool is_bitmap;
-		int color_depth;
-		//...
 		
-		AssetData() : ReadOnlyData(sizeof(AssetData)) {} // this line is important
-		~AssetData() = delete;
-	};
+		
+		bool is_file() const;
+		bool is_compressed() const;
+		
+		static const int ROD_IS_FILE;       /// tell if the data is in RAM or on a filesystem
+		static const int ROD_IS_COMPRESSED; /// 0 = no compression, 1=LZ7 or sth, ...
+		
+	};	
 }
