@@ -12,6 +12,7 @@ class Scene1 : public Scene
 private:
 	PaletteManager palette_manager = PaletteManager(&VRAM_E_EXT_PALETTE[1][6]);
 	Vector<short> colors; // keep track of colors for demonstration purposes	
+	Vector<int> pal16; 
 public:
 	void init() override
 	{		
@@ -37,7 +38,7 @@ public:
 
 		vramSetBankE(VRAM_E_BG_EXT_PALETTE); 				
 		
-		consoleDemoInit();		
+		consoleDemoInit();				
 		
 		iprintf("\n DSC Palette Manager Test \n");
 		
@@ -46,14 +47,34 @@ public:
 			swiWaitForVBlank();
 		}
 		
+		
 		vramSetBankE(VRAM_E_LCD);
 		
 		for(int i=0;i<256;i++)
 		{
 			VRAM_E_EXT_PALETTE[1][6][i]=0;
-		}			
+		}				
 
+		vramSetBankE(VRAM_E_BG_EXT_PALETTE);						
+		
+		/*for(int i=1;i<256;i++)
+		{
+			vramSetBankE(VRAM_E_LCD);
+			VRAM_E_EXT_PALETTE[1][6][i-1]=0;
+			VRAM_E_EXT_PALETTE[1][6][i]=0x001f;
+			vramSetBankE(VRAM_E_BG_EXT_PALETTE);
+			for(int j=0;j<3;j++)
+				swiWaitForVBlank();			
+		}
+		
+		vramSetBankE(VRAM_E_LCD);
+		//VRAM_E_EXT_PALETTE[1][6][255]=0;		
+		for(int i=0;i<256;i++)
+		{
+			VRAM_E_EXT_PALETTE[1][6][i]=0;
+		}				
 		vramSetBankE(VRAM_E_BG_EXT_PALETTE);
+		swiWaitForVBlank();*/
 		
 		iprintf("\n\n A - add new color\n");
 		iprintf(" B - add new 4-bit palette\n");
@@ -69,11 +90,8 @@ public:
 	
 	void add_one_color()
 	{
-		int color = 0;		
-		if(colors.size()==0)
-		{
-			color = 0x4000 + (rand() & 0x3fff); // pick a random brighter color
-		}			
+		int color = 0;				
+		color = 0x4000 + (rand() & 0x3fff); // pick a random brighter color				
 		
 		Debug::log("Trying to reserve color %x", color);
 		
@@ -81,13 +99,64 @@ public:
 		int index = palette_manager.reserve1(color);
 		vramSetBankE(VRAM_E_BG_EXT_PALETTE);
 		
+		if(index==-1)
+		{
+			Debug::log("Can't add colors anymore. Palette is full.");
+			return;
+		}				
 		Debug::log("Color %x placed at index %i", color, index);
+		colors.push_back(color);
 	}
 	
 	void remove_one_color()
 	{
-		// TO DO ...
+		if(colors.size()==0) return;
+		
+		int i = rand()%colors.size();
+		int color = colors[i];
+		
+		vramSetBankE(VRAM_E_LCD);
+		palette_manager.unload1(color);
+		vramSetBankE(VRAM_E_BG_EXT_PALETTE);
+				
+		Debug::log("Unloaded color %x.", color, index);		
+		colors.remove(color);
 	}
+	
+	void add_4bit_palette()
+	{		
+		int src_slot = rand() % 16;
+		const short* pal = ((const short*)palettePal) + 16*src_slot;
+		
+		vramSetBankE(VRAM_E_LCD);
+		int slot = palette_manager.reserve16(pal);
+		vramSetBankE(VRAM_E_BG_EXT_PALETTE);
+		
+		if(slot==-1)
+		{
+			Debug::log("Cannot load 4-bit palette. Not enough space");
+			return;
+		}
+		
+		Debug::log("Loaded 4-bit palette #%i at slot 0%X", src_slot, slot);
+		pal16.push_back(src_slot);
+	}
+	
+	void remove_4bit_palette()
+	{
+		if(pal16.size()==0) return;
+		
+		int src_slot = pal16[rand() % pal16.size()];
+		const short* pal = ((const short*)palettePal) + 16*src_slot;
+				
+		vramSetBankE(VRAM_E_LCD);		
+		
+		palette_manager.unload16(pal);
+		vramSetBankE(VRAM_E_BG_EXT_PALETTE);
+		
+		Debug::log("Unloaded 4-bit palette #%i", src_slot);
+		pal16.remove(src_slot);
+	}	
 	
 	static void key_down_hanlder(void* sender, void* _keys);
 };
@@ -98,7 +167,9 @@ void Scene1::key_down_hanlder(void* sender, void* _keys)
 	switch((const int)_keys)
 	{
 		case KEY_A: scene->add_one_color(); break;		
+		case KEY_B: scene->add_4bit_palette(); break;		
 		case KEY_X: scene->remove_one_color(); break;
+		case KEY_Y: scene->remove_4bit_palette(); break;
 		default: break;
 	}	
 }

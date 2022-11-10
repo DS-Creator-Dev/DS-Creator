@@ -145,7 +145,7 @@ int DSC::PaletteManager::reserve16(const void* palette4)
 	short* colors = (short*)palette4;
 	
 	// compute palette checksum to identify it faster
-	int chksum = get_chksum(colors);	
+	int chksum = get_chksum(colors);		
 	
 	// first check if the palette already exists
 	int p = get_pal16(colors, chksum);
@@ -166,6 +166,8 @@ int DSC::PaletteManager::reserve16(const void* palette4)
 			break;
 		}
 	}
+	
+	if(p<0) return -1;
 	
 	// register palette
 	records4bpp[p] = (chksum<<8) | 1;
@@ -201,9 +203,14 @@ void DSC::PaletteManager::unload16(const void* palette4)
 		free_space16[p] &= ~0xFFFE;
 		
 		// reset palette
-		short* pal = &((short*)pal_offset)[16*p];
-		for(int i=1;i<16;i++)	
-			pal[i] = 0;
+		short* pal = (short*)((int)pal_offset + 16*p*sizeof(short));			
+		
+		// https://gist.github.com/NotImplementedLife/91517a5fca90f53a7fd91c5b2e54c34d		
+		const int zero=0;
+		for(int i=1;i<16;i++)			
+			// pal[i] = 0; <-- leaves uncleared artifacts at pal[1]
+			__asm("STRH %[_0], [%[dest]]"				
+				: : [dest] "r" (&pal[i]), [_0] "r" (zero));
 		
 		return;
 	}
