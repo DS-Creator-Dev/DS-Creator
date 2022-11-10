@@ -139,7 +139,7 @@ namespace DSC
 template<typename T>
 DSC::Vector<T>::Vector(int cap)
 {	
-	_size = cap;
+	_size = 0;
 	if(sizeof(T)&1)
 	{
 		cap>>=1; cap++; cap<<=1; // assure capacity is 16-bit aligned

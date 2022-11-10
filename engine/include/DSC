@@ -11,3 +11,5 @@
 #include "DSCEngine/types/templates.hpp"
 #include "DSCEngine/types/hash_map.hpp"
 #include "DSCEngine/types/vector.hpp"
+
+#include "DSCEngine/video/palette_manager.hpp"

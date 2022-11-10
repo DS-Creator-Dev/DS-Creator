@@ -70,7 +70,8 @@ namespace
 
 						if(val==0)
 						{
-							*(built++)='0';
+							*(built++)='0'; 
+							++msg;
 							break;
 						}
 						
@@ -96,6 +97,7 @@ namespace
 						if(val==0)
 						{
 							*(built++)='0';
+							++msg;
 							break;
 						}
 						
@@ -108,6 +110,7 @@ namespace
 						
 						for(;nzeros--;) *(built++)='0';
 						
+						++msg;						
 						break;
 					}
 					case 's':
@@ -126,6 +129,8 @@ namespace
 							built = copy_str(built, "T");
 						else 
 							built = copy_str(built, "F");
+						
+						++msg;
 						break;
 					}
 					case 'B':
@@ -135,6 +140,8 @@ namespace
 							built = copy_str(built, "True");
 						else 
 							built = copy_str(built, "False");
+						
+						++msg;
 						break;
 					}
 					case 'x':					
@@ -149,7 +156,13 @@ namespace
 								continue;											
 							num_start = true;
 							*(built++) = hex_lower[digit];
-						}						
+						}		
+						if(!num_start)
+						{
+							*(built++)='0';
+						}
+						++msg;
+						break;
 					}
 					case 'X':
 					{
@@ -163,7 +176,13 @@ namespace
 								continue;											
 							num_start = true;
 							*(built++) = hex_upper[digit];
-						}								
+						}						
+						if(!num_start)
+						{
+							*(built++)='0';
+						}						
+						++msg;
+						break;
 					}
 				}					
 			}
