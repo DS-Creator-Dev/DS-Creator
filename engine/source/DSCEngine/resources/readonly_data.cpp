@@ -63,8 +63,18 @@ void DSC::ReadOnlyData::extract(void* destination, int offset, int length) const
 	}
 }
 
+int DSC::ReadOnlyData::get_type() const
+{
+	return (flags & ROD_TYPE) >> 2;
+}
+
 bool DSC::ReadOnlyData::is_file() const { return flags & ROD_IS_FILE; }
 bool DSC::ReadOnlyData::is_compressed() const { return flags & ROD_IS_COMPRESSED; }
 
-const int DSC::ReadOnlyData::ROD_IS_FILE = (1<<0);
+const int DSC::ReadOnlyData::ROD_IS_FILE       = (1<<0);
 const int DSC::ReadOnlyData::ROD_IS_COMPRESSED = (1<<1);
+const int DSC::ReadOnlyData::ROD_TYPE          = (15<<2);
+
+const int DSC::ReadOnlyData::ROD_TYPE_UNKNOWN = 0;
+const int DSC::ReadOnlyData::ROD_TYPE_ASSET   = 1;
+const int DSC::ReadOnlyData::ROD_TYPE_FONT    = 2;

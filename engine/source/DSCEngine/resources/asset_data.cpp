@@ -9,6 +9,8 @@ DSC::AssetData::AssetData() : ReadOnlyData(sizeof(DSC::AssetData))  // this line
 
 bool DSC::AssetData::is_bitmap() const { return flags & ROA_IS_BITMAP; }
 
+//// EVERYTHING BELOW ASSUMES DATA IS NOT COMPRESSED!!!!!!!
+
 int DSC::AssetData::get_gfx_length() const
 {
 	// actual width  = 8*width

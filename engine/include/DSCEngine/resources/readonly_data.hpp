@@ -34,21 +34,31 @@ namespace DSC
 	
 	class ReadOnlyData
 	{		
-	public:                      /// Some technical observations to account for during implementation:
-		int header_size;         /// equilavent of sizeof(*this), but foresees class inheritance
-		int data_length;         /// size in bytes of the actual data		
+	public:                      /// Some technical observations to account for during implementation:		
+		__attribute__ ((packed))
+		short header_size;       /// equilavent of sizeof(*this), but foresees class inheritance
+		__attribute__ ((packed))
+		int data_length;         /// size in bytes of the actual data	
+		__attribute__ ((packed))
 		char* data_source;       /// if is_file==true, data_source is the file path (fat://..., nitro://...)
 		                         /// if is_file==false, data_source is a pointer to WRAM
 						         /// if data_source==NULL, then the actual data resides right after *this
-								 
+		__attribute__ ((packed)) 
 		unsigned short flags;    /// bits 0-7  : see ROD_*	
 								 /// bits 8-15 : defined by derived formats specifications
 								 
 		ReadOnlyData(int header_size = sizeof(ReadOnlyData));
 		
-		// writes binary data to the given address (most popular expected use: VRAM)		
+		/*! \brief writes all binary data to the given address
+			\param destination address to extract data to
+		 */
 		void extract(void* destination) const; 
 		
+		/*! \brief writes binary data sequence to the given address
+			\param destination address to extract data to
+			\param offset position in effetive data where copying starts
+			\param length length of data to copy
+		 */
 		void extract(void* destination, int offset, int length) const;
 		
 		// prevent altering this object
@@ -57,12 +67,22 @@ namespace DSC
 		ReadOnlyData operator = (const ReadOnlyData&) = delete;
 		ReadOnlyData operator = (ReadOnlyData&&) = delete;		
 		
-		
+		/*! \brief checks if data is written to file
+			\return true if effective data is in file, false if in WRAM
+		 */
 		bool is_file() const;
+		
+		///*! \brief checks if 
 		bool is_compressed() const;
+		int get_type() const;
 		
 		static const int ROD_IS_FILE;       /// tell if the data is in RAM or on a filesystem
 		static const int ROD_IS_COMPRESSED; /// 0 = no compression, 1=LZ7 or sth, ...
+		static const int ROD_TYPE;
+		
+		static const int ROD_TYPE_UNKNOWN;
+		static const int ROD_TYPE_ASSET;
+		static const int ROD_TYPE_FONT;		
 		
 	};	
 }

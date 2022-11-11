@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DSC.Toolchain.AssetBuild": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\NotImpLife\\Desktop\\DSCLogo.8bpp.png -wram -tiles test.h test.s"
+    }
+  }
+}

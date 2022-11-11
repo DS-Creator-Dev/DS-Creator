@@ -6,6 +6,9 @@
 
 #include "DSCEngine/events/event.hpp"
 
+#include "DSCEngine/resources/readonly_data.hpp"
+#include "DSCEngine/resources/asset_data.hpp"
+
 #include "DSCEngine/scenes/scene.hpp"
 
 #include "DSCEngine/types/templates.hpp"
