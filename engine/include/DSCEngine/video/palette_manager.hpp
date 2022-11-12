@@ -4,9 +4,12 @@
 #pragma once
 
 #include "DSCEngine/types/hash_map.hpp"
+#include "DSCEngine/resources/asset_data.hpp"
 
 namespace DSC
 {	
+	struct PaletteAllocationResult;
+
 	/*! \brief Automatic palette manager
 	 */
 	class PaletteManager
@@ -66,10 +69,53 @@ namespace DSC
 		void unload16(const void* palette4);
 		
 		
-		//void load_from_asset(const AssetData* asset);
+		/*! \brief Attempts to load colors from asset data palette
+			\param asset asset data source
+			\return allocation result information			
+		 */
+		PaletteAllocationResult try_load(const AssetData* asset);
 		
-		//void unload_from_asset(const AssetData* asset);
+		
+		/*! \brief Unloads colors from a previously loaded asset data palette
+			\param asset asset data source
+			\warning No checks are performed to ensure that the asset's palette
+			has been previously loaded before deallocation happens. Accidentally
+			unloading "unloaded" data may result in possible data loss and corruption.
+		 */
+		void unload(const AssetData* asset);
 		
 		~PaletteManager();
+	};
+	
+	/*! \brief Struct that contains information following an asset allocation attempt via PaletteManager::try_load().		
+	 */
+	struct PaletteAllocationResult
+	{
+		/*! \brief The positions colors have been dynamically allocated to
+			\details
+			  - if asset is 4-bit, then indices contains a single value, which is the 4-bit palette slot that has been
+				assigned to the asset's palette. (0x0..0xF)
+			  - if asset is 8-bit, then for any index i, indices[i] is the position of the color that has the index i in
+				the readonly asset data
+		 */
+		short* indices = nullptr;
+		
+		/*! \brief size of the provided indices
+			\details
+			  - if asset is 4-bit, then the length is 1
+			  - if asset is 8-bit, then the length is equal to the asset's palette length
+		 */
+		int length;		
+		
+		/*! \brief color depth of the asset 
+		 */
+		char color_depth; 	
+		
+		/*! \brief flag that specifies whether the operation succeeded or failed. 
+			This struct contains relevant data only if succeeded == true.
+			*/
+		bool succeeded;		
+		
+		~PaletteAllocationResult(); // this is in order not to worry about the indices deallocation
 	};
 }

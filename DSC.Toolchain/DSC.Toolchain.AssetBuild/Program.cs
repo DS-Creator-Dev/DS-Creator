@@ -82,8 +82,8 @@ class AssetWriter
             // Height      (2 bytes)
             short[] header = new short[8];
             header[0] = 16;
-            header[1] = (short)(Data.Length % 65536);
-            header[2] = (short)(Data.Length / 65536);
+            header[1] = (short)((2*Data.Length) % 65536);
+            header[2] = (short)((2*Data.Length) / 65536);
             header[3] = 0; // .....
             header[4] = 0; // .....
             header[5] = Flags;
@@ -160,7 +160,7 @@ static class _
             });
             Console.WriteLine($"Palette size = {colors.Count} / {(1 << color_depth)}");
             ConvertedData data = new ConvertedData();
-            data.Gfx = new short[image.Width * image.Height * color_depth / 8];
+            data.Gfx = new short[image.Width * image.Height * color_depth / 8 / sizeof(short)];
 
             Console.WriteLine($"Generating graphics...");
             image.ProcessPixelRows(accessor =>
@@ -176,7 +176,7 @@ static class _
                             short index = colors[pixelRow[x]];
                             if (color_depth == 8)
                             {
-                                data.Gfx[k / 2] = (short)(index << (8 * (k % 2)));
+                                data.Gfx[k / 2] |= (short)(index << (8 * (k % 2)));
                                 k++;
                             }
                             else if (color_depth == 4)
@@ -203,7 +203,7 @@ static class _
                                     short index = colors[pixelRow[x]];
                                     if (color_depth == 8)
                                     {
-                                        data.Gfx[k / 2] = (short)(index << (8 * (k % 2)));
+                                        data.Gfx[k / 2] |= (short)(index << (8 * (k % 2)));
                                         k++;
                                     }
                                     else if (color_depth == 4)
@@ -311,7 +311,7 @@ internal partial class Program
     {
         if (img.Width % 8 != 0 || img.Height % 8 != 0)
         {
-            throw new ArgumentException("Image sizes must be multiple of 8.");            
+            throw new ArgumentException("Image sizes must be multiple of 8.");  
         }
     }
 

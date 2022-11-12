@@ -4,6 +4,7 @@
 
 #include "background.h"
 #include "palette.h"
+#include "roa_magma_texture8.h"
 
 using namespace DSC;
 
@@ -79,7 +80,9 @@ public:
 		iprintf("\n\n A - add new color\n");
 		iprintf(" B - add new 4-bit palette\n");
 		iprintf(" X - remove color\n");
-		iprintf(" Y - remove 4-bit palette\n\n\n");
+		iprintf(" Y - remove 4-bit palette\n");
+		iprintf(" L - load from asset (8-bit)\n");
+		iprintf(" R - unload from asset (8-bit)\n\n\n");
 		
 		iprintf(" Check emulator logs for\n feedback");
 		
@@ -158,6 +161,42 @@ public:
 		pal16.remove(src_slot);
 	}	
 	
+	const AssetData* asset = &ROA_magma_texture8;
+	int times_allocated = 0;
+	
+	void load_from_asset()
+	{		
+		vramSetBankE(VRAM_E_LCD);		
+		if(palette_manager.try_load(asset).succeeded)
+		{
+			times_allocated++;
+			Debug::log("Asset successfully allocated");
+		}	
+		else
+		{
+			Debug::log("Failed to allocate asset");
+		}
+		vramSetBankE(VRAM_E_BG_EXT_PALETTE);
+	}
+	
+	void unload_from_asset()
+	{
+		if(times_allocated==0)
+		{
+			Debug::log("Asset not allocated. Unloading skipped.");
+			return;
+		}
+		vramSetBankE(VRAM_E_LCD);		
+		palette_manager.unload(asset);
+		vramSetBankE(VRAM_E_BG_EXT_PALETTE);
+		times_allocated--;
+		Debug::log("Asset successfully deallocated.");
+		if(times_allocated>0)
+		{
+			Debug::log("Asset is still allocated %i times", times_allocated);
+		}
+	}
+	
 	static void key_down_hanlder(void* sender, void* _keys);
 };
 
@@ -170,6 +209,8 @@ void Scene1::key_down_hanlder(void* sender, void* _keys)
 		case KEY_B: scene->add_4bit_palette(); break;		
 		case KEY_X: scene->remove_one_color(); break;
 		case KEY_Y: scene->remove_4bit_palette(); break;
+		case KEY_L: scene->load_from_asset(); break;
+		case KEY_R: scene->unload_from_asset(); break;
 		default: break;
 	}	
 }

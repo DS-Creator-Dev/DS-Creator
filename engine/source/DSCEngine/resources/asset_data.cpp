@@ -34,6 +34,11 @@ int DSC::AssetData::get_pal_length() const
 	return data_length - get_gfx_length();
 }
 
+int DSC::AssetData::get_pal_count() const
+{
+	return get_pal_length()/2;
+}
+
 void DSC::AssetData::extract_palette(void* destination) const
 {	
 	int gfx_len = get_gfx_length();

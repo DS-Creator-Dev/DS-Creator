@@ -89,8 +89,8 @@ namespace DSC
 		 */
 		virtual void frame();
 				
-		__attribute__((noinline))		
-		virtual void run();		
+		__attribute__((noinline))
+		virtual void run();
 						
 		/*! \brief Key down event */
 		Event key_down;

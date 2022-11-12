@@ -1,6 +1,20 @@
 #include "DSCEngine/video/palette_manager.hpp"
 
 #include "DSCEngine/debug/assert.hpp"
+#include "DSCEngine/debug/log.hpp"
+
+// in case of fire break glass:
+//******************************************
+//
+//				#define DBG 
+//				
+//******************************************
+
+#ifdef DBG
+	#define dlog(...) Debug::log(__VA_ARGS__)
+#else
+	#define dlog(...) ;
+#endif
 
 using namespace DSC;
 
@@ -88,22 +102,24 @@ void DSC::PaletteManager::unload1(int color)
 {
 	// if color does not exist, do nothing
 	if(!colors_map.contains_key(color))
-	{		
+	{				
 		return;
 	}
 	
 	int value = colors_map[color] - 1;	
+	colors_map[color] = value;
 	
 	// if color isn't in use anymore, remove it
 	if((value & 0x0000FFFF)==0)
 	{
 		colors_map.remove_key(color);
 		int p = value>>16;
+		dlog("found index %X -> %i", color, p);
 		free_space[p/32] &= ~(1<<(p&31)); 
 		
 		// reset color
 		((short*)pal_offset)[p] = 0;
-	}			
+	}				
 }
 
 int DSC::PaletteManager::get_pal16(short* colors, int chksum)
@@ -217,6 +233,122 @@ void DSC::PaletteManager::unload16(const void* palette4)
 	
 }
 
+
+PaletteAllocationResult DSC::PaletteManager::try_load(const AssetData* asset)
+{	
+	nds_assert(asset->get_color_depth()!=16); // cannot palette non-paletted data :))
+	
+	PaletteAllocationResult result;	
+	result.color_depth = asset->get_color_depth();
+	
+	int pal_cnt = asset->get_pal_count();	
+	nds_assert(pal_cnt>0);
+	
+	if(asset->get_color_depth()==8)
+	{		
+		dlog("Loading 8-bit asset");
+		nds_assert(pal_cnt<=256);
+		short* pal = new short[pal_cnt];
+		
+		asset->extract_palette(pal);
+		
+		result.indices = new short[pal_cnt];
+		result.length = pal_cnt;
+		result.succeeded = true;
+				
+		for(int i=1, index; i<pal_cnt; i++)
+		{			 
+			if((index = reserve1(pal[i])) == -1) // allocation failed for this palette
+			{				
+				dlog("Allocation failed");
+				result.succeeded = false;				
+				result.length = 0;
+				// undo all previous color allocations
+				dlog("Unloading previous colors");
+				for(int j=1;j<i;j++)
+				{					
+					unload1(pal[j]);
+					dlog("Unloaded %X", pal[j]);
+				}
+				break;
+			}
+			else 
+			{
+				dlog("Loaded color %X at index %i",pal[i], index);
+				result.indices[i] = index;
+			}
+		}			
+		delete[] pal;
+	}		
+	else
+	{
+		dlog("Loading 4-bit asset");
+		nds_assert(pal_cnt<=16);
+		short* pal = new short[16]();
+		asset->extract_palette(pal);
+		
+		result.indices = new short;
+		result.length = 1;
+		result.succeeded = true;
+		
+		int index = reserve16(pal);
+		if(index==-1)
+		{			
+			result.succeeded = false;
+			result.length = 0;
+		}
+		else 
+		{
+			result.indices[0] = index;
+		}
+		
+		delete[] pal;
+	}
+	
+	return result;
+}
+		
+void DSC::PaletteManager::unload(const AssetData* asset)
+{
+	nds_assert(asset->get_color_depth()!=16); // cannot palette non-paletted data :))	
+	
+	int pal_cnt = asset->get_pal_count();
+	nds_assert(pal_cnt>0);
+	
+	if(asset->get_color_depth()==8)
+	{
+		dlog("Unloading 8-bit asset");
+		nds_assert(pal_cnt<=256);
+		short* pal = new short[pal_cnt];		
+		asset->extract_palette(pal);
+		
+		// this does NOT do any prior checks. Careful not to unload an asset that hasn't been previously loaded!	
+		// there's no benefit in checking if the unloaded data actually exists. In order to do that, references		
+		// to the loaded assets must be stored somewhere and added/remove as we load/unload their palettes.
+		// Each Scene is able to account for their own used assets so all the management & corectness is left to be 
+		// handled at the Scene level.
+		// Maybe will change this in the next versions, but for now I believe it is not a necessary measure.
+		for(int i=1; i<pal_cnt; i++)
+		{
+			dlog("Unloading color %X", pal[i]);
+			unload1(pal[i]);
+		}
+		
+		delete[] pal;		
+	}
+	else
+	{
+		dlog("Unloading 4-bit asset");
+		nds_assert(pal_cnt<=16);
+		short* pal = new short[16]();
+		asset->extract_palette(pal);
+		
+		unload16(pal); // same goes for this line ^ ^ ^
+		
+		delete[] pal;
+	}
+}
+
 DSC::PaletteManager::~PaletteManager()
 {	
 }
@@ -227,4 +359,10 @@ int DSC::PaletteManager::hashColor(const short& color)
 	int g = (color>>5) & 0x1F;
 	int b = (color>>10);
 	return (r+g+b)&127;
+}
+
+
+DSC::PaletteAllocationResult::~PaletteAllocationResult()
+{
+	delete[] indices;
 }

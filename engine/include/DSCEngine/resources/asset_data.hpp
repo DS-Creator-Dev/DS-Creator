@@ -21,6 +21,7 @@ namespace DSC
 		
 		int get_gfx_length() const;
 		int get_pal_length() const;
+		int get_pal_count() const;
 		void extract_gfx(void* destination) const;
 		void extract_palette(void* destination) const;		
 		
