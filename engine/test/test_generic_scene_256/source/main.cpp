@@ -10,7 +10,7 @@ public:
 	{				
 		GenericScene256::init();
 		
-		require_bitmap(3, &ROA_magma_texture8);
+		require_bitmap(MAIN_BG3, &ROA_magma_texture8);
 	}	
 	
 	void frame() override

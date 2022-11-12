@@ -338,12 +338,12 @@ void DSC::GenericScene256::set_banks()
 	vramSetBankI(VRAM_I_SUB_SPRITE_EXT_PALETTE);
 }
 
- const int MAIN_BG0 = 0;
- const int MAIN_BG1 = 1;
- const int MAIN_BG2 = 2;
- const int MAIN_BG3 = 3;
+ const int DSC::GenericScene256::MAIN_BG0 = 0;
+ const int DSC::GenericScene256::MAIN_BG1 = 1;
+ const int DSC::GenericScene256::MAIN_BG2 = 2;
+ const int DSC::GenericScene256::MAIN_BG3 = 3;
 
- const int SUB_BG0 = 4;
- const int SUB_BG1 = 5;
- const int SUB_BG2 = 6;
- const int SUB_BG3 = 7;
+ const int DSC::GenericScene256::SUB_BG0 = 4;
+ const int DSC::GenericScene256::SUB_BG1 = 5;
+ const int DSC::GenericScene256::SUB_BG2 = 6;
+ const int DSC::GenericScene256::SUB_BG3 = 7;
