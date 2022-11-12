@@ -2,11 +2,60 @@
 
 namespace DSC
 {
+	/*! \brief Wrapper around int to convert units
+	 */
+	class MeasureValue
+	{
+	private:
+		int raw_value;		
+		bool conversion_fit = true;
+		int block_cnt = 1;
+	public:		
+		/*! \brief creates measure data from numeric value
+			\raw numeric value
+		 */
+		MeasureValue(int raw = 0);
+						
+		/*! \brief specifies to use the lower integer bound for non-integer value conversion
+		 */
+		MeasureValue& cut();
+		
+		/*! \brief specifies to use the upper integer bound for non-integer value conversion
+		 */
+		MeasureValue& fit();
+		
+		/*! \brief specifies the number of packets of fixed quantities the value must be divided into
+			\param quant a packet size
+			\example
+			\code{.cpp}
+				MeasureValue(20).blocks(5).value() // 4 = 20/5
+				MeasureValue(10).cut().blocks(3).value() // 3 = floor(10/3)
+				MeasureValue(10).fit().blocks(3).value() // 4 = floor(10/3) + 1
+			\endcode
+		 */
+		MeasureValue& blocks(int quant);
+	
+		/*! \brief gets the value of the measure, after applying the value modifier
+			\return resulted value
+		 */
+		int value() const;
+		
+		/*! \brief converts the value of the measure in kilobytes. Roughly equivalent to MeasureValue::blocks(1024).
+			\return resulted value in kilobytes
+		 */
+		int kilobytes() const;
+				
+		operator int() const;
+		
+	};
+	
 	/*! \brief Helper class to deal with graphics size computations
 	 */
 	class Measure
 	{
-	private:
+	private:		
+		bool bmp = false;
+		bool rot = false;
 		int color_depth = 4;
 		int tile_w = 1;
 		int tile_h = 1;
@@ -33,6 +82,14 @@ namespace DSC
 		 */
 		Measure& metatile(int tw, int th);
 		
+		/*! \brief chain function to set map type as text (tiles)
+		 */
+		Measure& text();
+		
+		/*! \brief chain function to set map type as bitmap
+		 */
+		Measure& bitmap();
+		
 		/*! \brief computes the size of a number of tiles given the measure settings
 			\param count the number of tiles
 			\return size of a graphics with the given number of tiles and the defined settings
@@ -40,7 +97,7 @@ namespace DSC
 			\details In computing the tiles size, the color depth and metatile data are taken into account.
 			By default, tiles are 8x8px with 4bpp color-depth
 		 */
-		int tiles(int count) const;
+		MeasureValue tiles(int count) const;
 			
 		/*! \brief computes the size of a matrix of tiles given the measure settings
 			\param rows_count number of rows in the tiles matrix
@@ -50,19 +107,26 @@ namespace DSC
 			\details In computing the tiles size, the color depth and metatile data are taken into account.
 			By default, tiles are 8x8px with 4bpp color-depth
 		 */			
-		int tiles(int rows_count, int cols_count) const;
+		MeasureValue tiles(int rows_count, int cols_count) const;
 		
 		/*! \brief computes the size of a bitmap given the measure settings
 			\param width bitmap's width in pixels
 			\param height bitmap's height in pixels
 			\return size of a bitmap with the given size and the defined color depth
 		 */		
-		int bitmap(int width, int height) const;
+		MeasureValue bitmap(int width, int height) const;
 		
 		/*! \brief finds how many tiles can fit in memory block of a certain size, given the measure settings
 			\param size the memory block size
 			\return maximum number of tiles whose size are at most the specified size
 		 */
 		int tiles_count(int size) const;
+		
+		MeasureValue map_size(int width, int height) const;
+		
+		int bytes_per_map_entry() const;
+		
+		
+		
 	};
 }

@@ -23,7 +23,12 @@ namespace DSC
 		__privates__* privates;
 		
 		void set_banks();
-		void solve_map_requirements();
+		void solve_map_requirements();		
+		
+		void solve_map_requirements_main();
+		void solve_map_requirements_sub();
+		
+		static void validate_bg_size(int w, int h, int color_depth, bool is_bitmap);
 	public:
 		GenericScene256();
 		virtual void init() override;
@@ -43,6 +48,8 @@ namespace DSC
 		
 		void require_bitmap_16bpp(int id, int px_width, int px_height);
 		void require_bitmap_16bpp(int id, DSC::AssetData* bitmap);
+		
+		~GenericScene256();
 		
 		static const int MAIN_BG0;
 		static const int MAIN_BG1;

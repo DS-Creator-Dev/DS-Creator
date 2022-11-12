@@ -1,6 +1,8 @@
 #include "DSCEngine/scenes/generic_scene_256.hpp"
-#include "DSCEngine/debug/assert.hpp"
 #include "DSCEngine/video/measure.hpp"
+
+#include "DSCEngine/debug/assert.hpp"
+#include "DSCEngine/debug/error.hpp"
 
 using namespace DSC;
 
@@ -8,6 +10,7 @@ namespace
 {
 	struct BackgroundRequirement
 	{
+		bool enabled = false;
 		bool is_bitmap;
 		int color_depth;		
 		int width;
@@ -40,9 +43,82 @@ void DSC::GenericScene256::run()
 	Scene::run();	
 }
 
-void DSC::GenericScene256::solve_map_requirements()
+void DSC::GenericScene256::solve_map_requirements_main()
 {
-	// ...
+	int izone = 0;
+	int imap_base = 0;
+	
+	int* tile_base = new int[4];
+	int* map_base = new int[4];
+	
+	// solve main
+	for(int i=0;i<4;i++)
+	{
+		BackgroundRequirement& req = privates->bg_requirements[i];		
+		
+		if(!req.enabled) continue;
+		
+		if(imap_base>=32)
+		{
+			fatal("Map base exceeded for main BG%i",i);
+		}		
+		
+		map_base[i] = imap_base;
+		
+		if(!req.is_bitmap) // is it tilemap? then, update the map base index
+		{
+			// get the number of 2KB blocks that would fit the map data for this bg			
+			int map_blocks = Measure()
+				.map_size(req.width, req.height) 
+				.fit()
+				.blocks(2)
+				.kilobytes();
+				
+			imap_base+=map_blocks; // suppose we have already allocated this bg
+		}					
+		
+		// get the number of zones required for the background data (tileset/bitmap)
+		int gfx_blocks = MeasureValue(req.data_length)		
+			.fit()
+			.blocks(16)
+			.kilobytes();
+			
+		tile_base[i] = izone;
+		izone+=gfx_blocks;		
+	}	
+	
+	// get the "offset" zone - the tile base right after all the map data (1 zone == 8 map blocks)
+	int ozone = MeasureValue(imap_base).fit().blocks(8).value();
+	if(ozone + izone > 16) // exceeded 256KB limit?
+	{
+		fatal("Main backgrounds data does not fit in allocated VRAM");
+	}
+			
+	for(int i=0;i<4;i++) tile_base[i] += ozone;
+	
+	
+	// init backgrounds	
+	for(int i=0;i<4;i++)
+	{
+		BackgroundRequirement& req = privates->bg_requirements[i];
+		if(req.enabled)
+		{
+			//validate_bg_size();
+			
+			//bgInit(i, bg_type, bg_size, tile_base[i], map_base[i]);
+		}
+	}		
+}
+
+void DSC::GenericScene256::solve_map_requirements_sub()
+{
+	
+}
+
+void DSC::GenericScene256::solve_map_requirements()
+{	
+	solve_map_requirements_main();
+	solve_map_requirements_sub();
 }
 
 
@@ -51,6 +127,7 @@ void DSC::GenericScene256::require_tiledmap_4bpp(int id, int px_width, int px_he
 	nds_assert(0<=id && id<8);
 	privates->bg_requirements[id] = 
 	{
+		enabled      : true,
 		is_bitmap    : false,
 		color_depth  : 4,
 		width        : px_width,
@@ -65,6 +142,7 @@ void DSC::GenericScene256::require_tiledmap_8bpp(int id, int px_width, int px_he
 	nds_assert(0<=id && id<8);
 	privates->bg_requirements[id] = 
 	{
+		enabled      : true,
 		is_bitmap    : false,
 		color_depth  : 8,
 		width        : px_width,
@@ -84,6 +162,7 @@ void DSC::GenericScene256::require_tiledmap(int id, int px_width, int px_height,
 	
 	privates->bg_requirements[id] = 
 	{
+		enabled      : true,
 		is_bitmap    : false,
 		color_depth  : color_depth,
 		width        : px_width,
@@ -98,6 +177,7 @@ void DSC::GenericScene256::require_bitmap(int id, int px_width, int px_height)
 	nds_assert(0<=id && id<8);
 	privates->bg_requirements[id] = 
 	{
+		enabled      : true,
 		is_bitmap    : true,
 		color_depth  : 8,
 		width        : px_width,
@@ -121,6 +201,7 @@ void DSC::GenericScene256::require_bitmap_16bpp(int id, int px_width, int px_hei
 	nds_assert(0<=id && id<8);
 	privates->bg_requirements[id] = 
 	{
+		enabled      : true,
 		is_bitmap    : true,
 		color_depth  : 16,
 		width        : px_width,
@@ -137,6 +218,28 @@ void DSC::GenericScene256::require_bitmap_16bpp(int id, DSC::AssetData* bitmap)
 	
 	require_bitmap_16bpp(id, 8*bitmap->width, 8*bitmap->height);
 	privates->bg_requirements[id].src_asset = bitmap;
+}
+
+DSC::GenericScene256::~GenericScene256()
+{
+	delete privates;
+}
+
+void DSC::GenericScene256::validate_bg_size(int w, int h, int color_depth, bool is_bitmap)
+{	
+	nds_assert((w&(w-1))==0, "Map width must be a power of 2");
+	nds_assert((h&(h-1))==0, "Map height must be a power of 2");
+	
+	nds_assert(w>=128);
+	
+	if(is_bitmap)
+	{
+		
+	}
+	else
+	{
+		
+	}
 }
 
 #include <nds.h>
