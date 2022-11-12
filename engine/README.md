@@ -1,213 +1,86 @@
-# DSC Engine Lib Documentation
+# DSCEngine Tests list
+
+This is a list of tests that DSCEngine should pass.
+
+## Legend
+
+✅ - ok, seems to work, but wouldn't hurt to double check it
+
+🍦 - other things may break if this doesn't work. Assume it's correct, although it has not been thoroughly tested
+
+⚠️ - not tested, proceed with caution
+
+❌ - successfully fails
+
+🔵 - not a concern
+
+🔸 - to be implemented
+
+## Tests List
+
+| No.  | Related source file                  | Target                                 | Description                                                              | Passing |
+|-----:|:-------------------------------------|----------------------------------------|--------------------------------------------------------------------------|:-------:|
+|    1 |`debug/log.cpp`                       | `_logv()`                              | Check for incorrect parsings, index-out-of-bounds etc                    |✅| 
+|    2 |`events/event.cpp`                    | `Event::trigger()`                     | Missed case: what if the EventHandler is null?                           |⚠️| 
+|    3 |`resources/readonly_data.cpp`         | `ReadOnlyData::extract()`              | Possible "8-bit write to VRAM" error source                              |⚠️| 
+|    4 |`resources/readonly_data.cpp`         | `ReadOnlyData::extract()`              | Extracting resources from file                                           |⚠️| 
+|    5 |`resources/readonly_data.cpp`         | `ReadOnlyData::extract(v*,i,i)`        | Check requested data alignment                                           |✅| 
+|    6 |`resources/asset_data.cpp`            | `*`                                    | It is assumed that provided AssetData sources are correctly created      |⚠️/🔵?| 
+|    7 |`resources/asset_data.cpp`            | `*`                                    | Data access with compression enabled                                     |🔸| 
+|    8 |`resources/asset_data.cpp`            | `AssetData::get_color_depth()`         | Detect incorrect color depth flag                                        |⚠️|
+|    9 |`scenes/scene.cpp`                    | `Scene::run()`                         | Key events working                                                       |✅|
+|   10 |`scenes/scene.cpp`                    | `SceneCom::next()`                     | Calling `close->next()` from within an event                             |⚠️|
+|   11 |`scenes/generic_scene_256.cpp`   | `GenericScene256::solve_map_requirements_main()` | Assert encounter: `Map base exceeded`                                    |⚠️|
+|   12 |`scenes/generic_scene_256.cpp`   | `GenericScene256::solve_map_requirements_main()` | Assert encounter: `Backgrounds 0,1 cannot be bitmaps`                    |⚠️|
+|   13 |`scenes/generic_scene_256.cpp`   | `GenericScene256::solve_map_requirements_main()` | Assert encounter: `Main backgrounds data does not fit in allocated VRAM` |⚠️|
+|   14 |`scenes/generic_scene_256.cpp`   | `GenericScene256::solve_map_requirements_main()` | Check if tile & map bases are computed correctly                         |⚠️|
+|   15 |`scenes/generic_scene_256.cpp`   | `GenericScene256::solve_map_requirements_sub()`  | Same observations for the sub engine                                     |🔸|
+|   16 |`scenes/generic_scene_256.cpp`   | `GenericScene256::load_assets()`| Assert encounter: `Palette allocation failed`                                             |⚠️/🔸|
+|   17 |`scenes/generic_scene_256.cpp`       | `GenericScene256::require_tiledmap_4bpp()` | Checks for invalid data                                                    |⚠️|
+|   18 |`scenes/generic_scene_256.cpp`       | `GenericScene256::require_tiledmap_8bpp()` | Checks for invalid data                                                    |⚠️|
+|   19 |`scenes/generic_scene_256.cpp`       | `GenericScene256::require_tiledmap()` | Checks for invalid data                                                         |⚠️|
+|   20 |`scenes/generic_scene_256.cpp`       | `GenericScene256::require_bitmap(i,i,i)` | Checks for invalid data                                                      |⚠️|
+|   21 |`scenes/generic_scene_256.cpp`       | `GenericScene256::require_bitmap(i,cAD*)` | Checks for invalid data                                                     |⚠️|
+|   22 |`scenes/generic_scene_256.cpp`       | `GenericScene256::require_bitmap_16bpp(i,i,i)` | Checks for invalid data                                                |⚠️|
+|   23 |`scenes/generic_scene_256.cpp`       | `GenericScene256::require_bitmap_16bpp(i,cAD*)` | Checks for invalid data                                               |⚠️|
+|   24 |`scenes/generic_scene_256.cpp`       | `GenericScene256::validate_bg_size()`           | Allowing individual map sizes: 128, 256, 512, 1024                    |🍦|
+|   25 |`scenes/generic_scene_256.cpp`       | `GenericScene256::validate_bg_size()`           | Allowing right map size combination                                   |⚠️|
+|   26 |`video/allocator.cpp`                | `Allocator::reserve()`           | Reserving memory zone                                                                |⚠️|
+|   27 |`video/allocator.cpp`                | `Allocator::reserve()`           | Prevent overwriting                                                                  |⚠️|
+|   28 |`video/allocator.cpp`                | `Allocator::reserve()`           | Desired-offset allocation                                                            |⚠️|
+|   29 |`video/allocator.cpp`                | `Allocator::reserve()`           | Returning null on fail                                                               |⚠️|
+|   30 |`video/allocator.cpp`                | `Allocator::reserve()`           | Allocate + Deallocate + Reallocate                                                   |⚠️|
+|   31 |`video/allocator.cpp`                | `Allocator::release()`           | Freeing occupied segment                                                             |⚠️|
+|   32 |`video/allocator.cpp`                | `Allocator::release()`           | Adjacent segments merging                                                            |⚠️|
+|   33 |`video/allocator.cpp`                | `Allocator::release()`           | Freeing what resides at the start of the memory zone                                 |⚠️|
+|   34 |`video/allocator.cpp`                | `Allocator::release()`           | Ignoring invalid addresses                                                           |⚠️|
+|   35 |`video/measure.cpp`                  | `*`                              | Check the math, should be straight forward                                           |⚠️|
+|   36 |`video/palette_manager.cpp`          | `validate_palette_manager_constructor_input()`| Maybe also allow shadow-palettes in WRAM?   |🔸|
+|   37 |`video/palette_manager.cpp`          | `free_bit_pos()`| Check the math, should be straight forward                                                            |🍦|
+|   38 |`video/palette_manager.cpp`          | `PaletteManager::reserve1()`| Reserve a new color index                                                                 |🍦|
+|   39 |`video/palette_manager.cpp`          | `PaletteManager::reserve1()`| Prevents color duplicates                                                                 |🍦|
+|   40 |`video/palette_manager.cpp`          | `PaletteManager::reserve1()`| Returns -1 on fail                                                                        |🍦|
+|   41 |`video/palette_manager.cpp`          | `PaletteManager::unload1()` | Removes colors allocated one                                                              |🍦|
+|   42 |`video/palette_manager.cpp`          | `PaletteManager::unload1()` | Keeps colors still in use                                                                 |🍦|
+|   43 |`video/palette_manager.cpp`          | `PaletteManager::unload1()` | Ignores inexistent colors                                                                 |🍦|
+|   44 |`video/palette_manager.cpp`          | `PaletteManager::reserve16()` | Reserves a new slot                                                                     |🍦|
+|   45 |`video/palette_manager.cpp`          | `PaletteManager::reserve16()` | Prevents duplicates                                                                     |🍦|
+|   46 |`video/palette_manager.cpp`          | `PaletteManager::reserve16()` | Returns -1 on fail                                                                      |🍦|
+|   47 |`video/palette_manager.cpp`          | `PaletteManager::unload()`    | Removes palettes allocated once                                                         |🍦|
+|   48 |`video/palette_manager.cpp`          | `PaletteManager::unload()`    | Keeps palettes still in use                                                             |🍦|
+|   49 |`video/palette_manager.cpp`          | `PaletteManager::unload()`    | Ignores inexistent palettes                                                             |🍦|
+|   50 |`video/palette_manager.cpp`          | `PaletteManager::try_load()`  | Error on 16-bit asset                                                                   |⚠️|
+|   51 |`video/palette_manager.cpp`          | `PaletteManager::try_load()`  | Loads 4-bit asset                                                                       |⚠️|
+|   52 |`video/palette_manager.cpp`          | `PaletteManager::try_load()`  | Loads 8-bit asset                                                                       |🍦|
+|   53 |`video/palette_manager.cpp`          | `PaletteManager::unload()`    | Error on 16-bit asset                                                                   |⚠️|
+|   54 |`video/palette_manager.cpp`          | `PaletteManager::unload()`    | Loads 4-bit asset                                                                       |⚠️|
+|   55 |`video/palette_manager.cpp`          | `PaletteManager::unload()`    | Loads 8-bit asset                                                                       |🍦|
+|   56 |`video/vram_loader.cpp`              | `VramLoader::load()`          | Copies without additional buffer (4bpp, 16bpp and 8bpp w/o) dynamic indices             |⚠️|
+|   57 |`video/vram_loader.cpp`              | `VramLoader::load()`          | Copies with additional buffer 8bpp w/ dynamic palette indices                           |🍦|
+
+
+## Related
+
+See [DOCS.md](DOCS.md) for old docs.
 
 For updated docs, see `docs/html/annotations.html`.
-
-## ```DSC::Debug```
-
-### ```void DSC::Debug::log(const char* message, ...)```
-
-Sends a **log** to the emulator. 
-
-#### Parameters
-- message
-
-    Text to display. Allows wildcards mush like `printf` does:
-    - `"%i"` : signed integer
-    - `"%u"` : unsigned integer
-    - `"%s"` : string
-    - `"%b"` : short boolean (`"T"`/`"F"`)
-    - `"%B"` : long boolean (`"True"`/`"False"`)
-    - `"%x"` : lowercase hex
-    - `"%X"` : uppercase hex
-- variadic args
-
-    Arguments that fit `message`'s wildcards.
-
-### ```void DSC::Debug::warn(const char* message, ...)```
-
-Sends a **warning** to the emulator. 
-
-#### Parameters
-- see [DSC::debug::log()](#void-dscdebuglogconst-char-message)
-
-### ```void DSC::Debug::error(const char* message, ...)```
-
-Sends an **error** to the emulator. Could suspend the execution.
-
-#### Parameters
-- see [DSC::debug::log()](#void-dscdebuglogconst-char-message)
-
-
-## ```DSC::EventHandler```
-
-Alias for function type `void(void* sender, void* args)`
-
-### Parameters
-- sender : The object that fires the event
-- args : pretty much what you want
-
-
-
-## ```DSC::Event```
-
-Class to register and fire events.
-
-### ```DSC::Event::Event()```
-
-Constructs a new event.
-
-### ```DSC::Event::operator+=(const DSC::EventHandler& e)```
-
-Adds new event handler.
-
-### ```DSC::Event::operator-=(const DSC::EventHandler& e)```
-
-Removes an event handler
-
-### ```DSC::Event::trigger(void* sender, void* args)```
-
-Fires an event
-
-#### Parameters
-
-See [DSC::EventHandler()](#dsceventhandler)
-
-## DSC::Scene
-
-The game flow is broken into smaller individual parts called Scenes. Only one Scene can be executed at a time
-
-### ```virtual void DSC::Scene::init()```
-
-Provides an initializer for the Scene
-
-### ```virtual void DSC::Scene::frame()```
-
-Provides a per-frame logic for the Scene (is executed at each VBlank)
-
-### ```Event DSC::Scene::key_down```
-
-### ```Event DSC::Scene::key_held```
-
-### ```Event DSC::Scene::key_up```
-
-Key trigggered events. Event arg is the target key code. Event handlers look like this:
-
-```C++
-void on_key_down(void* sender, void* _keys) 
-{
-    // Get the keys state
-    const int keys = (const int) _keys;
-    // Do actions
-    switch(keys)
-    {
-        //...
-    }
-}
-
-void MyScene::init() override 
-{
-    keys_down += on_key_down(); // register event
-}
-```
-
-### ```DSC::close()```
-
-Closes the scene **and** clears up all the resources. `DSC::close()` returns an internal singleton object
-that can be used to load up the next scene.
-
-```C++
-void MyScene::doOnGameOver()
-{    
-    if(win)
-    {
-        this->close()->next(new MyNextScene());
-    }
-    else
-    {
-        this->close()->next(new MyScene()); // reset scene
-    }    
-}
-```
-
-**Warning!**
-- Due to the way `close()` is implemented, don't try to use statically declared `Scene`s.
-    Only use pointer `Scene`s with their specialized api (`dsc_launch(...)`, `close()->next(...)`)
-
-
-- Don't access any of the Scene's properies after `close()`-ing it!
-    `close()` literally deletes the object in order to make room for the
-    next Scene to load. 
-
-    Don't do:
-
-    ```C++
-    class MyScene : public DSC::Scene
-    {
-    public:
-        int my_property = 123;
-
-        void next_scene() 
-        {
-            this->close()->next(new MyOtherScene(my_property));                        
-            // After close(), my_property is no longer available
-            // Therefore, the line above leads to runtime error
-        }
-    }
-    ```
-
-    Do it this way:
-
-```C++
-    class MyScene : public DSC::Scene
-    {
-    public:
-        int my_property = 123;
-
-        void next_scene() 
-        {
-            // save my_property to stack
-            int my_backup = my_property;
-            // Even though closing the Scene deletes its properties,
-            // we can still retrieve our valuable variable from the
-            // local scope
-            this->close()->next(new MyOtherScene(my_backup));
-        }
-    }
-```
-
-- [To be verified] It is unsafe to `close()` during key events (?)
-
-## ```DSC::Allocator```
-
-An allocator instance behaves like `malloc`, but has a customizable memory segment, anti-leak measures 
-and can force some data to be allocated at fixed addresses.
-
-### ```DSC::Allocator::Allocator(int offset, int length)```
-
-Construct an Allocator. 
-
-#### Parameters
-
-- **offset** The base segment start offset
-
-- **length** The base segment length
-
-An Allocator instance only works with addresses in range [offset, offset+length-1]
-
-### ```void* DSC::Allocator::reserve(int size, int desired_offset = -1)```
-
-The equivalent of `malloc(size)`. 
-
-#### Parameters
-
-- **size** Data length (works best in units of 32 bytes a.k.a. the size of a 4bpp tile)
-- **desired_offset** If positive, the block of desired size tries to be placed at `offset + desired_offset`
-
-#### Returns
-
-An address in the allocator's effective range. If the allocation does not succeed, `nullptr` is returned instead.
-
-### ````void release(void* address)````
-
-`free(address)`. That's all. And don't be afraid to `release()` previosuly unallocated addresses. Nothing happens.
-

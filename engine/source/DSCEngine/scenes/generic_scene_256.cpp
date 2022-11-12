@@ -25,7 +25,7 @@ namespace
 
 struct DSC::GenericScene256::__privates__
 {
-	BackgroundRequirement bg_requirements[8];	
+	BackgroundRequirement bg_requirements[8];
 	
 	PaletteManager main_palette = PaletteManager(BG_PALETTE);
 };
