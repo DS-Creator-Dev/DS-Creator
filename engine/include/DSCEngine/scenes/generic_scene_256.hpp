@@ -28,11 +28,14 @@ namespace DSC
 		void solve_map_requirements_main();
 		void solve_map_requirements_sub();
 		
+		void solve_video_mode();
+		
+		void load_assets();
+		
 		static int validate_bg_size(int w, int h, int color_depth, bool is_bitmap);
 	public:
 		GenericScene256();
-		virtual void init() override;
-		virtual void frame() override;
+		virtual void init() override;		
 		
 		__attribute__((noinline))
 		virtual void run() override;
@@ -41,13 +44,13 @@ namespace DSC
 		void require_tiledmap_4bpp(int id, int px_width, int px_height, int number_of_tiles);
 		void require_tiledmap_8bpp(int id, int px_width, int px_height, int number_of_tiles);
 		
-		void require_tiledmap(int id, int px_width, int px_height, AssetData* tileset);
+		void require_tiledmap(int id, int px_width, int px_height, const AssetData* tileset);
 		
 		void require_bitmap(int id, int px_width, int px_height);
-		void require_bitmap(int id, DSC::AssetData* bitmap);
+		void require_bitmap(int id, const DSC::AssetData* bitmap);
 		
 		void require_bitmap_16bpp(int id, int px_width, int px_height);
-		void require_bitmap_16bpp(int id, DSC::AssetData* bitmap);
+		void require_bitmap_16bpp(int id, const DSC::AssetData* bitmap);
 		
 		~GenericScene256();
 		

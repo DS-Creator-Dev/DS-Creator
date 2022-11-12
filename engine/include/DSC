@@ -10,9 +10,12 @@
 #include "DSCEngine/resources/asset_data.hpp"
 
 #include "DSCEngine/scenes/scene.hpp"
+#include "DSCEngine/scenes/generic_scene_256.hpp"
 
 #include "DSCEngine/types/templates.hpp"
 #include "DSCEngine/types/hash_map.hpp"
 #include "DSCEngine/types/vector.hpp"
 
+#include "DSCEngine/video/measure.hpp"
 #include "DSCEngine/video/palette_manager.hpp"
+#include "DSCEngine/video/vram_loader.hpp"
