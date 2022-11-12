@@ -43,7 +43,7 @@ NITRO    :=
 ARCH := -marm -mthumb-interwork -march=armv5te -mtune=arm946e-s
 
 CFLAGS   := -g -Wall -O3 $(ARCH)
-CFLAGS	 += $(INCLUDE) -DARM9 -DTESTMOD
+CFLAGS	 += $(INCLUDE) -DARM9
 CXXFLAGS := $(CFLAGS) -fno-rtti -fno-exceptions
 ASFLAGS  := -g $(ARCH)
 LDFLAGS   = -specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
@@ -75,7 +75,7 @@ LIBDIRS := $(LIBNDS) $(PORTLIBS)
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
 
-export OUTPUT := $(CURDIR)/lib/libdscengine_testmod.a
+export OUTPUT := $(CURDIR)/lib/libdscengine.a
 
 export VPATH := $(CURDIR)/$(subst /,,$(dir $(ICON)))\
                 $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))\

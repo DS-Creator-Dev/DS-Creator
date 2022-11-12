@@ -13,6 +13,8 @@ endif
 
 include $(DEVKITARM)/ds_rules
 
+LIBDSC  := D:\Users\NotImpLife\Projects\DS-Creator\engine
+
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
@@ -26,8 +28,8 @@ include $(DEVKITARM)/ds_rules
 #---------------------------------------------------------------------------------
 TARGET   := $(shell basename $(CURDIR))
 BUILD    := build
-SOURCES  := ${shell find ${source} -regex ".*source/.*" -type d -print}
-INCLUDES := include 
+SOURCES  := source
+INCLUDES := include
 DATA     := data
 GRAPHICS :=
 AUDIO    :=
@@ -42,8 +44,8 @@ NITRO    :=
 #---------------------------------------------------------------------------------
 ARCH := -marm -mthumb-interwork -march=armv5te -mtune=arm946e-s
 
-CFLAGS   := -g -Wall -O3 $(ARCH)
-CFLAGS	 += $(INCLUDE) -DARM9 -DTESTMOD
+CFLAGS   := -g -Wall -O3\
+            $(ARCH) $(INCLUDE) -DARM9
 CXXFLAGS := $(CFLAGS) -fno-rtti -fno-exceptions
 ASFLAGS  := -g $(ARCH)
 LDFLAGS   = -specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
@@ -62,11 +64,13 @@ ifneq ($(strip $(AUDIO)),)
 LIBS := -lmm9 $(LIBS)
 endif
 
+LIBS := -ldscengine_testmod $(LIBS)
+
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS := $(LIBNDS) $(PORTLIBS)
+LIBDIRS := $(LIBDSC) $(LIBNDS) $(PORTLIBS)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -75,7 +79,7 @@ LIBDIRS := $(LIBNDS) $(PORTLIBS)
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
 
-export OUTPUT := $(CURDIR)/lib/libdscengine_testmod.a
+export OUTPUT := $(CURDIR)/$(TARGET)
 
 export VPATH := $(CURDIR)/$(subst /,,$(dir $(ICON)))\
                 $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))\
@@ -159,7 +163,6 @@ endif
 
 #---------------------------------------------------------------------------------
 $(BUILD):
-	@echo $(INCLUDES)
 	@mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
@@ -174,11 +177,8 @@ else
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-
-$(OUTPUT) : $(OFILES)
-
-#$(OUTPUT).nds: $(OUTPUT).elf $(NITRO_FILES) $(GAME_ICON)
-#$(OUTPUT).elf: $(OFILES)
+$(OUTPUT).nds: $(OUTPUT).elf $(NITRO_FILES) $(GAME_ICON)
+$(OUTPUT).elf: $(OFILES)
 
 # source files depend on generated headers
 $(OFILES_SOURCES) : $(HFILES)
