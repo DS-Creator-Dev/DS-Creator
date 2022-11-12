@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>DSCEngine: DSC::ReadOnlyData Class Reference</title>
+<title>DSC Engine: DSC::ReadOnlyData Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -20,9 +20,8 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
-  <td id="projectlogo"><img alt="Logo" src="DSC Logo.png"/></td>
   <td id="projectalign">
-   <div id="projectname">DSCEngine
+   <div id="projectname">DSC Engine
    </div>
   </td>
  </tr>
@@ -76,7 +75,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_d_s_c_1_1_read_only_data-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">DSC::ReadOnlyData Class Reference</div></div>
 </div><!--header-->
@@ -95,13 +93,30 @@ Inheritance diagram for DSC::ReadOnlyData:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac091f868669ff29e0d0c821e8dd8d0fc"><td class="memItemLeft" align="right" valign="top"><a id="ac091f868669ff29e0d0c821e8dd8d0fc" name="ac091f868669ff29e0d0c821e8dd8d0fc"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ReadOnlyData</b> (int <a class="el" href="class_d_s_c_1_1_read_only_data.html#a17e994673352381c20dee8c1b0a6a073">header_size</a>=sizeof(<a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a>))</td></tr>
-<tr class="memdesc:ac091f868669ff29e0d0c821e8dd8d0fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">0 = no compression, 1=LZ7 or sth, ... <br /></td></tr>
+<tr class="memitem:a3ef6661a7d7b86c63b6a681d1e419c13"><td class="memItemLeft" align="right" valign="top"><a id="a3ef6661a7d7b86c63b6a681d1e419c13" name="a3ef6661a7d7b86c63b6a681d1e419c13"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>__attribute__</b> ((packed)) short header_size</td></tr>
+<tr class="memdesc:a3ef6661a7d7b86c63b6a681d1e419c13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Some technical observations to account for during implementation: <br  />
+ <br /></td></tr>
+<tr class="separator:a3ef6661a7d7b86c63b6a681d1e419c13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62c5767f51808a5a20aaa718d15713db"><td class="memItemLeft" align="right" valign="top"><a id="a62c5767f51808a5a20aaa718d15713db" name="a62c5767f51808a5a20aaa718d15713db"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>__attribute__</b> ((packed)) int data_length</td></tr>
+<tr class="memdesc:a62c5767f51808a5a20aaa718d15713db"><td class="mdescLeft">&#160;</td><td class="mdescRight">equilavent of sizeof(*this), but foresees class inheritance <br /></td></tr>
+<tr class="separator:a62c5767f51808a5a20aaa718d15713db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8ac1dc7e95cfe4a5fe1108f7333fac"><td class="memItemLeft" align="right" valign="top"><a id="ace8ac1dc7e95cfe4a5fe1108f7333fac" name="ace8ac1dc7e95cfe4a5fe1108f7333fac"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>__attribute__</b> ((packed)) char *data_source</td></tr>
+<tr class="memdesc:ace8ac1dc7e95cfe4a5fe1108f7333fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">size in bytes of the actual data <br  />
+ <br /></td></tr>
+<tr class="separator:ace8ac1dc7e95cfe4a5fe1108f7333fac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e807d60f761e4248701de1bcc90faf2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_c_1_1_read_only_data.html#a7e807d60f761e4248701de1bcc90faf2">__attribute__</a> ((packed)) unsigned short flags</td></tr>
+<tr class="separator:a7e807d60f761e4248701de1bcc90faf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac091f868669ff29e0d0c821e8dd8d0fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_c_1_1_read_only_data.html#ac091f868669ff29e0d0c821e8dd8d0fc">ReadOnlyData</a> (int header_size=sizeof(<a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a>))</td></tr>
 <tr class="separator:ac091f868669ff29e0d0c821e8dd8d0fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c90de401e3eeffc402a8f5498e78287"><td class="memItemLeft" align="right" valign="top"><a id="a5c90de401e3eeffc402a8f5498e78287" name="a5c90de401e3eeffc402a8f5498e78287"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>extract</b> (void *destination)</td></tr>
-<tr class="separator:a5c90de401e3eeffc402a8f5498e78287"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87aafc79daf1fea788023d5680361865"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_c_1_1_read_only_data.html#a87aafc79daf1fea788023d5680361865">extract</a> (void *destination) const</td></tr>
+<tr class="memdesc:a87aafc79daf1fea788023d5680361865"><td class="mdescLeft">&#160;</td><td class="mdescRight">writes all binary data to the given address  <a href="class_d_s_c_1_1_read_only_data.html#a87aafc79daf1fea788023d5680361865">More...</a><br /></td></tr>
+<tr class="separator:a87aafc79daf1fea788023d5680361865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf4bfdfd3a816d9f7a8059e953e894f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_c_1_1_read_only_data.html#acf4bfdfd3a816d9f7a8059e953e894f7">extract</a> (void *destination, int offset, int length) const</td></tr>
+<tr class="memdesc:acf4bfdfd3a816d9f7a8059e953e894f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">writes binary data sequence to the given address  <a href="class_d_s_c_1_1_read_only_data.html#acf4bfdfd3a816d9f7a8059e953e894f7">More...</a><br /></td></tr>
+<tr class="separator:acf4bfdfd3a816d9f7a8059e953e894f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9ded40fb10d980cd38fe03bab708ff1"><td class="memItemLeft" align="right" valign="top"><a id="ad9ded40fb10d980cd38fe03bab708ff1" name="ad9ded40fb10d980cd38fe03bab708ff1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ReadOnlyData</b> (const <a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a> &amp;)=delete</td></tr>
 <tr class="separator:ad9ded40fb10d980cd38fe03bab708ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,27 +129,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>extract</b> (void *de
 <tr class="memitem:a392e1b926f3aefb9c84b02acf06c09b3"><td class="memItemLeft" align="right" valign="top"><a id="a392e1b926f3aefb9c84b02acf06c09b3" name="a392e1b926f3aefb9c84b02acf06c09b3"></a>
 <a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a> &amp;&amp;)=delete</td></tr>
 <tr class="separator:a392e1b926f3aefb9c84b02acf06c09b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a17e994673352381c20dee8c1b0a6a073"><td class="memItemLeft" align="right" valign="top"><a id="a17e994673352381c20dee8c1b0a6a073" name="a17e994673352381c20dee8c1b0a6a073"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>header_size</b></td></tr>
-<tr class="memdesc:a17e994673352381c20dee8c1b0a6a073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Some technical observations to account for during implementation: <br /></td></tr>
-<tr class="separator:a17e994673352381c20dee8c1b0a6a073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a382e9066aa30793c0edc4321caf4e5ec"><td class="memItemLeft" align="right" valign="top"><a id="a382e9066aa30793c0edc4321caf4e5ec" name="a382e9066aa30793c0edc4321caf4e5ec"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>data_length</b></td></tr>
-<tr class="memdesc:a382e9066aa30793c0edc4321caf4e5ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">equilavent of sizeof(*this), but foresees class inheritance <br /></td></tr>
-<tr class="separator:a382e9066aa30793c0edc4321caf4e5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa33e599e283cb351e5f6aef6ed0362ba"><td class="memItemLeft" align="right" valign="top"><a id="aa33e599e283cb351e5f6aef6ed0362ba" name="aa33e599e283cb351e5f6aef6ed0362ba"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_file</b></td></tr>
-<tr class="memdesc:aa33e599e283cb351e5f6aef6ed0362ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">size in bytes of the actual data <br /></td></tr>
-<tr class="separator:aa33e599e283cb351e5f6aef6ed0362ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a235d81e95bf96753fabee187bf384128"><td class="memItemLeft" align="right" valign="top"><a id="a235d81e95bf96753fabee187bf384128" name="a235d81e95bf96753fabee187bf384128"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>data_source</b></td></tr>
-<tr class="memdesc:a235d81e95bf96753fabee187bf384128"><td class="mdescLeft">&#160;</td><td class="mdescRight">tell if the data is in RAM or on a filesystem <br /></td></tr>
-<tr class="separator:a235d81e95bf96753fabee187bf384128"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a942bcfeb7babe0c12a5e0f85b703c5bd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_c_1_1_read_only_data.html#a942bcfeb7babe0c12a5e0f85b703c5bd">compression_type</a></td></tr>
-<tr class="separator:a942bcfeb7babe0c12a5e0f85b703c5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf19435784da6734988dad8a5a6c0283"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_c_1_1_read_only_data.html#adf19435784da6734988dad8a5a6c0283">is_file</a> () const</td></tr>
+<tr class="memdesc:adf19435784da6734988dad8a5a6c0283"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if data is written to file  <a href="class_d_s_c_1_1_read_only_data.html#adf19435784da6734988dad8a5a6c0283">More...</a><br /></td></tr>
+<tr class="separator:adf19435784da6734988dad8a5a6c0283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p ><a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a> denotes a type of static resource that lies either in RAM, FAT or NITRO.</p>
@@ -144,15 +141,40 @@ char *&#160;</td><td class="memItemRight" valign="bottom"><b>data_source</b></td
 <p >Instances of this class should be constants, not allow moving/making copies of them. In fact, only DSC specialized tools have to create reliable <a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a> instances.</p>
 <p >Referencing instances of this class should only be done through pointers (attention to down/upcasts, no polymorphism is being used)</p>
 <p >[ !!! POSSIBLE BUG SOURCE !!! ] There is no "Read-Only Memory" thing on DS homebrew. All the constants are being placed in EWRAM (4MB). The compiler tries its best to prevent programmers from altering constant values, but one can simply break the rule by overwriting a constant only using its dereferenced pointer. Assuming the programmer doesn't try anything strange, there is still a chance that an undefined behavior/RAM corruption/ some accidental buffer overflow (eg. for i=0;i&lt;10;i&ndash;) may overwrite in-memory "read-only" data. We should keep a careful eye on that and consider it as a potential explanation for any visual glitches or misterious data corruption. Therefore, when constant data changes its bytes, then something's really messed up. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a942bcfeb7babe0c12a5e0f85b703c5bd" name="a942bcfeb7babe0c12a5e0f85b703c5bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a942bcfeb7babe0c12a5e0f85b703c5bd">&#9670;&#160;</a></span>compression_type</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac091f868669ff29e0d0c821e8dd8d0fc" name="ac091f868669ff29e0d0c821e8dd8d0fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac091f868669ff29e0d0c821e8dd8d0fc">&#9670;&#160;</a></span>ReadOnlyData()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool DSC::ReadOnlyData::compression_type</td>
+          <td class="memname">DSC::ReadOnlyData::ReadOnlyData </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>header_size</em> = <code>sizeof(<a class="el" href="class_d_s_c_1_1_read_only_data.html">ReadOnlyData</a>)</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >bits 0-7 : see ROD_* <br  />
+ bits 8-15 : defined by derived formats specifications </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7e807d60f761e4248701de1bcc90faf2" name="a7e807d60f761e4248701de1bcc90faf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e807d60f761e4248701de1bcc90faf2">&#9670;&#160;</a></span>__attribute__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DSC::ReadOnlyData::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(packed)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -160,8 +182,98 @@ char *&#160;</td><td class="memItemRight" valign="bottom"><b>data_source</b></td
 
 </div>
 </div>
+<a id="a87aafc79daf1fea788023d5680361865" name="a87aafc79daf1fea788023d5680361865"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87aafc79daf1fea788023d5680361865">&#9670;&#160;</a></span>extract() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSC::ReadOnlyData::extract </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>destination</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>writes all binary data to the given address </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">destination</td><td>address to extract data to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acf4bfdfd3a816d9f7a8059e953e894f7" name="acf4bfdfd3a816d9f7a8059e953e894f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf4bfdfd3a816d9f7a8059e953e894f7">&#9670;&#160;</a></span>extract() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSC::ReadOnlyData::extract </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>destination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>writes binary data sequence to the given address </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">destination</td><td>address to extract data to </td></tr>
+    <tr><td class="paramname">offset</td><td>position in effetive data where copying starts </td></tr>
+    <tr><td class="paramname">length</td><td>length of data to copy </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adf19435784da6734988dad8a5a6c0283" name="adf19435784da6734988dad8a5a6c0283"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf19435784da6734988dad8a5a6c0283">&#9670;&#160;</a></span>is_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DSC::ReadOnlyData::is_file </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>checks if data is written to file </p>
+<dl class="section return"><dt>Returns</dt><dd>true if effective data is in file, false if in WRAM </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>DSCEngine/resources/<a class="el" href="readonly__data_8hpp_source.html">readonly_data.hpp</a></li>
+<li>D:/Users/NotImpLife/Projects/DS-Creator/engine/include/DSCEngine/resources/<a class="el" href="readonly__data_8hpp_source.html">readonly_data.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

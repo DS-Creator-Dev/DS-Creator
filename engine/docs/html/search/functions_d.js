@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['scene_0',['Scene',['../class_d_s_c_1_1_scene.html#a275c631e026c5b6df3783e47e1e1662c',1,'DSC::Scene']]],
-  ['size_1',['size',['../class_d_s_c_1_1_vector.html#ab54aa822fc7c1e03e8aaaecd19486c7b',1,'DSC::Vector']]]
+  ['palettemanager_0',['PaletteManager',['../class_d_s_c_1_1_palette_manager.html#ab647ed1df2f69d35ecb017feeefe8760',1,'DSC::PaletteManager']]],
+  ['push_5fback_1',['push_back',['../class_d_s_c_1_1_vector.html#a562b4902f224803e6ba199264c858210',1,'DSC::Vector']]]
 ];

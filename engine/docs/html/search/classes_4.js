@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['readonlydata_0',['ReadOnlyData',['../class_d_s_c_1_1_read_only_data.html',1,'DSC']]]
+  ['measure_0',['Measure',['../class_d_s_c_1_1_measure.html',1,'DSC']]],
+  ['measurevalue_1',['MeasureValue',['../class_d_s_c_1_1_measure_value.html',1,'DSC']]]
 ];

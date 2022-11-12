@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['log_0',['log',['../log_8hpp.html#ab8a93ebb1fbb8d6ed5b75511b2bd362c',1,'DSC::Debug']]]
+  ['kilobytes_0',['kilobytes',['../class_d_s_c_1_1_measure_value.html#a03b60259954237cd305b52cf1be651d1',1,'DSC::MeasureValue']]]
 ];

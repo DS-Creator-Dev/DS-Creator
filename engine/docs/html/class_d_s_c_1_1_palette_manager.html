@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>DSCEngine: DSC::PaletteManager Class Reference</title>
+<title>DSC Engine: DSC::PaletteManager Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -20,9 +20,8 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
-  <td id="projectlogo"><img alt="Logo" src="DSC Logo.png"/></td>
   <td id="projectalign">
-   <div id="projectname">DSCEngine
+   <div id="projectname">DSC Engine
    </div>
   </td>
  </tr>
@@ -103,6 +102,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a589ebdcdc69b8d58b0958a87f30f612d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_c_1_1_palette_manager.html#a589ebdcdc69b8d58b0958a87f30f612d">unload16</a> (const void *palette4)</td></tr>
 <tr class="memdesc:a589ebdcdc69b8d58b0958a87f30f612d"><td class="mdescLeft">&#160;</td><td class="mdescRight">removes a 4-bit palette  <a href="class_d_s_c_1_1_palette_manager.html#a589ebdcdc69b8d58b0958a87f30f612d">More...</a><br /></td></tr>
 <tr class="separator:a589ebdcdc69b8d58b0958a87f30f612d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad06d4eb2a1f28bd3e459f92bb120d05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_d_s_c_1_1_palette_allocation_result.html">PaletteAllocationResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_c_1_1_palette_manager.html#aad06d4eb2a1f28bd3e459f92bb120d05">try_load</a> (const <a class="el" href="class_d_s_c_1_1_asset_data.html">AssetData</a> *asset)</td></tr>
+<tr class="memdesc:aad06d4eb2a1f28bd3e459f92bb120d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to load colors from asset data palette.  <a href="class_d_s_c_1_1_palette_manager.html#aad06d4eb2a1f28bd3e459f92bb120d05">More...</a><br /></td></tr>
+<tr class="separator:aad06d4eb2a1f28bd3e459f92bb120d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61e1f2323ab1cb89e0f9ffea3f3c2684"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_c_1_1_palette_manager.html#a61e1f2323ab1cb89e0f9ffea3f3c2684">unload</a> (const <a class="el" href="class_d_s_c_1_1_asset_data.html">AssetData</a> *asset)</td></tr>
+<tr class="memdesc:a61e1f2323ab1cb89e0f9ffea3f3c2684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unloads colors from a previously loaded asset data palette.  <a href="class_d_s_c_1_1_palette_manager.html#a61e1f2323ab1cb89e0f9ffea3f3c2684">More...</a><br /></td></tr>
+<tr class="separator:a61e1f2323ab1cb89e0f9ffea3f3c2684"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Automatic palette manager. </p>
@@ -192,6 +197,61 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aad06d4eb2a1f28bd3e459f92bb120d05" name="aad06d4eb2a1f28bd3e459f92bb120d05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad06d4eb2a1f28bd3e459f92bb120d05">&#9670;&#160;</a></span>try_load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_d_s_c_1_1_palette_allocation_result.html">PaletteAllocationResult</a> DSC::PaletteManager::try_load </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_d_s_c_1_1_asset_data.html">AssetData</a> *&#160;</td>
+          <td class="paramname"><em>asset</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Attempts to load colors from asset data palette. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">asset</td><td>asset data source </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>allocation result information <br  />
+ </dd></dl>
+
+</div>
+</div>
+<a id="a61e1f2323ab1cb89e0f9ffea3f3c2684" name="a61e1f2323ab1cb89e0f9ffea3f3c2684"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61e1f2323ab1cb89e0f9ffea3f3c2684">&#9670;&#160;</a></span>unload()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSC::PaletteManager::unload </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_d_s_c_1_1_asset_data.html">AssetData</a> *&#160;</td>
+          <td class="paramname"><em>asset</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unloads colors from a previously loaded asset data palette. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">asset</td><td>asset data source </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>No checks are performed to ensure that the asset's palette has been previously loaded before deallocation happens. Accidentally unloading "unloaded" data may result in possible data loss and corruption. </dd></dl>
+
+</div>
+</div>
 <a id="af2ab58484a6769567cb6b87b5da0bd7d" name="af2ab58484a6769567cb6b87b5da0bd7d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af2ab58484a6769567cb6b87b5da0bd7d">&#9670;&#160;</a></span>unload1()</h2>
 
@@ -247,7 +307,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>DSCEngine/video/<a class="el" href="palette__manager_8hpp_source.html">palette_manager.hpp</a></li>
+<li>D:/Users/NotImpLife/Projects/DS-Creator/engine/include/DSCEngine/video/<a class="el" href="palette__manager_8hpp_source.html">palette_manager.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

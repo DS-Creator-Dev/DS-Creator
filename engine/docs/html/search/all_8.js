@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['hashmap_0',['HashMap',['../class_d_s_c_1_1_hash_map.html',1,'DSC']]],
-  ['hashmap_3c_20short_2c_20int_2c_20hashcolor_2c_20128_20_3e_1',['HashMap&lt; short, int, hashColor, 128 &gt;',['../class_d_s_c_1_1_hash_map.html',1,'DSC']]],
-  ['header_5fsize_2',['header_size',['../class_d_s_c_1_1_read_only_data.html#a17e994673352381c20dee8c1b0a6a073',1,'DSC::ReadOnlyData']]]
+  ['indices_0',['indices',['../struct_d_s_c_1_1_palette_allocation_result.html#a82ef296707f7c9b44123fea275bf97ae',1,'DSC::PaletteAllocationResult']]],
+  ['init_1',['init',['../class_d_s_c_1_1_generic_scene256.html#ab5a64456a7cf6ac430f1c2600b0a4264',1,'DSC::GenericScene256::init()'],['../class_d_s_c_1_1_scene.html#a6c6ec2e1e893531927361a23159c4b02',1,'DSC::Scene::init()'],['../class_d_s_c_1_1_scene_templates_1_1_visual_novel_scene.html#a509ffdd834d3f77aaa7b3f52d9beaba0',1,'DSC::SceneTemplates::VisualNovelScene::init()']]],
+  ['is_5ffile_2',['is_file',['../class_d_s_c_1_1_read_only_data.html#adf19435784da6734988dad8a5a6c0283',1,'DSC::ReadOnlyData']]]
 ];
