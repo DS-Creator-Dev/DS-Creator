@@ -28,7 +28,7 @@ namespace DSC
 		void solve_map_requirements_main();
 		void solve_map_requirements_sub();
 		
-		static void validate_bg_size(int w, int h, int color_depth, bool is_bitmap);
+		static int validate_bg_size(int w, int h, int color_depth, bool is_bitmap);
 	public:
 		GenericScene256();
 		virtual void init() override;

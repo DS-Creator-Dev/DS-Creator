@@ -22,9 +22,9 @@ namespace
 {
 	void validate_palette_manager_constructor_input(int palettes_offset)
 	{						
-		__assert__(palettes_offset%512 == 0, "Bad palette offset alignment");
+		nds_assert(palettes_offset%512 == 0, "Bad palette offset alignment");
 		
-		__assert__((0x05000000<=palettes_offset && palettes_offset<=0x05000600)
+		nds_assert((0x05000000<=palettes_offset && palettes_offset<=0x05000600)
 				|| (0x06880000<=palettes_offset && palettes_offset<=0x06887FFF) 		
 				|| (0x06890000<=palettes_offset && palettes_offset<=0x06891FFF)
 				|| (0x06898000<=palettes_offset && palettes_offset<=0x068A3FFF),

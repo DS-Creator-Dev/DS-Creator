@@ -103,16 +103,17 @@ void DSC::GenericScene256::solve_map_requirements_main()
 		BackgroundRequirement& req = privates->bg_requirements[i];
 		if(req.enabled)
 		{
-			//validate_bg_size();
-			
-			//bgInit(i, bg_type, bg_size, tile_base[i], map_base[i]);
+			int config = validate_bg_size(req.width, req.height, req.color_depth, req.is_bitmap);
+			BgType bg_type = (BgType)((config>>16)&0xFFFF);
+			BgSize bg_size = (BgSize)(config & 0xFFFF);
+			bgInit(i, bg_type, bg_size, tile_base[i], map_base[i]);			
 		}
 	}		
 }
 
 void DSC::GenericScene256::solve_map_requirements_sub()
 {
-	
+	// same as above but I'm too tired to do it
 }
 
 void DSC::GenericScene256::solve_map_requirements()
@@ -225,24 +226,63 @@ DSC::GenericScene256::~GenericScene256()
 	delete privates;
 }
 
-void DSC::GenericScene256::validate_bg_size(int w, int h, int color_depth, bool is_bitmap)
+#include <nds.h>
+
+int DSC::GenericScene256::validate_bg_size(int w, int h, int color_depth, bool is_bitmap)
 {	
 	nds_assert((w&(w-1))==0, "Map width must be a power of 2");
 	nds_assert((h&(h-1))==0, "Map height must be a power of 2");
 	
-	nds_assert(w>=128);
+	nds_assert(128<=w && w<=1024);
+	nds_assert(128<=h && h<=1024);
 	
+	int type;
+	int size;
+	bool ok  = false;
+	
+	// this looks terrible but I have no ideas how to make it cleaner
+	// no (ex)rotation backgrounds yet!!!!!!!!!!!!!!!!
 	if(is_bitmap)
-	{
-		
+	{				
+		if(color_depth==8)
+		{
+			type = BgType_Bmp8;
+			ok |= (w== 128 && h== 128); if(ok) { size = BgSize_B8_128x128;  goto __validate_bg_size__success; }
+			ok |= (w== 256 && h== 256); if(ok) { size = BgSize_B8_256x256;  goto __validate_bg_size__success; }
+			ok |= (w== 512 && h== 256); if(ok) { size = BgSize_B8_512x256;  goto __validate_bg_size__success; }
+			ok |= (w== 512 && h== 512); if(ok) { size = BgSize_B8_512x512;  goto __validate_bg_size__success; }
+			ok |= (w== 512 && h==1024); if(ok) { size = BgSize_B8_512x1024; goto __validate_bg_size__success; }
+			ok |= (w==1024 && h== 512); if(ok) { size = BgSize_B8_1024x512; goto __validate_bg_size__success; }
+		}
+		else if(color_depth==16)
+		{
+			type = BgType_Bmp16;
+			ok |= (w== 128 && h== 128); if(ok) { size = BgSize_B16_128x128; goto __validate_bg_size__success; }
+			ok |= (w== 256 && h== 256); if(ok) { size = BgSize_B16_256x256; goto __validate_bg_size__success; }
+			ok |= (w== 512 && h== 256); if(ok) { size = BgSize_B16_512x256; goto __validate_bg_size__success; }
+			ok |= (w== 512 && h== 512); if(ok) { size = BgSize_B16_512x512; goto __validate_bg_size__success; }
+		}
 	}
 	else
 	{
-		
-	}
+		if(color_depth!=16)
+		{
+			type = color_depth==4 ? BgType_Text4bpp : BgType_Text8bpp;
+			ok |= (w== 256 && h== 256); if(ok) { size = BgSize_T_256x256;  goto __validate_bg_size__success; }
+			ok |= (w== 256 && h== 512); if(ok) { size = BgSize_T_256x512;  goto __validate_bg_size__success; }
+			ok |= (w== 512 && h== 256); if(ok) { size = BgSize_T_512x256;  goto __validate_bg_size__success; }
+			ok |= (w== 512 && h== 512); if(ok) { size = BgSize_T_512x512;  goto __validate_bg_size__success; }
+		}
+	}	
+	
+	fatal("Invalid map size (%i,%i) for %i-bpp %s", w, h, color_depth, is_bitmap ? "bitmap" : "tiled map");	
+	
+	return -1;
+	
+	__validate_bg_size__success:
+	return size | (type<<16);
+	
 }
-
-#include <nds.h>
 
 void DSC::GenericScene256::set_banks()
 {
